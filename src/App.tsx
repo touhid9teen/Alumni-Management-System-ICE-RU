@@ -1,11 +1,9 @@
-import Tooltipe from "./elements/Tooltipe";
+import Toggle from "./elements/Toggle";
 const App = () => {
     return (
         <div className="w-80 h-80">
             <h1>This is Alumni Management Project</h1>
-            <Tooltipe content="This is a tooltip" position="bottom">
-                <button>Hover over me</button>
-            </Tooltipe>
+            <Toggle />
         </div>
     );
 };
