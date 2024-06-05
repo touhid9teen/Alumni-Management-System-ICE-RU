@@ -7,6 +7,7 @@ export default {
         secondary: '#ECECEC',
         'deep-blue': '#00156A',
         'silver-cloud': '#F3F3F3',
+        'tranquil-blue': '#B9C1D9',
       },
     },
   },
