@@ -1,13 +1,13 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+export default {
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#5630FF',
+        secondary: '#ECECEC',
+        'deep-blue': '#00156A',
+        'silver-cloud': '#F3F3F3',
+      },
+    },
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
-}
-
+};

@@ -1,18 +1,28 @@
-interface ButtonProps {
-    text: string;
-    onClick?: () => void;
+import { ButtonHTMLAttributes, FC, ReactNode } from 'react';
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
+  customClass?: string;
+  buttonType?: 'submit' | 'reset' | 'button';
+  buttonVariant?: 'primary' | 'secondary';
 }
 
-const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
-    const { text, onClick } = props;
-    return (
-        <button
-            onClick={onClick}
-            className={`flex items-center justify-center px-4 py-2.5 bg-blue-700 rounded-lg text-white font-semibold w-full`}
-        >
-            {text}
-        </button>
-    );
+const Button: FC<ButtonProps> = (props: ButtonProps) => {
+  const { children, customClass = '', buttonVariant = 'primary', buttonType = 'button', ...attributes } = props;
+
+  const buttonColor = `${
+    buttonVariant === 'primary' ? 'bg-primary text-white' : 'bg-white text-[#858585] border border-[#DFDFDF]'
+  }`;
+
+  return (
+    <button
+      type={buttonType}
+      className={`flex items-center rounded-lg h-14 px-5 ${buttonColor} ${customClass}`}
+      {...attributes}
+    >
+      {children}
+    </button>
+  );
 };
 
 export default Button;
