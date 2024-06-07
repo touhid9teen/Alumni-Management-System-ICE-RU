@@ -1,11 +1,14 @@
-import Header from "./components/Layout.tsx/Header";
-const App = () => {
+import { BrowserRouter as Router } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+// ...
+
+function App() {
     return (
-        <div className="w-2/3">
-            <h1>This is Alumni Management Project</h1>
-            <Header />
-        </div>
+        <Router>
+            {/* Your other components, including Sidebar, go here */}
+            <Sidebar />
+        </Router>
     );
-};
+}
 
 export default App;
