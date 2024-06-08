@@ -15,7 +15,9 @@ const TableHeader: React.FC<TableHeaderProps> = (props: TableHeaderProps) => {
                         <th
                             id={id}
                             key={item}
-                            className={`font-semibold text-left pr-8 py-3 ${customTableHeaderClass}`}
+                            className={`font-semibold text-left pr-8 py-3 ${customTableHeaderClass} ${
+                                item === "Name" && "pl-8"
+                            }`}
                         >
                             {item}
                         </th>

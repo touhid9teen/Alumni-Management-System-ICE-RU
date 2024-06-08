@@ -1,16 +1,21 @@
-//import { BrowserRouter as Router } from "react-router-dom";
-//import Sidebar from "./components/Layout.tsx/Sidebar";
-import AlumniInfoTable from "../src/page/dashboard/AlumniInfoTable";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import AlumniInfoTable from "./page/dashboard/AlumniInfoTable";
+
 function App() {
     return (
-        // <Router>
-        //     {/* Your other components, including Sidebar, go here */}
-        //     <Sidebar />
-        // </Router>
-
-        <div>
-            <AlumniInfoTable />
-        </div>
+        <Router>
+            <Routes>
+                <Route
+                    path="/dashboard"
+                    element={
+                        <MainLayout>
+                            <AlumniInfoTable />
+                        </MainLayout>
+                    }
+                />
+            </Routes>
+        </Router>
     );
 }
 
