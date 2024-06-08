@@ -12,7 +12,7 @@ import {
     SettingIcon,
     LogoutIcon,
     FundraisingIcon,
-} from "../elements/Icons";
+} from "../../elements/Icons";
 
 interface Link {
     icon: JSX.Element;
@@ -123,7 +123,9 @@ const Sidebar: React.FC = () => {
                         src={RU}
                         alt="Logo of Rajshahi University"
                     />
-                    <p className={`${!open && "hidden"} text-md font-medium `}>Alumni ICE RU</p>
+                    <p className={`${!open && "hidden"} text-md font-medium `}>
+                        Alumni ICE RU
+                    </p>
                 </div>
             </div>
             <div className="space-y-5 duration-100">
