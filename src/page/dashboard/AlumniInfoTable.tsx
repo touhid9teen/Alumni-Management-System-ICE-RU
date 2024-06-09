@@ -2,7 +2,6 @@ import avatar from "../../assets/avatar.png";
 import AvatarWithDescription from "../../components/AvatarWithDescription";
 import Table from "../../components/Table/Table";
 import TableRow from "../../components/Table/TableRow";
-import Button from "../../elements/Button";
 
 export interface User {
     address: string;
