@@ -11,7 +11,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
   const { children, customClass = '', buttonVariant = 'primary', buttonType = 'button', ...attributes } = props;
 
   const buttonColor = `${
-    buttonVariant === 'primary' ? 'bg-primary text-white' : 'bg-white text-[#858585] border border-[#DFDFDF]'
+    buttonVariant === 'primary' ? 'bg-primary text-textDark' : 'bg-white text-[#858585] border border-[#DFDFDF]'
   }`;
 
   return (

@@ -8,7 +8,7 @@ export default {
                 10.5: "42px",
             },
             colors: {
-                primary: "#5630FF",
+                primary: "#aaebec",
                 secondary: "#ECECEC",
                 "deep-blue": "#00156A",
                 "light-blue": "#F3F6F9",

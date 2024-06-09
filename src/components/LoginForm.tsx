@@ -30,7 +30,7 @@ const LoginForm: FC = () => {
             <span
               className=" text-indigo-600 text-sm font-medium cursor-pointer"
               onClick={() => {
-                navigate('/signup');
+                navigate('/singup');
               }}
             >
               Sign Up!
@@ -84,7 +84,7 @@ const LoginForm: FC = () => {
             </p>
           </div>
           <Button
-            customClass="flex justify-center item-center w-100 h-14 font-semibold text-lg mt-10"
+            customClass="flex justify-center item-center !bg-primary !text-black w-100 h-14 font-semibold text-sm"
             buttonType="submit"
             buttonVariant="primary"
           >

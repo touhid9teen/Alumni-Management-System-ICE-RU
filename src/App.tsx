@@ -3,8 +3,9 @@ import MainLayout from "./layouts/MainLayout";
 // import AuthLayout from "./layouts/AuthLayout";
 import AlumniInfoTable from "./page/dashboard/AlumniInfoTable";
 import Login from "./page/auth/login";
+import Signup from "./page/auth/Signup";
 
-function App() {
+function App(): JSX.Element {
     return (
         <Router>
             <Routes>
@@ -16,7 +17,8 @@ function App() {
                         </MainLayout>
                     }
                 />
-                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Login />} />
+                <Route path="/singup" element={<Signup/>} />
             </Routes>
         </Router>
     );
