@@ -27,8 +27,8 @@ interface LProps extends Link {
 const PageNavLinks: Link[] = [
     {
         icon: <HomeIcon />,
-        text: "Home",
-        linkTo: "/home",
+        text: "",
+        linkTo: "/",
     },
     {
         icon: <DashboardIcon />,

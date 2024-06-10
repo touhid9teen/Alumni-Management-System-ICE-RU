@@ -5,6 +5,7 @@ import AlumniInfoTable from "./page/dashboard/AlumniInfoTable";
 import Login from "./page/auth/login";
 import Signup from "./page/auth/Signup";
 import AlumniProfile from "./components/AlumniProfile";
+import Home from "./page/home";
 function App(): JSX.Element {
     return (
         <Router>
@@ -17,9 +18,17 @@ function App(): JSX.Element {
                         </MainLayout>
                     }
                 />
-                <Route path="/" element={<Login />} />
-                <Route path="/singup" element={<Signup/>} />
-                <Route path="/dashboard/profile" element={<AlumniProfile/>}/>
+                <Route path="/login" element={<Login />} />
+                <Route path="/singup" element={<Signup />} />
+                <Route path="/dashboard/profile" element={<AlumniProfile />} />
+                <Route
+                    path="/"
+                    element={
+                        <MainLayout>
+                            <Home />
+                        </MainLayout>
+                    }
+                />
             </Routes>
         </Router>
     );

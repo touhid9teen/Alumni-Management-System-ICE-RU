@@ -1,24 +1,78 @@
 import { FC } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import Button from "../elements/Button";
 import InputField from "../elements/InputField";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 interface FormData {
     fullName: string;
-    StudentId: string;
+    studentId: string;
     email: string;
     password: string;
     confirmPassword: string;
     certificate: FileList;
 }
 
+const schema = yup.object().shape({
+    fullName: yup.string().required("Name is required"),
+    studentId: yup.string().min(10).max(10).required(),
+    email: yup.string().email().required("Email is required"),
+    password: yup.string().min(8).max(20).required(),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref("password")])
+        .required("Password did not matched"),
+    // certificate: yup
+    //     .mixed()
+    //     .required("A certificate is required")
+    //     .test("fileSize", "File too large", (value) => {
+    //         const fileList = value as FileList;
+    //         return fileList && fileList[0] && fileList[0].size <= 1024 * 1024; // 1MB
+    //     })
+    //     .test("fileType", "Unsupported File Format", (value) => {
+    //         const fileList = value as FileList;
+    //         return (
+    //             fileList &&
+    //             fileList[0] &&
+    //             ["image/jpeg", "image/png", "application/pdf"].includes(
+    //                 fileList[0].type
+    //             )
+    //         );
+    //     }),
+});
+
+type FieldKeys =
+    | "fullName"
+    | "studentId"
+    | "email"
+    | "password"
+    | "confirmPassword";
+
 const SignUpForm: FC = () => {
     const navigate = useNavigate();
-    const { register, handleSubmit } = useForm<FormData>();
-
-    const onSubmit = (data: FormData) => {
-        console.log(data);
+    const {
+        reset,
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<FormData>({
+        resolver: yupResolver(schema),
+        defaultValues: {
+            fullName: "",
+            studentId: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+        },
+    });
+    const onSubmit: SubmitHandler<FormData> = (data) => {
+        console.log("data", data);
+        // Store value in localstorage
+        localStorage.setItem("user", JSON.stringify(data));
+        reset();
+         navigate("/login");
     };
 
     return (
@@ -31,7 +85,7 @@ const SignUpForm: FC = () => {
                         <span
                             className="w-14 h-4 text-deep-blue text-sm font-medium cursor-pointer"
                             onClick={() => {
-                                navigate("/");
+                                navigate("/login");
                             }}
                         >
                             Sign in!
@@ -63,8 +117,8 @@ const SignUpForm: FC = () => {
                             placeholder: "Full Name",
                         },
                         {
-                            name: "StudentId",
-                            key: "StudentId",
+                            name: "studentId",
+                            key: "studentId",
                             placeholder: "Student Id",
                         },
                         { name: "Email", key: "email", placeholder: "Email" },
@@ -74,28 +128,40 @@ const SignUpForm: FC = () => {
                             placeholder: "New password",
                         },
                         {
-                            name: "ConfirmPassword",
+                            name: "confirmPassword",
                             key: "confirmPassword",
                             placeholder: "Confirm Password",
                         },
                     ].map((field) => (
                         <div key={field.key}>
-                            <InputField
-                                {...register(field.key)}
-                                type={
-                                    field.key
-                                        .toLocaleLowerCase()
-                                        .includes("password")
-                                        ? "password"
-                                        : field.key == "email"
-                                        ? "email"
-                                        : "text"
-                                }
-                                customInputClass="w-100 h-16 px-6 py-7 h-18 border-zinc-300 bg-white flex-shrink-0 rounded-lg placeholder:text-sm placeholder:text-zinc-600 placeholder:font-normal"
-                                id={field.key}
-                                name={field.name}
-                                placeholder={field.placeholder}
+                            <Controller
+                                name={field.key as FieldKeys}
+                                control={control}
+                                render={({ field: { onChange, value } }) => (
+                                    <InputField
+                                        type={
+                                            field.key
+                                                .toLocaleLowerCase()
+                                                .includes("password")
+                                                ? "password"
+                                                : field.key == "email"
+                                                ? "email"
+                                                : "text"
+                                        }
+                                        customInputClass="w-100 h-16 px-6 py-7 h-18 border-zinc-300 bg-white flex-shrink-0 rounded-lg placeholder:text-sm placeholder:text-zinc-600 placeholder:font-normal"
+                                        value={value}
+                                        onChange={onChange}
+                                        id={value}
+                                        name={field.name}
+                                        placeholder={field.placeholder}
+                                    />
+                                )}
                             />
+                            {errors[field.key] && (
+                                <p className="text-red-500 text-sm">
+                                    {errors[field.key]?.message}
+                                </p>
+                            )}
                         </div>
                     ))}
 
