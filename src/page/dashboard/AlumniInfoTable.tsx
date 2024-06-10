@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import avatar from "../../assets/avatar.png";
 import AvatarWithDescription from "../../components/AvatarWithDescription";
 import Table from "../../components/Table/Table";
@@ -15,9 +16,10 @@ export interface User {
 }
 
 const ContactTable: React.FC = () => {
+    const navigate = useNavigate();
     const users = [
         {
-            id: "1",
+            studentId: "1",
             name: "John Doe",
             jobTypes: "Privet",
             position: "Software Engineer",
@@ -25,7 +27,7 @@ const ContactTable: React.FC = () => {
             location: "New York",
         },
         {
-            id: "2",
+            studentId: "2",
             name: "Jane Doe",
             jobTypes: "Public",
             position: "Software Engineer",
@@ -33,7 +35,7 @@ const ContactTable: React.FC = () => {
             location: "San Francisco",
         },
         {
-            id: "3",
+            studentId: "3",
             name: "John Smith",
             jobTypes: "Public",
             position: "Software Engineer",
@@ -41,7 +43,7 @@ const ContactTable: React.FC = () => {
             location: "Los Angeles",
         },
         {
-            id: "4",
+            studentId: "4",
             name: "Jane Smith",
             jobTypes: "Privet",
             position: "Software Engineer",
@@ -49,7 +51,7 @@ const ContactTable: React.FC = () => {
             location: "Chicago",
         },
         {
-            id: "5",
+            studentId: "5",
             name: "John Doe",
             jobTypes: "Privet",
             position: "Software Engineer",
@@ -57,7 +59,7 @@ const ContactTable: React.FC = () => {
             location: "New York",
         },
         {
-            id: "6",
+            studentId: "6",
             name: "Jane Doe",
             jobTypes: "Public",
             position: "Software Engineer",
@@ -65,7 +67,7 @@ const ContactTable: React.FC = () => {
             location: "San Francisco",
         },
         {
-            id: "7",
+            studentId: "7",
             name: "John Smith",
             jobTypes: "Public",
             position: "Software Engineer",
@@ -73,7 +75,7 @@ const ContactTable: React.FC = () => {
             location: "Los Angeles",
         },
         {
-            id: "8",
+            studentId: "8",
             name: "Jane Smith",
             jobTypes: "Privet",
             position: "Software Engineer",
@@ -81,7 +83,7 @@ const ContactTable: React.FC = () => {
             location: "Chicago",
         },
         {
-            id: "9",
+            studentId: "9",
             name: "John Doe",
             jobTypes: "Privet",
             position: "Software Engineer",
@@ -89,7 +91,7 @@ const ContactTable: React.FC = () => {
             location: "New York",
         },
         {
-            id: "10",
+            studentId: "10",
             name: "Jane Doe",
             jobTypes: "Public",
             position: "Software Engineer",
@@ -97,7 +99,7 @@ const ContactTable: React.FC = () => {
             location: "San Francisco",
         },
         {
-            id: "11",
+            studentId: "11",
             name: "John Smith",
             jobTypes: "Public",
             position: "Software Engineer",
@@ -105,7 +107,7 @@ const ContactTable: React.FC = () => {
             location: "Los Angeles",
         },
         {
-            id: "12",
+            studentId: "12",
             name: "Jane Smith",
             jobTypes: "Privet",
             position: "Software Engineer",
@@ -130,11 +132,16 @@ const ContactTable: React.FC = () => {
                 >
                     {users.map((user) => (
                         <TableRow
-                            id={user.id}
+                            stduentId={user.studentId}
                             name={
                                 <AvatarWithDescription
                                     avatar={avatar}
                                     title={user.name}
+                                    onClick={() => {
+                                        navigate(
+                                            "/dashboard/profile"
+                                        );
+                                    }}
                                 />
                             }
                             jobTypes={user.jobTypes}

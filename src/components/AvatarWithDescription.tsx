@@ -5,6 +5,7 @@ import Avatar from "../components/Avatar";
 interface AvatarDescriptionProps {
     avatar: string;
     title: string;
+    onClick: () => void;
     customParentClass?: string;
     customTitleClass?: string;
 }
@@ -15,12 +16,13 @@ const AvatarWithDescription: FC<AvatarDescriptionProps> = (
     const {
         avatar,
         title,
+        onClick,
         customParentClass = "",
         customTitleClass = "",
     } = props;
 
     return (
-        <div className={`flex items-center ${customParentClass}`}>
+        <div className={`flex items-center cursor-pointer ${customParentClass}`} onClick={onClick}>
             <Avatar
                 image={avatar}
                 fullName={title}

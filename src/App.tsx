@@ -4,7 +4,7 @@ import MainLayout from "./layouts/MainLayout";
 import AlumniInfoTable from "./page/dashboard/AlumniInfoTable";
 import Login from "./page/auth/login";
 import Signup from "./page/auth/Signup";
-
+import AlumniProfile from "./components/AlumniProfile";
 function App(): JSX.Element {
     return (
         <Router>
@@ -19,6 +19,7 @@ function App(): JSX.Element {
                 />
                 <Route path="/" element={<Login />} />
                 <Route path="/singup" element={<Signup/>} />
+                <Route path="/dashboard/profile" element={<AlumniProfile/>}/>
             </Routes>
         </Router>
     );

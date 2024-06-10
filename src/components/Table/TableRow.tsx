@@ -1,5 +1,5 @@
 interface TableRowProps {
-    id: string;
+    stduentId: string;
     name: React.ReactNode;
     jobTypes: string;
     position: string;
@@ -11,7 +11,7 @@ interface TableRowProps {
 
 const TableRow: React.FC<TableRowProps> = (props: TableRowProps) => {
     const {
-        id,
+        stduentId,
         name,
         jobTypes,
         position,
@@ -22,7 +22,7 @@ const TableRow: React.FC<TableRowProps> = (props: TableRowProps) => {
     } = props;
 
     return (
-        <tr className={`text-sm ${customTableRowClass}`} id={id}>
+        <tr className={`text-sm ${customTableRowClass}`} id={stduentId}>
             <td className={`font-semibold pr-16 ${customTableDataClass}`}>
                 {name}
             </td>
