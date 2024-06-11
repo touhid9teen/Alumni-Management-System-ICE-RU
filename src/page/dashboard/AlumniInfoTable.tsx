@@ -140,7 +140,7 @@ const ContactTable: React.FC = () => {
                                     title={user.name}
                                     onClick={() => {
                                         navigate(
-                                            `/dashboard/profile/${user.studentId}`
+                                            `/alumnus/profile/${user.studentId}`
                                         );
                                     }}
                                 />

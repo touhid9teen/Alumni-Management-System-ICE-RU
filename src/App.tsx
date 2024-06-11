@@ -11,7 +11,7 @@ function App(): JSX.Element {
         <Router>
             <Routes>
                 <Route
-                    path="/dashboard"
+                    path="/alumnus"
                     element={
                         <MainLayout>
                             <AlumniInfoTable />
@@ -20,9 +20,17 @@ function App(): JSX.Element {
                 />
                 <Route path="/login" element={<Login />} />
                 <Route path="/singup" element={<Signup />} />
-                <Route path="/dashboard/profile/:studentId" element={<AlumniProfile />} />
+                <Route path="/alumnus/profile/:studentId" element={<AlumniProfile />} />
                 <Route
                     path="/"
+                    element={
+                        <MainLayout>
+                            <Home />
+                        </MainLayout>
+                    }
+                />
+                <Route
+                    path="/home"
                     element={
                         <MainLayout>
                             <Home />

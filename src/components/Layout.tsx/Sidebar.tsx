@@ -4,14 +4,17 @@ import { NavLink } from "react-router-dom";
 import RU from "../assets/Logo_of_rajshahi_university.jpg";
 import {
     NavIcon,
-    DashboardIcon,
+    AlumnusIcon,
     EventsIcon,
     HomeIcon,
-    // Jobs,
+    JobsIcon,
     MentorshipIcon,
     SettingIcon,
     LogoutIcon,
     FundraisingIcon,
+    // LoginIcon,
+    BlogIcon,
+    AlumniAssociationIcon,
 } from "../../elements/Icons";
 
 interface Link {
@@ -27,45 +30,55 @@ interface LProps extends Link {
 const PageNavLinks: Link[] = [
     {
         icon: <HomeIcon />,
-        text: "",
+        text: "Home Icon",
         linkTo: "/",
     },
     {
-        icon: <DashboardIcon />,
-        text: "DashBoard",
-        linkTo: "/dashboard",
+        icon: <AlumnusIcon />,
+        text: "Alumnus Icon",
+        linkTo: "/alumnus",
+    },
+    {
+        icon: <BlogIcon />,
+        text: "Blog Icon",
+        linkTo: "/blog",
     },
     {
         icon: <EventsIcon />,
-        text: "Events",
+        text: "Events Icon",
         linkTo: "/events",
     },
     {
         icon: <FundraisingIcon />,
-        text: "Fundraising",
+        text: "Fundraising Icon",
         linkTo: "/fundraising",
     },
     {
         icon: <MentorshipIcon />,
-        text: "Mentors",
+        text: "Mentors Icon",
         linkTo: "/mentors",
     },
-    // {
-    //     icon: <Jobs />,
-    //     text: "Jobs",
-    //     linkTo: "jobs",
-    // },
+    {
+        icon: <JobsIcon />,
+        text: "Jobs Icon",
+        linkTo: "jobs",
+    },
+    {
+        icon: <AlumniAssociationIcon />,
+        text: "Alumni Association Icon",
+        linkTo: "alumniassociation",
+    },
 ];
 
 const ActionNavLinks: Link[] = [
     {
         icon: <SettingIcon />,
-        text: "Setting",
+        text: "Setting Icon",
         linkTo: "/setting",
     },
     {
         icon: <LogoutIcon />,
-        text: "Logout",
+        text: "Logout Icon",
         linkTo: "/logout",
     },
 ];
@@ -110,7 +123,7 @@ const Sidebar: React.FC = () => {
         <div
             className={`${
                 open ? "w-full" : "w-[76px]"
-            } flex flex-col max-w-[276px] h-screen border-r-[1px] border-[#E9E9E9] p-[21px]`}
+            } flex flex-col justify-between max-w-[276px] h-screen border-r-[1px] border-[#E9E9E9] p-[21px]`}
         >
             <div className="flex gap-[21px] mb-10">
                 <NavIcon
