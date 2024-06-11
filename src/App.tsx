@@ -20,7 +20,7 @@ function App(): JSX.Element {
                 />
                 <Route path="/login" element={<Login />} />
                 <Route path="/singup" element={<Signup />} />
-                <Route path="/dashboard/profile" element={<AlumniProfile />} />
+                <Route path="/dashboard/profile/:studentId" element={<AlumniProfile />} />
                 <Route
                     path="/"
                     element={

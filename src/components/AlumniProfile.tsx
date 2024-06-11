@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Avarter from "../assets/avatar.png";
 import {
     FaGithub,
@@ -13,35 +15,44 @@ import {
     FaRegClock,
 } from "react-icons/fa";
 
-interface AlumniProfileProps {
+interface Alumni {
     studentId: string;
-    // customAlumniProfileProps?: string;
+    name: string;
+    jobTypes: string;
+    position: string;
+    Institute: string;
+    location: string;
+    socialLinks: {
+        github: string;
+        linkedin: string;
+        facebook: string;
+        twitter: string;
+    };
+    session: string;
+    email: string;
+    phone: string;
+    liveIn: string;
+    from: string;
 }
 
-const AlumniProfile: React.FC<AlumniProfileProps> = (
-    props: AlumniProfileProps
-) => {
-    const { studentId } = props;
+const AlumniProfile: React.FC = () => {
+    const { studentId } = useParams<{ studentId: string }>();
+    const [alumniData, setAlumniData] = useState<Alumni | null>(null);
 
-    const alumniData = {
-        name: "Md. Touhidul Islam",
-        role: "Software Engineer",
-        company: "ABCD LTD",
-        location: "Dhaka, Bangladesh",
-        socialLinks: {
-            github: "touhid",
-            linkedin: "touhid",
-            facebook: "touhid",
-            twitter: "touhid",
-        },
-        session: "2000-2001",
-        email: "abc@gmail.com",
-        phone: "01788888222",
-        liveIn: "Dhaka, Bangladesh",
-        from: "Rajshahi, Bangladesh",
-        previousJob: "EFGH LTD",
-        profilePic: "https://www.flaticon.com/free-icon/profile_3135715",
-    };
+    useEffect(() => {
+        const storedData = localStorage.getItem("alumniDataSet");
+        if (storedData) {
+            const storedDataSet: Alumni[] = JSON.parse(storedData);
+            const alumni = storedDataSet.find(
+                (alumni) => alumni.studentId === studentId
+            );
+            setAlumniData(alumni || null);
+        }
+    }, [studentId]);
+
+    if (!alumniData) {
+        return <div>Alumni data not found</div>;
+    }
 
     return (
         <div
@@ -68,7 +79,7 @@ const AlumniProfile: React.FC<AlumniProfileProps> = (
                             </button>
                         </div>
 
-                        <p>{alumniData.role}</p>
+                        <p>{alumniData.position}</p>
                         <p>{alumniData.location}</p>
                     </div>
                 </div>
@@ -109,16 +120,6 @@ const AlumniProfile: React.FC<AlumniProfileProps> = (
                                 <FaMapMarkerAlt />
                                 <p className="font-bold">From : </p>{" "}
                                 <p>{alumniData.from}</p>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col items-center p-2 pl-16 bg-white rounded h-full w-full">
-                            <div className="flex flex-row gap-4 ">
-                                <FaBriefcase />
-                                <p className="font-bold">
-                                    Previous Job Information :{" "}
-                                </p>{" "}
-                                <p>{alumniData.previousJob}</p>
                             </div>
                         </div>
                     </div>

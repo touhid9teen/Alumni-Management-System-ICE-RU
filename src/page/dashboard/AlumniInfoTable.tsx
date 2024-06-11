@@ -17,104 +17,105 @@ export interface User {
 
 const ContactTable: React.FC = () => {
     const navigate = useNavigate();
-    const users = [
+    const alumniDataSet = [
         {
             studentId: "1",
-            name: "John Doe",
-            jobTypes: "Privet",
+            name: "Md. Touhidul Islam",
+            jobTypes: "Private",
             position: "Software Engineer",
             Institute: "ABC Institute",
-            location: "New York",
+            location: "Dhaka, Bangladesh",
+            socialLinks: {
+                github: "touhid",
+                linkedin: "touhid",
+                facebook: "touhid",
+                twitter: "touhid",
+            },
+            session: "2000-2001",
+            email: "abc@gmail.com",
+            phone: "01788888222",
+            liveIn: "Dhaka, Bangladesh",
+            from: "Rajshahi, Bangladesh",
         },
         {
             studentId: "2",
             name: "Jane Doe",
-            jobTypes: "Public",
-            position: "Software Engineer",
-            Institute: "DEF Institute",
-            location: "San Francisco",
+            jobTypes: "Government",
+            position: "Data Analyst",
+            Institute: "XYZ University",
+            location: "New York, USA",
+            socialLinks: {
+                github: "janeDoe",
+                linkedin: "janeDoe",
+                facebook: "janeDoe",
+                twitter: "janeDoe",
+            },
+            session: "2001-2002",
+            email: "jane.doe@example.com",
+            phone: "+1-555-555-5555",
+            liveIn: "New York, USA",
+            from: "Los Angeles, USA",
         },
         {
             studentId: "3",
             name: "John Smith",
-            jobTypes: "Public",
-            position: "Software Engineer",
-            Institute: "GHI Institute",
-            location: "Los Angeles",
+            jobTypes: "Freelance",
+            position: "Web Developer",
+            Institute: "DEF College",
+            location: "London, UK",
+            socialLinks: {
+                github: "johnsmith",
+                linkedin: "johnsmith",
+                facebook: "johnsmith",
+                twitter: "johnsmith",
+            },
+            session: "1999-2000",
+            email: "john.smith@example.com",
+            phone: "+44-20-1234-5678",
+            liveIn: "London, UK",
+            from: "Manchester, UK",
         },
         {
             studentId: "4",
-            name: "Jane Smith",
-            jobTypes: "Privet",
-            position: "Software Engineer",
-            Institute: "JKL Institute",
-            location: "Chicago",
+            name: "Alice Johnson",
+            jobTypes: "Private",
+            position: "Project Manager",
+            Institute: "GHI University",
+            location: "Toronto, Canada",
+            socialLinks: {
+                github: "alicejohnson",
+                linkedin: "alicejohnson",
+                facebook: "alicejohnson",
+                twitter: "alicejohnson",
+            },
+            session: "2002-2003",
+            email: "alice.johnson@example.com",
+            phone: "+1-416-555-7890",
+            liveIn: "Toronto, Canada",
+            from: "Vancouver, Canada",
         },
         {
             studentId: "5",
-            name: "John Doe",
-            jobTypes: "Privet",
-            position: "Software Engineer",
-            Institute: "ABC Institute",
-            location: "New York",
-        },
-        {
-            studentId: "6",
-            name: "Jane Doe",
-            jobTypes: "Public",
-            position: "Software Engineer",
-            Institute: "DEF Institute",
-            location: "San Francisco",
-        },
-        {
-            studentId: "7",
-            name: "John Smith",
-            jobTypes: "Public",
-            position: "Software Engineer",
-            Institute: "GHI Institute",
-            location: "Los Angeles",
-        },
-        {
-            studentId: "8",
-            name: "Jane Smith",
-            jobTypes: "Privet",
-            position: "Software Engineer",
+            name: "Bob Lee",
+            jobTypes: "Startup",
+            position: "CTO",
             Institute: "JKL Institute",
-            location: "Chicago",
-        },
-        {
-            studentId: "9",
-            name: "John Doe",
-            jobTypes: "Privet",
-            position: "Software Engineer",
-            Institute: "ABC Institute",
-            location: "New York",
-        },
-        {
-            studentId: "10",
-            name: "Jane Doe",
-            jobTypes: "Public",
-            position: "Software Engineer",
-            Institute: "DEF Institute",
-            location: "San Francisco",
-        },
-        {
-            studentId: "11",
-            name: "John Smith",
-            jobTypes: "Public",
-            position: "Software Engineer",
-            Institute: "GHI Institute",
-            location: "Los Angeles",
-        },
-        {
-            studentId: "12",
-            name: "Jane Smith",
-            jobTypes: "Privet",
-            position: "Software Engineer",
-            Institute: "JKL Institute",
-            location: "Chicago",
+            location: "San Francisco, USA",
+            socialLinks: {
+                github: "boblee",
+                linkedin: "boblee",
+                facebook: "boblee",
+                twitter: "boblee",
+            },
+            session: "2003-2004",
+            email: "bob.lee@example.com",
+            phone: "+1-650-555-1234",
+            liveIn: "San Francisco, USA",
+            from: "Seattle, USA",
         },
     ];
+
+    localStorage.setItem("alumniDataSet", JSON.stringify(alumniDataSet));
 
     return (
         <>
@@ -130,7 +131,7 @@ const ContactTable: React.FC = () => {
                     ]}
                     customTableClass="w-full"
                 >
-                    {users.map((user) => (
+                    {alumniDataSet.map((user) => (
                         <TableRow
                             stduentId={user.studentId}
                             name={
@@ -139,7 +140,7 @@ const ContactTable: React.FC = () => {
                                     title={user.name}
                                     onClick={() => {
                                         navigate(
-                                            "/dashboard/profile"
+                                            `/dashboard/profile/${user.studentId}`
                                         );
                                     }}
                                 />
