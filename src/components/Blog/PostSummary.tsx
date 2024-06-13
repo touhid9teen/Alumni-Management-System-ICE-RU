@@ -4,14 +4,13 @@ interface PostSummaryProps {
     content: string;
     photo?: string[];
     video?: string[];
-    onClick: () => void;
 }
 
 const PostSummary: React.FC<PostSummaryProps> = ({
     content,
     photo = [],
     video = [],
-    onClick,
+    
 }) => {
     const [showFullContent, setShowFullContent] = useState(false);
     const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
@@ -61,7 +60,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({
                         onClick={handleToggleContent}
                         className="text-blue-500 mt-2"
                     >
-                        {showFullContent ? "Show Less" : "Full Post"}
+                        {showFullContent ? "" : "Full Post"}
                     </button>
                 )}
             </div>
