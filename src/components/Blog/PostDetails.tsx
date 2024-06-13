@@ -8,6 +8,7 @@ import photo1 from "../../assets/AI1.jpg";
 import photo2 from "../../assets/AI2.jpg";
 import photo3 from "../../assets/AI3.jpg";
 import photo4 from "../../assets/AI8.jpg";
+import Comment from "./Comment"
 
 const PostDetails: React.FC = () => {
     const now = moment();
@@ -37,6 +38,16 @@ const PostDetails: React.FC = () => {
                 onClickComment={() => {}}
                 onClickShare={() => {}}
             />
+             <Comment
+                                avatar={avatar}
+                                time={validTimestamp}
+                                title={"John Doe"}
+                                onClick={()=>{}}
+                                comment={"This is an example comment."}
+                                totalLike={"10"}
+                                handleLike={()=>{}}
+                                handleShare={()=>{}}
+                            />
         </div>
     );
 };

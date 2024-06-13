@@ -8,7 +8,9 @@ import AlumniProfile from "./components/AlumniProfile";
 import Home from "./page/Home";
 import PostDetails from "./components/Blog/PostDetails";
 
+
 function App(): JSX.Element {
+    
     return (
         <Router>
             <Routes>
@@ -30,7 +32,7 @@ function App(): JSX.Element {
                     path="/"
                     element={
                         <MainLayout>
-                            <PostDetails/>
+                            <PostDetails />
                         </MainLayout>
                     }
                 />
@@ -38,7 +40,8 @@ function App(): JSX.Element {
                     path="/home"
                     element={
                         <MainLayout>
-                            <PostDetails/>
+                            <PostDetails />
+                           
                         </MainLayout>
                     }
                 />
