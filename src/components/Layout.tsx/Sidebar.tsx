@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import RU from "../assets/Logo_of_rajshahi_university.jpg";
 import {
     NavIcon,
-    AlumnusIcon,
+    DashboardIcon,
     EventsIcon,
     HomeIcon,
     JobsIcon,
@@ -30,67 +30,67 @@ interface LProps extends Link {
 const PageNavLinks: Link[] = [
     {
         icon: <HomeIcon />,
-        text: "Home Icon",
+        text: "Home",
         linkTo: "/",
     },
     {
-        icon: <AlumnusIcon />,
-        text: "Alumnus Icon",
-        linkTo: "/alumnus",
+        icon: <DashboardIcon />,
+        text: "Dashboard",
+        linkTo: "/dashboard",
     },
     {
         icon: <BlogIcon />,
-        text: "Blog Icon",
+        text: "Blog",
         linkTo: "/blog",
     },
     {
         icon: <EventsIcon />,
-        text: "Events Icon",
+        text: "Events",
         linkTo: "/events",
     },
     {
         icon: <FundraisingIcon />,
-        text: "Fundraising Icon",
+        text: "Fundraising",
         linkTo: "/fundraising",
     },
     {
         icon: <MentorshipIcon />,
-        text: "Mentors Icon",
+        text: "Mentors",
         linkTo: "/mentors",
     },
     {
         icon: <JobsIcon />,
-        text: "Jobs Icon",
-        linkTo: "jobs",
+        text: "Jobs",
+        linkTo: "/jobs",
     },
     {
         icon: <AlumniAssociationIcon />,
-        text: "Alumni Association Icon",
-        linkTo: "alumniassociation",
+        text: "Alumni Association",
+        linkTo: "/alumniassociation",
     },
 ];
 
 const ActionNavLinks: Link[] = [
     {
         icon: <SettingIcon />,
-        text: "Setting Icon",
+        text: "Setting",
         linkTo: "/setting",
     },
     {
         icon: <LogoutIcon />,
-        text: "Logout Icon",
+        text: "Logout",
         linkTo: "/logout",
     },
 ];
 
 const SideBarLink: React.FC<LProps> = (props: LProps) => {
-    const { icon, text, linkTo, open } = props;
+    const { icon, linkTo, open } = props;
     return (
         <NavLink
             to={linkTo}
             className={({ isActive }) =>
                 isActive
-                    ? "block duration-300 text-primary"
+                    ? "block duration-300 text-deep-blue"
                     : "block duration-300"
             }
         >
@@ -100,7 +100,7 @@ const SideBarLink: React.FC<LProps> = (props: LProps) => {
                 }`}
             >
                 {icon}
-                <div className={`${!open && "hidden"} flex gap-3 items-center`}>
+                {/* <div className={`${!open && "hidden"} flex gap-3 items-center`}>
                     <span className="text-sm font-medium">{text}</span>
                     {text !== "Contacts" ? (
                         ""
@@ -109,15 +109,15 @@ const SideBarLink: React.FC<LProps> = (props: LProps) => {
                             56
                         </div>
                     )}
-                </div>
+                </div> */}
             </div>
         </NavLink>
     );
 };
 
-const Sidebar: React.FC = () => {
+const SideBar: React.FC = () => {
     const [open, setOpen] = useState(true);
-    //  const navigate = useNavigate();
+
 
     return (
         <div
@@ -136,7 +136,7 @@ const Sidebar: React.FC = () => {
                         src={RU}
                         alt="Logo of Rajshahi University"
                     />
-                    <p className={`${!open && "hidden"} text-md font-medium `}>
+                    <p className={`${!open && "hidden"} text-md font-medium`}>
                         Alumni ICE RU
                     </p>
                 </div>
@@ -174,4 +174,4 @@ const Sidebar: React.FC = () => {
     );
 };
 
-export default Sidebar;
+export default SideBar;

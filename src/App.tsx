@@ -5,13 +5,20 @@ import AlumniInfoTable from "./page/dashboard/AlumniInfoTable";
 import Login from "./page/auth/login";
 import Signup from "./page/auth/Signup";
 import AlumniProfile from "./components/AlumniProfile";
-import Home from "./page/home";
+import Home from "./page/Home";
+import AvatarWithDescription from "./components/AvatarWithDescription";
+import avatar from "./assets/avatar.png";
+import moment from 'moment';
 function App(): JSX.Element {
-    return (
+    const now = moment();
+    const timestamp = now.valueOf();
+    const timestampString = timestamp.toString(); 
+    const validTimestamp = Date.parse(timestampString) ? timestampString : new Date().toISOString();
+    return (    
         <Router>
             <Routes>
                 <Route
-                    path="/alumnus"
+                    path="/dashboard"
                     element={
                         <MainLayout>
                             <AlumniInfoTable />
@@ -20,12 +27,20 @@ function App(): JSX.Element {
                 />
                 <Route path="/login" element={<Login />} />
                 <Route path="/singup" element={<Signup />} />
-                <Route path="/alumnus/profile/:studentId" element={<AlumniProfile />} />
+                <Route
+                    path="/dashboard/profile/:studentId"
+                    element={<AlumniProfile />}
+                />
                 <Route
                     path="/"
                     element={
                         <MainLayout>
-                            <Home />
+                            <AvatarWithDescription
+                                avatar={avatar}
+                                title={"Mr. X"}
+                                time={validTimestamp}
+                                onClick={() => {}}
+                            />
                         </MainLayout>
                     }
                 />
@@ -33,7 +48,12 @@ function App(): JSX.Element {
                     path="/home"
                     element={
                         <MainLayout>
-                            <Home />
+                            <AvatarWithDescription
+                                avatar={avatar}
+                                time={validTimestamp}
+                                title={"Mr. X"}
+                                onClick={() => {}}
+                            />
                         </MainLayout>
                     }
                 />
