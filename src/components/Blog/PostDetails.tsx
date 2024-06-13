@@ -8,20 +8,56 @@ import photo1 from "../../assets/AI1.jpg";
 import photo2 from "../../assets/AI2.jpg";
 import photo3 from "../../assets/AI3.jpg";
 import photo4 from "../../assets/AI8.jpg";
-import Comment from "./Comment"
+import AllComments from "./AllComment";
 
 const PostDetails: React.FC = () => {
-    const now = moment();
-    const timestamp = now.valueOf();
-    const timestampString = timestamp.toString();
-    const validTimestamp = Date.parse(timestampString)
-        ? timestampString
-        : new Date().toISOString();
+    const now = moment().toDate();
+   
+    const dummyComments = [
+        {
+            avatar: "https://via.placeholder.com/150",
+            time: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+            title: "John Doe",
+            comment: "This is an example comment.",
+            totalLike: "10",
+        },
+        {
+            avatar: "https://via.placeholder.com/150",
+            time: new Date(Date.now() - 3 * 60 * 60 * 1000), // 3 hours ago
+            title: "Jane Smith",
+            comment: "This is another example comment.",
+            totalLike: "5",
+        },
+        {
+            avatar: "https://via.placeholder.com/150",
+            time: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
+            title: "Alice Johnson",
+            comment: "This is yet another example comment.",
+            totalLike: "20",
+        },
+        {
+            avatar: "https://via.placeholder.com/150",
+            time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+            title: "Bob Brown",
+            comment: "This is a comment example.",
+            totalLike: "8",
+        },
+        {
+            avatar: "https://via.placeholder.com/150",
+            time: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
+            title: "Carol White",
+            comment: "This is an additional comment example.",
+            totalLike: "15",
+        },
+    ];
+    const handleCreateComment = () => {
+        console.log("Create Comment clicked!");
+    };
     return (
         <div className="h-1/2 w-1/2 flex flex-col ">
             <AvatarWithDescription
                 avatar={avatar}
-                time={validTimestamp}
+                time={new Date()}
                 title={"Mr. X"}
                 onClick={() => {}}
             />
@@ -38,16 +74,11 @@ const PostDetails: React.FC = () => {
                 onClickComment={() => {}}
                 onClickShare={() => {}}
             />
-             <Comment
-                                avatar={avatar}
-                                time={validTimestamp}
-                                title={"John Doe"}
-                                onClick={()=>{}}
-                                comment={"This is an example comment."}
-                                totalLike={"10"}
-                                handleLike={()=>{}}
-                                handleShare={()=>{}}
-                            />
+            <AllComments
+                comments={dummyComments}
+                totalComment={dummyComments.length}
+                createComment={handleCreateComment}
+            />
         </div>
     );
 };
