@@ -38,24 +38,24 @@ const AvatarWithDescription: FC<AvatarDescriptionProps> = (
                 }
             />
             <div>
-                
                 {time ? (
                     <div className="my-1 ml-4">
-                    <div className="font-bold">{title}</div>
-                    <div className="text-sm text-gray-500 font-thin">
-                        {formatDistanceToNow(new Date(time), {//post.createdAt
-                            addSuffix: true,
-                        })}
+                        <div className="font-bold">{title}</div>
+                        <div className="text-sm text-gray-500 font-thin">
+                            {formatDistanceToNow(new Date(time), {
+                                //post.createdAt
+                                addSuffix: true,
+                            })}
+                        </div>
                     </div>
-                </div>
                 ) : (
                     <div className="my-1 ml-4 text-sm">
-                    <p
-                        className={`font-semibold text-black ${customTitleClass}`}
-                    >
-                        {title}
-                    </p>
-                </div>
+                        <p
+                            className={`font-semibold text-black ${customTitleClass}`}
+                        >
+                            {title}
+                        </p>
+                    </div>
                 )}
             </div>
         </div>
