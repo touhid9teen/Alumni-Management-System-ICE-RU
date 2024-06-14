@@ -8,7 +8,6 @@ import AlumniProfile from "./components/AlumniProfile";
 import Home from "./page/Home";
 import PostDetails from "./components/Blog/PostDetails";
 
-
 function App(): JSX.Element {
     
     return (
@@ -41,7 +40,7 @@ function App(): JSX.Element {
                     element={
                         <MainLayout>
                             <PostDetails />
-                           
+                            
                         </MainLayout>
                     }
                 />
