@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Post } from "../interfaces";
-import { FaPhotoVideo } from "react-icons/fa";
 import AvatarWithDescription from "./AvatarWithDescription";
 import Avatar from "../assets/avatar.png";
 import Button from "../elements/Button";
+import TextArea from "../elements/TextArea";
+import MediaUploader from "../elements/MediaUploader"; 
+
 interface CreatePostFormProps {
     onCreatePost: (post: Post) => void;
 }
@@ -11,6 +13,7 @@ interface CreatePostFormProps {
 const CreatePostForm: React.FC<CreatePostFormProps> = ({ onCreatePost }) => {
     const [content, setContent] = useState("");
     const [media, setMedia] = useState<string[]>([]);
+    const [postValue, setPostValue] = useState("");
 
     const handleMediaUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
@@ -41,52 +44,34 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onCreatePost }) => {
     };
 
     return (
-        <div className="bg-white shadow-md rounded-lg p-6 mb-6  ">
+        <div className="bg-white shadow-md rounded-lg p-6 mb-6">
             <AvatarWithDescription
                 avatar={Avatar}
                 time={new Date()}
                 title={"Mr. X"}
                 onClick={() => {}}
             />
-            <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className="border border-gray-300 w-full p-4 rounded-lg focus:outline-none focus:ring  text-lg"
-                placeholder="What's on your mind?"
-                style={{ minHeight: "100px", resize: "none" }}
-            ></textarea>
-            <div className="flex mt-4 h-15">
-                {media.length > 0 && (
-                    <div className="flex flex-wrap mb-4">
-                        {media.map((src, index) => (
-                            <img
-                                key={index}
-                                src={src}
-                                alt={`upload-${index}`}
-                                className="w-32 h-32 object-cover mr-2 mb-2 rounded-lg"
-                            />
-                        ))}
-                    </div>
-                )}
-                <label className="flex items-center justify-center border border-gray-300 rounded-lg p-4 cursor-pointer text-blue-500 text-lg">
-                    <FaPhotoVideo className="mr-2" />
-                    <span>Add Photo/Video</span>
-                    <input
-                        type="file"
-                        multiple
-                        onChange={handleMediaUpload}
-                        style={{ display: "none" }}
-                    />
-                </label>
-            </div>
+            <TextArea
+                value={postValue}
+                onChange={setPostValue}
+                placeholder="Write your post here..."
+                minHeight="200px"
+            />
+            <MediaUploader
+                media={media}
+                handleMediaUpload={handleMediaUpload}
+            />{" "}
+            {/* Use MediaUploader component */}
             <Button
-                customClass="flex justify-center item-center !bg-primary !text-black mt-4 w-full h-12 font-semibold text-sm"
+                customClass="flex justify-center items-center !bg-primary !text-black mt-4 w-full h-12 font-semibold text-sm"
                 buttonType="submit"
                 buttonVariant="primary"
+                onClick={handleSubmit}
             >
                 Post
             </Button>
         </div>
     );
 };
+
 export default CreatePostForm;

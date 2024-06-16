@@ -9,6 +9,7 @@ interface InputFieldProps {
     placeholder?: string;
     customInputClass?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    accept?: string;
 }
 
 const InputField: React.FC<InputFieldProps> = (props: InputFieldProps) => {
@@ -20,6 +21,7 @@ const InputField: React.FC<InputFieldProps> = (props: InputFieldProps) => {
         name,
         value,
         onChange,
+        accept,
     } = props;
 
     const [isPasswordVisible, setIsPasswardVisible] = useState<boolean>(false);
@@ -32,13 +34,13 @@ const InputField: React.FC<InputFieldProps> = (props: InputFieldProps) => {
             <div className="relative w-full">
                 <input
                     id={id}
-                    type={type}
+                    type={isPasswordVisible ? "text" : "password"}
                     placeholder={placeholder}
                     name={name}
                     onChange={onChange}
                     value={value}
                     className={`rounded-lg w-full px-4 py-2.5 text-deep-blue text-base border-2 border-silver-cloud placeholder:text-tranquil-blue placeholder:text-base ${customInputClass}`}
-                />
+                 />
 
                 {/* Icon for toggling password visibility */}
                 {isPasswordVisible ? (
@@ -65,6 +67,7 @@ const InputField: React.FC<InputFieldProps> = (props: InputFieldProps) => {
                 name={name}
                 onChange={onChange}
                 value={value}
+                accept={accept}
                 className={`rounded-lg w-full px-4 py-2.5 text-deep-blue text-base border-2 border-silver-cloud placeholder:text-tranquil-blue placeholder:text-base ${customInputClass}`}
             />
         </div>
