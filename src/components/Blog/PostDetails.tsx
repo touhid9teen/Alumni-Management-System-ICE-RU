@@ -10,6 +10,7 @@ import moment from "moment";
 // import photo4 from "../../assets/AI8.jpg";
 import AllComments from "./AllComment";
 import CreatePostForm from "../CreatePostForm";
+import CreateCommentForm from "../CreateCommentForm";
 const PostDetails: React.FC = () => {
     const now = moment().toDate();
 
@@ -92,6 +93,7 @@ const PostDetails: React.FC = () => {
                 createComment={handleCreateComment}
             />
             <CreatePostForm />
+            <CreateCommentForm/>
         </div>
     );
 };
