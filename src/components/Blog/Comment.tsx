@@ -4,7 +4,7 @@ import { FaThumbsUp, FaReply } from 'react-icons/fa';
 
 interface CommentProps {
     avatar: string;
-    time: string;
+    commentTime: string;
     title: string;
     comment: string;
     totalLike: string;
@@ -15,7 +15,7 @@ interface CommentProps {
 
 const Comment: React.FC<CommentProps> = ({
     avatar,
-    time,
+    commentTime,
     title,
     comment,
     totalLike,
@@ -29,7 +29,7 @@ const Comment: React.FC<CommentProps> = ({
                 avatar={avatar}
                 title={title}
                 onClick={onClick}
-                time={time}
+                time={commentTime}
             />
             <div className="flex-1">
                 <div className="bg-gray-100 rounded-lg p-2">

@@ -1,99 +1,168 @@
+import React, { useState } from "react";
+import moment from "moment";
 import AvatarWithDescription from "../AvatarWithDescription";
 import PostAction from "./PostAction";
 import PostSummary from "./PostSummary";
-import avatar from "../../assets/avatar.png";
-import moment from "moment";
-// import photo from "../../assets/AI6.jpg";
-// import photo1 from "../../assets/AI1.jpg";
-// import photo2 from "../../assets/AI2.jpg";
-// import photo3 from "../../assets/AI3.jpg";
-// import photo4 from "../../assets/AI8.jpg";
 import AllComments from "./AllComment";
-import CreatePostForm from "../CreatePostForm";
-import CreateCommentForm from "../CreateCommentForm";
-const PostDetails: React.FC = () => {
-    const now = moment().toDate();
+import avatar from "../../assets/avatar.png";
 
-    const dummyComments = [
-        {
-            avatar: "https://via.placeholder.com/150",
-            time: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-            title: "John Doe",
-            comment: "This is an example comment.",
-            totalLike: "10",
-        },
-        {
-            avatar: "https://via.placeholder.com/150",
-            time: new Date(Date.now() - 3 * 60 * 60 * 1000), // 3 hours ago
-            title: "Jane Smith",
-            comment: "This is another example comment.",
-            totalLike: "5",
-        },
-        {
-            avatar: "https://via.placeholder.com/150",
-            time: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
-            title: "Alice Johnson",
-            comment: "This is yet another example comment.",
-            totalLike: "20",
-        },
-        {
-            avatar: "https://via.placeholder.com/150",
-            time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
-            title: "Bob Brown",
-            comment: "This is a comment example.",
-            totalLike: "8",
-        },
-        {
-            avatar: "https://via.placeholder.com/150",
-            time: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
-            title: "Carol White",
-            comment: "This is an additional comment example.",
-            totalLike: "15",
-        },
-    ];
+const PostDetails: React.FC = () => {
+    const [visibleComments, setVisibleComments] = useState<number | null>(null); // State to track visible comments
+
     const handleCreateComment = () => {
         console.log("Create Comment clicked!");
     };
+
+    const handleToggleComments = (postId: number) => {
+        setVisibleComments(visibleComments === postId ? null : postId);
+    };
+
+    const posts = [
+        {
+            id: 1,
+            avatar: avatar,
+            title: "John Doe",
+            time: moment().subtract(1, "day").toDate(),
+            postTime: moment(moment().subtract(1, "day").toDate()).fromNow(),
+            content:
+                "This is the first dummy post. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            photos: [
+               
+            ],
+            totalLike: 20,
+            totalComment: 10,
+            comments: [
+                {
+                    id: 1,
+                    avatar: avatar,
+                    title: "Jane Doe",
+                    time: moment().subtract(23, "hours").toDate(),
+                    commentTime: moment(
+                        moment().subtract(23, "hours").toDate()
+                    ).fromNow(),
+                    content: "Nice post!",
+                },
+                {
+                    id: 2,
+                    avatar: avatar,
+                    title: "Jack Smith",
+                    time: moment().subtract(22, "hours").toDate(),
+                    commentTime: moment(
+                        moment().subtract(22, "hours").toDate()
+                    ).fromNow(),
+                    content: "Great content!",
+                },
+            ],
+        },
+        {
+            id: 2,
+            avatar: avatar,
+            title: "Jane Smith",
+            time: moment().subtract(2, "days").toDate(),
+            postTime: moment(moment().subtract(2, "days").toDate()).fromNow(),
+            content:
+                "This is the second dummy post. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            photos: [
+                "https://picsum.photos/id/1014/200/300",
+                "https://picsum.photos/id/1015/200/300",
+                "https://picsum.photos/id/1011/200/300",
+                "https://picsum.photos/id/1012/200/300",
+                "https://picsum.photos/id/1013/200/300",
+            ],
+            totalLike: 30,
+            totalComment: 15,
+            comments: [
+                {
+                    id: 1,
+                    avatar: avatar,
+                    title: "John Doe",
+                    time: moment().subtract(1, "day").toDate(),
+                    commentTime: moment(
+                        moment().subtract(1, "day").toDate()
+                    ).fromNow(),
+                    content: "Awesome!",
+                },
+                {
+                    id: 2,
+                    avatar: avatar,
+                    title: "Jane Doe",
+                    time: moment().subtract(23, "hours").toDate(),
+                    commentTime: moment(
+                        moment().subtract(23, "hours").toDate()
+                    ).fromNow(),
+                    content: "Love it!",
+                },
+            ],
+        },
+        {
+            id: 3,
+            avatar: avatar,
+            title: "Jack Johnson",
+            time: moment().subtract(3, "days").toDate(),
+            postTime: moment(moment().subtract(3, "days").toDate()).fromNow(),
+            content:
+                "This is the third dummy post. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            photos: [
+                "https://picsum.photos/id/1016/200/300",
+                "https://picsum.photos/id/1018/200/300",
+            ],
+            totalLike: 25,
+            totalComment: 12,
+            comments: [
+                {
+                    id: 1,
+                    avatar: avatar,
+                    title: "John Smith",
+                    time: moment().subtract(2, "days").toDate(),
+                    commentTime: moment(
+                        moment().subtract(2, "days").toDate()
+                    ).fromNow(),
+                    content: "Keep it up!",
+                },
+                {
+                    id: 2,
+                    avatar: avatar,
+                    title: "Jane Smith",
+                    time: moment().subtract(1, "day").toDate(),
+                    commentTime: moment(
+                        moment().subtract(1, "day").toDate()
+                    ).fromNow(),
+                    content: "Looking forward to more!",
+                },
+            ],
+        },
+    ];
+
     return (
-        <div className="h-1/2 w-1/2 flex flex-col ">
-            <button
-                className="mb-4 flex justify-end items-center text-blue-500 text-lg underline"
-               // onClick={createComment}
-            >
-                Write a post?
-            </button>
-            <AvatarWithDescription
-                avatar={avatar}
-                time={new Date()}
-                title={"Mr. X"}
-                onClick={() => {}}
-            />
-            <PostSummary
-                content={
-                    "Hello there... Hello, Codeforces We are pleased to announce Round  Thanks to XTX Markets for supporting theinitiative! In 2024, we are holding 4 such rounds. The series results will take into account the best 3 participations out of 4. On Sunday, June 9, 2024 at 20:35UTC+6 we will host Codeforces Global Round 26.Codeforces Global Round 26 marks the second round in the 2024 series of Codeforces Global Rounds. hese rounds are open and rated for everyone."
-                }
-                photo={[
-                    "https://via.placeholder.com/150",
-                    "https://via.placeholder.com/150",
-                    "https://via.placeholder.com/150",
-                    "https://via.placeholder.com/150",
-                    "https://via.placeholder.com/150",
-                ]}
-            />
-            <PostAction
-                totalLike={"40"}
-                totalComment={"50"}
-                onClickLike={() => {}}
-                onClickComment={() => {}}
-                onClickShare={() => {}}
-            />
-            <AllComments
-                comments={dummyComments}
-                totalComment={dummyComments.length}
-                createComment={handleCreateComment}
-            />
-            <CreatePostForm />
-            <CreateCommentForm/>
+        <div className="flex flex-col space-y-4">
+            {posts.map((post) => (
+                <div
+                    key={post.id}
+                    className="bg-white shadow-md rounded-lg p-6"
+                >
+                    <AvatarWithDescription
+                        avatar={post.avatar}
+                        time={post.postTime}
+                        title={post.title}
+                        onClick={() => {}}
+                    />
+                    <PostSummary content={post.content} photo={post.photos} />
+                    <PostAction
+                        totalLike={post.totalLike.toString()}
+                        totalComment={post.totalComment.toString()}
+                        onClickLike={() => {}}
+                        onClickComment={() => handleToggleComments(post.id)}
+                        onClickShare={() => {}}
+                    />
+                    {visibleComments === post.id && (
+                        <AllComments
+                            comments={post.comments}
+                            totalComment={post.totalComment}
+                            createComment={handleCreateComment}
+                        />
+                    )}
+                </div>
+            ))}
         </div>
     );
 };

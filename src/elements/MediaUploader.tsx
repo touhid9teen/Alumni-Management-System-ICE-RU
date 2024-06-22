@@ -4,9 +4,14 @@ import { FaPhotoVideo } from "react-icons/fa";
 interface MediaUploaderProps {
     media: string[];
     handleMediaUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    mediaType: "photo" | "video";
 }
 
-const MediaUploader: React.FC<MediaUploaderProps> = ({ media, handleMediaUpload }) => {
+const MediaUploader: React.FC<MediaUploaderProps> = ({
+    media,
+    handleMediaUpload,
+    mediaType,
+}) => {
     return (
         <div className="flex flex-col mt-4 w-full">
             {media.length > 0 && (
@@ -23,14 +28,13 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({ media, handleMediaUpload 
             )}
             <label className="flex flex-col sm:flex-row items-center justify-center border border-gray-300 rounded-lg p-4 cursor-pointer text-blue-500 text-lg hover:bg-gray-100 transition duration-200">
                 <FaPhotoVideo className="mr-2" />
-                <span>Add Photo/Video</span>
+                <span>Add {mediaType === "photo" ? "Photo" : "Video"}</span>
                 <input
                     id="media-upload"
                     name="media-upload"
                     type="file"
                     onChange={handleMediaUpload}
-                    value="" // Reset value after each upload
-                    accept="image/*,video/*,audio/*"
+                    accept={mediaType === "photo" ? "image/*" : "video/*"}
                     className="hidden"
                 />
             </label>

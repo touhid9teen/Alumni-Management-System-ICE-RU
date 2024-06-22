@@ -5,8 +5,7 @@ import AlumniInfoTable from "./page/dashboard/AlumniInfoTable";
 import Login from "./page/auth/login";
 import Signup from "./page/auth/Signup";
 import AlumniProfile from "./components/AlumniProfile";
-import Home from "./page/Home";
-import PostDetails from "./components/Blog/PostDetails";
+import Blog from "./page/Blog";
 
 function App(): JSX.Element {
     
@@ -31,7 +30,7 @@ function App(): JSX.Element {
                     path="/"
                     element={
                         <MainLayout>
-                            <PostDetails />
+                            <Blog />
                         </MainLayout>
                     }
                 />
@@ -39,7 +38,7 @@ function App(): JSX.Element {
                     path="/home"
                     element={
                         <MainLayout>
-                            <PostDetails />
+                            <Blog />
                             
                         </MainLayout>
                     }

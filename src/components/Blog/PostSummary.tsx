@@ -52,7 +52,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({
             : video[currentMediaIndex - photo.length];
 
     return (
-        <div className="bg-white shadow-md rounded-lg p-4 mb-4  mx-auto">
+        <div className="bg-white rounded-lg p-4 mb-4  mx-auto">
             <div className="mb-2">
                 <p>{showFullContent ? content : truncatedContent}</p>
                 {content.length > 350 && (

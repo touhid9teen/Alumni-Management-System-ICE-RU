@@ -44,7 +44,7 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
     };
 
     return (
-        <div className="bg-white shadow-md rounded-lg p-2 flex items-start  mb-6">
+        <div className="bg-white rounded-lg p-2 flex items-start  mb-6">
             <AvatarWithDescription
                 avatar={Avatar}
                 alt="User Avatar"

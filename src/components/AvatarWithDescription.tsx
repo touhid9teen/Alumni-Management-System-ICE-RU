@@ -19,6 +19,9 @@ const AvatarWithDescription: FC<AvatarDescriptionProps> = ({
     customTitleClass = "",
     time,
 }) => {
+    // Validate time is a valid date
+    const isValidDate = (date: string) => !isNaN(Date.parse(date));
+    const displayTime = time && isValidDate(time) ? formatDistanceToNow(new Date(time), { addSuffix: true }) : 'Invalid date';
     return (
         <div
             className={`flex items-center cursor-pointer ${customParentClass}`}
@@ -27,7 +30,7 @@ const AvatarWithDescription: FC<AvatarDescriptionProps> = ({
             <Avatar
                 image={avatar}
                 divCustomClass={
-                    avatar.length ? "w-11 h-11 items-end" : "w-11 h-11 items-center"
+                    avatar && avatar.length ? "w-11 h-11 items-end" : "w-11 h-11 items-center"
                 }
             />
             <div className="ml-4">
@@ -35,9 +38,10 @@ const AvatarWithDescription: FC<AvatarDescriptionProps> = ({
                     <div className="my-1">
                         <div className="font-bold">{title}</div>
                         <div className="text-sm text-gray-500 font-thin">
-                            {formatDistanceToNow(new Date(time), {
+                            {displayTime}
+                            {/* formatDistanceToNow(new Date(time), {
                                 addSuffix: true,
-                            })}
+                            }) */}
                         </div>
                     </div>
                 ) : title ? (
