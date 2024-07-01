@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Button from "../elements/Button";
@@ -6,11 +6,13 @@ import InputField from "../elements/InputField";
 import Toggle from "../elements/Toggle";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-interface FormData {
-    email: string;
-    password: string;
-}
+import { ILoginRequest } from "../models/Auth";
+import axios from "axios";
+import { getBaseUrl } from "../utils/utils";
+import { LOCAL_STORAGE_KEYS } from "../constants/Global";
+import { setToStorage } from "../utils/token";
+import { toast } from "react-toastify";
+import Loader from "./Loader";
 
 const schema = yup.object().shape({
     email: yup.string().email().required(),
@@ -20,63 +22,57 @@ const schema = yup.object().shape({
 type FieldKeys = "email" | "password";
 const LoginForm: FC = () => {
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
     const {
         reset,
         control,
         handleSubmit,
         formState: { errors },
-    } = useForm<FormData>({
-        resolver: yupResolver(schema),
+    } = useForm<ILoginRequest>({
+        resolver: yupResolver<ILoginRequest>(schema),
         defaultValues: {
             email: "",
             password: "",
         },
     });
-    const onSubmit: SubmitHandler<FormData> = (data) => {
-        console.log("data", data);
-        reset();
-        const userJSON = localStorage.getItem("user");
-        if (userJSON) {
-            try {
-                const loggeduser = JSON.parse(userJSON) as {
-                    email: string;
-                    password: string;
-                };
-                if (
-                    data.email === loggeduser.email &&
-                    data.password === loggeduser.password
-                ) {
-                    navigate("/");
-                } else {
-                    alert("Wrong Email Or Password");
-                }
-            } catch (error) {
-                console.error("Error parsing JSON from localStorage", error);
-                alert("An error occurred while processing your request.");
-            }
-        } else {
-            alert("No user found");
-            navigate("/singup");
-        }
-    };
 
+    const onSubmit: SubmitHandler<ILoginRequest> = async (
+        payload: ILoginRequest
+    ) => {
+        setIsLoading(true);
+        try {
+            const url = getBaseUrl() + "/auth/login";
+            const response = await axios.post(url, payload);
+
+            setToStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN, response.data.token);
+            setToStorage(LOCAL_STORAGE_KEYS.AUTH_EMAIL, response.data.email);
+            setToStorage(LOCAL_STORAGE_KEYS.AUTH_NAME, response.data.name);
+
+            toast.success("Login successful!", {
+                autoClose: 1500,
+            });
+            navigate("/");
+        } catch (error) {
+            toast.error(error.message, {
+                autoClose: 3000,
+            });
+        }
+        setIsLoading(false);
+    };
+    const onClickSignUp = () => navigate("/signup");
     return (
-        <div className="w-[821px] h-[900px] bg-white">
+        <div className="py-8 2xl:py-12">
             {/* message top */}
-            <div className="flex justify-center items-center">
-                <div className="w-full mt-12 mr-28">
-                    <p className="flex text-sm font-normal justify-end  ">
-                        Don’t have an account?&nbsp;
-                        <span
-                            className=" text-indigo-600 text-sm font-medium cursor-pointer"
-                            onClick={() => {
-                                navigate("/singup");
-                            }}
-                        >
-                            Sign Up!
-                        </span>
-                    </p>
-                </div>
+            <div className="mr-16 2xl:mr-28">
+                <p className="flex justify-end text-sm">
+                    Don't have an account?&nbsp;
+                    <span
+                        className=" text-primary text-sm font-medium cursor-pointer"
+                        onClick={onClickSignUp}
+                    >
+                        Sign Up!
+                    </span>
+                </p>
             </div>
 
             {/* headline */}
@@ -114,7 +110,6 @@ const LoginForm: FC = () => {
                                                 ? "password"
                                                 : "text"
                                         }
-                                        customInputClass="w-100 h-16 px-6 py-7 h-18 text-[#5A5A5A] border-zinc-300 bg-white flex-shrink-0 rounded-lg placeholder:text-sm placeholder:text-zinc-600 placeholder:font-normal"
                                         value={value}
                                         onChange={onChange}
                                         id={value}
@@ -131,8 +126,8 @@ const LoginForm: FC = () => {
                         </div>
                     ))}
 
-                    {/* Toggle button  */}
-                    <div className="flex justify-between">
+                   {/* Toggle button 
+                   <div className="flex justify-between">
                         <Toggle
                             id={"cn"}
                             name={"cn"}
@@ -156,13 +151,15 @@ const LoginForm: FC = () => {
                         <p className="text-red-600 text-sm font-normal cursor-pointer">
                             Recover Password
                         </p>
-                    </div>
+                    </div> */}
                     <Button
-                        customClass="flex justify-center item-center !bg-primary !text-black w-100 h-14 font-semibold text-sm"
                         buttonType="submit"
-                        buttonVariant="primary"
+                        customClass="flex justify-center item-center font-semibold text-base text-gray-900 !py-0"
+                        disabled={isLoading}
                     >
-                        Log In
+                        <div className="flex items-center justify-center relative min-w-48 min-h-12">
+                            {isLoading ? <Loader mode="container" /> : "Log In"}
+                        </div>
                     </Button>
                 </form>
             </div>
@@ -171,3 +168,13 @@ const LoginForm: FC = () => {
 };
 
 export default LoginForm;
+
+<Button
+                        buttonType="submit"
+                        customClass="flex justify-center item-center font-semibold text-base text-gray-900 !py-0"
+                        disabled={isLoading}
+                    >
+                        <div className="flex items-center justify-center relative min-w-48 min-h-12">
+                            {isLoading ? <Loader mode="container" /> : "Log In"}
+                        </div>
+                    </Button>
