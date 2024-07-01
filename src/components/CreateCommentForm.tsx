@@ -1,66 +1,87 @@
 import React, { useState } from "react";
-import { Comment } from "../interfaces";
-import { FaPhotoVideo, FaPaperPlane } from "react-icons/fa";
-import AvatarWithDescription from "./AvatarWithDescription";
-import Avatar from "../assets/avatar.png";
+import { FaPaperPlane } from "react-icons/fa";
+import AvatarWithDescription from "../components/AvatarWithDescription";
+import avatar from "../assets/avatar.png";
 import Button from "../elements/Button";
 import TextArea from "../elements/TextArea";
 import MediaUploader from "../elements/MediaUploader";
 
+interface Comment {
+    id: number;
+    avatar: string;
+    title: string;
+    time: string;
+    content: string;
+    photos: string[];
+    videos: string[];
+}
+
 interface CreateCommentFormProps {
-    onCreatePost: (comment: Comment) => void;
+    postId: number;
+    onCreateComment: (postId: number, comment: Comment) => void;
 }
 
 const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
-    onCreatePost,
+    postId,
+    onCreateComment,
 }) => {
-    const [content, setContent] = useState("");
-    const [media, setMedia] = useState<string[]>([]);
-    const [postValue, setPostValue] = useState("");
+    const [comment, setComment] = useState("");
+    const [photos, setPhotos] = useState<string[]>([]);
+    const [videos, setVideos] = useState<string[]>([]);
 
-    const handleMediaUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        if (files) {
-            const fileArray = Array.from(files).map((file) =>
-                URL.createObjectURL(file)
-            );
-            setMedia((prevMedia) => prevMedia.concat(fileArray));
+    const handleCommentChange = (value: string) => {
+        setComment(value);
+    };
+
+    const handleMediaUpload = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        type: "photo" | "video"
+    ) => {
+        if (e.target.files) {
+            const urls = files.map((file) => URL.createObjectURL(file));
+            if (type === "photo") {
+                setPhotos(urls);
+            } else {
+                setVideos(urls);
+            }
         }
     };
 
     const handleSubmit = () => {
         const newComment: Comment = {
-            id: Date.now().toString(),
-            userId: "1", // Replace with actual user ID
-            userName: "John Doe", // Replace with actual user name
-            userPhoto: "path/to/photo.jpg", // Replace with actual user photo
-            content,
-            media,
-            createdAt: new Date(),
+            id: Date.now(),
+            avatar: avatar,
+            title: "John Doe", // Replace with actual user name
+            time: new Date().toISOString(),
+            content: comment,
+            photos: photos,
+            videos: videos,
         };
-        onCreatePost(newComment);
-        setContent("");
-        setMedia([]);
+        onCreateComment(postId, newComment);
+        setComment("");
+        setPhotos([]);
+        setVideos([]);
     };
 
     return (
-        <div className="bg-white rounded-lg p-2 flex items-start  mb-6">
+        <div className="bg-white rounded-lg p-2 flex items-start mb-6">
             <AvatarWithDescription
-                avatar={Avatar}
-                alt="User Avatar"
-                className="w-10 h-10 rounded-full"
+                avatar={avatar}
+                time={new Date().toISOString()}
+                title="User Avatar"
+                onClick={() => {}}
             />
             <div className="flex-1">
                 <TextArea
-                    value={postValue}
-                    onChange={setPostValue}
+                    value={comment}
+                    onChange={(e) => handleCommentChange(e.target.value)}
                     placeholder="Write a comment..."
                     minHeight="50px"
                     customClass="border border-gray-300 rounded-full px-4 py-2 w-full resize-none"
                 />
-                {media.length > 0 && (
+                {photos.length > 0 && (
                     <div className="flex flex-wrap mt-2 mb-4">
-                        {media.map((src, index) => (
+                        {photos.map((src, index) => (
                             <img
                                 key={index}
                                 src={src}
@@ -70,11 +91,33 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
                         ))}
                     </div>
                 )}
+                {videos.length > 0 && (
+                    <div className="flex flex-wrap mt-2 mb-4">
+                        {videos.map((src, index) => (
+                            <video
+                                key={index}
+                                src={src}
+                                controls
+                                className="w-20 h-20 object-cover mr-2 mb-2 rounded-lg"
+                            />
+                        ))}
+                    </div>
+                )}
                 <div className="flex justify-between items-center mt-2">
                     <div className="flex-1 flex items-center">
                         <MediaUploader
-                            media={media}
-                            handleMediaUpload={handleMediaUpload}
+                            handleMediaUpload={(e) =>
+                                handleMediaUpload(e, "photo")
+                            }
+                            mediaType="photo"
+                            media={photos}
+                        />
+                        <MediaUploader
+                            handleMediaUpload={(e) =>
+                                handleMediaUpload(e, "video")
+                            }
+                            mediaType="video"
+                            media={videos}
                         />
                     </div>
                     <Button

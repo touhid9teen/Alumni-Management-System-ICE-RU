@@ -4,9 +4,12 @@ import PostDetails from "../components/Blog/PostDetails";
 
 const Blog: React.FC = () => {
     const [showCreatePost, setShowCreatePost] = useState(false);
-
+    const [refreshPosts, setRefreshPosts] = useState(false);
     const handleCreatePost = () => {
         setShowCreatePost(!showCreatePost);
+    };
+    const handlePostSubmit = () => {
+        setRefreshPosts(!refreshPosts);
     };
 
     return (
@@ -39,7 +42,7 @@ const Blog: React.FC = () => {
                     {showCreatePost && (
                         <CreatePostForm onClick={handleCreatePost} />
                     )}
-                    <PostDetails />
+                    <PostDetails refreshPosts={handlePostSubmit} />
                 </main>
             </div>
         </div>

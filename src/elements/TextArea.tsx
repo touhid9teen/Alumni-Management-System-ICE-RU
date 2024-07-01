@@ -5,11 +5,11 @@ interface TextAreaProps {
     onChange: (value: string) => void;
     placeholder: string;
     minHeight: string;
-    maxLength?: number;
+    //maxLength?: number;
     customClass? : string;
 }
 
-const TextArea: React.FC<TextAreaProps> = ({ value, onChange, placeholder, minHeight, maxLength,customClass }) => {
+const TextArea: React.FC<TextAreaProps> = ({ value, onChange, placeholder, minHeight,customClass }) => {
     return (
         <div className="relative">
             <textarea
@@ -17,7 +17,7 @@ const TextArea: React.FC<TextAreaProps> = ({ value, onChange, placeholder, minHe
                 onChange={(e) => onChange(e.target.value)}
                 className={`border border-gray-300 w-full p-4 rounded-lg focus:outline-none${customClass}` }
                 placeholder={placeholder}
-                style={{ minHeight: maxLength, resize: "none" }}
+                style={{ minHeight }}
             ></textarea>
         </div>
     );

@@ -1,27 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, FC } from "react";
 import AvatarWithDescription from "./AvatarWithDescription";
 import Avatar from "../assets/avatar.png";
 import Button from "../elements/Button";
 import TextArea from "../elements/TextArea";
 import MediaUploader from "../elements/MediaUploader";
+import moment from "moment"; // Ensure you have moment installed
 
-interface CreatePostFormProps {
-    onSubmit: (post: { content: string; photo?: string[]; video?: string[] }) => void;
+interface Post {
+    id: number;
+    avatar: string;
+    title: string;
+    postTime: string;
+    content: string;
+    photos: string[];
+    videos: string[];
 }
 
-const CreatePostForm: React.FC<CreatePostFormProps> = ({ onSubmit }) => {
+interface CreatePostFormProps {
+    onClick?: () => void;
+}
+
+const CreatePostForm: FC<CreatePostFormProps> = ({ onClick }) => {
     const [content, setContent] = useState("");
     const [photos, setPhotos] = useState<string[]>([]);
     const [videos, setVideos] = useState<string[]>([]);
+    const [posts, setPosts] = useState<Post[]>([]);
 
-    const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setContent(e.target.value);
+    useEffect(() => {
+        const loadedPosts = localStorage.getItem("posts");
+        if (loadedPosts) {
+            setPosts(JSON.parse(loadedPosts));
+        }
+    }, []);
+
+    const handleContentChange = (value: string) => {
+        setContent(value);
     };
 
-    const handleMediaUpload = (e: React.ChangeEvent<HTMLInputElement>, type: "photo" | "video") => {
+    const handleMediaUpload = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        type: "photo" | "video"
+    ) => {
         if (e.target.files) {
             const files = Array.from(e.target.files);
-            const urls = files.map(file => URL.createObjectURL(file));
+            const urls = files.map((file) => URL.createObjectURL(file));
             if (type === "photo") {
                 setPhotos(urls);
             } else {
@@ -32,14 +54,28 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onSubmit }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onSubmit({
-            content,
-            photo: photos,
-            video: videos,
-        });
+        const newPost: Post = {
+            id: posts.length + 1,
+            avatar: Avatar,
+            title: "Jane Smith",
+            postTime: moment().fromNow(),
+            content: content,
+            photos: photos,
+            videos: videos,
+        };
+        const updatedPosts = [newPost, ...posts];
+        setPosts(updatedPosts);
+        localStorage.setItem("posts", JSON.stringify(updatedPosts)); // Save to local storage
+        console.log("Post submitted successfully!");
+        console.log(posts);
+
         setContent("");
         setPhotos([]);
         setVideos([]);
+
+        if (onClick) {
+            onClick();
+        }
     };
 
     return (
@@ -50,7 +86,7 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onSubmit }) => {
                 title="Mr. X"
                 onClick={() => {}}
             />
-            <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+            <div className="flex flex-col gap-5">
                 <TextArea
                     value={content}
                     onChange={handleContentChange}
@@ -77,7 +113,7 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onSubmit }) => {
                 >
                     Post
                 </Button>
-            </form>
+            </div>
         </div>
     );
 };

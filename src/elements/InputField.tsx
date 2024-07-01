@@ -39,8 +39,8 @@ const InputField: React.FC<InputFieldProps> = (props: InputFieldProps) => {
                     name={name}
                     onChange={onChange}
                     value={value}
-                    className={`rounded-lg w-full px-4 py-2.5 text-deep-blue text-base border-2 border-silver-cloud placeholder:text-tranquil-blue placeholder:text-base ${customInputClass}`}
-                 />
+                    className={`rounded-lg w-full px-4 py-2.5 pr-12 text-deep-blue text-base border-2 border-silver-cloud placeholder:text-tranquil-blue placeholder:text-base ${customInputClass}`}
+                />
 
                 {/* Icon for toggling password visibility */}
                 {isPasswordVisible ? (

@@ -1,137 +1,84 @@
-import React, { useState } from "react";
-import moment from "moment";
+import React, { useState, useEffect } from "react";
 import AvatarWithDescription from "../AvatarWithDescription";
 import PostAction from "./PostAction";
 import PostSummary from "./PostSummary";
-import AllComments from "./AllComment";
+import CreateCommentForm from "../CreateCommentForm";
 import avatar from "../../assets/avatar.png";
 
-const PostDetails: React.FC = () => {
-    const [visibleComments, setVisibleComments] = useState<number | null>(null); // State to track visible comments
+interface Comment {
+    id: number;
+    avatar: string;
+    title: string;
+    time: string;
+    content: string;
+    photos: string[];
+    videos: string[];
+}
 
-    const handleCreateComment = () => {
-        console.log("Create Comment clicked!");
+interface Post {
+    id: number;
+    avatar: string;
+    title: string;
+    postTime: string;
+    content: string;
+    photos: string[];
+    totalLike: number;
+    totalComment: number;
+    comments: Comment[];
+}
+
+interface PostDetailsProps {
+    refreshPosts?: () => void;
+}
+
+const PostDetails: React.FC<PostDetailsProps> = ({ refreshPosts }) => {
+    const [posts, setPosts] = useState<Post[]>([]);
+
+    const fetchPosts = () => {
+        const loadedPosts = localStorage.getItem("posts");
+        if (loadedPosts) {
+            setPosts(JSON.parse(loadedPosts));
+        }
     };
 
-    const handleToggleComments = (postId: number) => {
-        setVisibleComments(visibleComments === postId ? null : postId);
+    useEffect(() => {
+        fetchPosts();
+    }, [refreshPosts]);
+
+    const handleLike = (id: number) => {
+        const updatedPosts = posts.map((post) =>
+            post.id === id
+                ? { ...post, totalLike: post.totalLike + 1 }
+                : post
+        );
+        setPosts(updatedPosts);
+        localStorage.setItem("posts", JSON.stringify(updatedPosts));
     };
 
-    const posts = [
-        {
-            id: 1,
-            avatar: avatar,
-            title: "John Doe",
-            time: moment().subtract(1, "day").toDate(),
-            postTime: moment(moment().subtract(1, "day").toDate()).fromNow(),
-            content:
-                "This is the first dummy post. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            photos: [
-               
-            ],
-            totalLike: 20,
-            totalComment: 10,
-            comments: [
-                {
-                    id: 1,
-                    avatar: avatar,
-                    title: "Jane Doe",
-                    time: moment().subtract(23, "hours").toDate(),
-                    commentTime: moment(
-                        moment().subtract(23, "hours").toDate()
-                    ).fromNow(),
-                    content: "Nice post!",
-                },
-                {
-                    id: 2,
-                    avatar: avatar,
-                    title: "Jack Smith",
-                    time: moment().subtract(22, "hours").toDate(),
-                    commentTime: moment(
-                        moment().subtract(22, "hours").toDate()
-                    ).fromNow(),
-                    content: "Great content!",
-                },
-            ],
-        },
-        {
-            id: 2,
-            avatar: avatar,
-            title: "Jane Smith",
-            time: moment().subtract(2, "days").toDate(),
-            postTime: moment(moment().subtract(2, "days").toDate()).fromNow(),
-            content:
-                "This is the second dummy post. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            photos: [
-                "https://picsum.photos/id/1014/200/300",
-                "https://picsum.photos/id/1015/200/300",
-                "https://picsum.photos/id/1011/200/300",
-                "https://picsum.photos/id/1012/200/300",
-                "https://picsum.photos/id/1013/200/300",
-            ],
-            totalLike: 30,
-            totalComment: 15,
-            comments: [
-                {
-                    id: 1,
-                    avatar: avatar,
-                    title: "John Doe",
-                    time: moment().subtract(1, "day").toDate(),
-                    commentTime: moment(
-                        moment().subtract(1, "day").toDate()
-                    ).fromNow(),
-                    content: "Awesome!",
-                },
-                {
-                    id: 2,
-                    avatar: avatar,
-                    title: "Jane Doe",
-                    time: moment().subtract(23, "hours").toDate(),
-                    commentTime: moment(
-                        moment().subtract(23, "hours").toDate()
-                    ).fromNow(),
-                    content: "Love it!",
-                },
-            ],
-        },
-        {
-            id: 3,
-            avatar: avatar,
-            title: "Jack Johnson",
-            time: moment().subtract(3, "days").toDate(),
-            postTime: moment(moment().subtract(3, "days").toDate()).fromNow(),
-            content:
-                "This is the third dummy post. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            photos: [
-                "https://picsum.photos/id/1016/200/300",
-                "https://picsum.photos/id/1018/200/300",
-            ],
-            totalLike: 25,
-            totalComment: 12,
-            comments: [
-                {
-                    id: 1,
-                    avatar: avatar,
-                    title: "John Smith",
-                    time: moment().subtract(2, "days").toDate(),
-                    commentTime: moment(
-                        moment().subtract(2, "days").toDate()
-                    ).fromNow(),
-                    content: "Keep it up!",
-                },
-                {
-                    id: 2,
-                    avatar: avatar,
-                    title: "Jane Smith",
-                    time: moment().subtract(1, "day").toDate(),
-                    commentTime: moment(
-                        moment().subtract(1, "day").toDate()
-                    ).fromNow(),
-                    content: "Looking forward to more!",
-                },
-            ],
-        },
-    ];
+    // const handleComment = (id: number) => {
+    //     // This function is not used anymore
+    // };
+
+    const handleShare = (id: number) => {
+        //console.log(`Post ${postId} shared!`);
+        // Implement your share logic here
+    };
+
+    const handleCreateComment = (postId: number, comment: Comment) => {
+        const updatedPosts = posts.map((post) => {
+            if (post.id === postId) {
+                const updatedComments = [...post.comments, comment];
+                return {
+                    ...post,
+                    comments: updatedComments,
+                    totalComment: post.totalComment + 1,
+                };
+            }
+            return post;
+        });
+        setPosts(updatedPosts);
+        localStorage.setItem("posts", JSON.stringify(updatedPosts));
+    };
 
     return (
         <div className="flex flex-col space-y-4">
@@ -148,19 +95,21 @@ const PostDetails: React.FC = () => {
                     />
                     <PostSummary content={post.content} photo={post.photos} />
                     <PostAction
-                        totalLike={post.totalLike.toString()}
-                        totalComment={post.totalComment.toString()}
-                        onClickLike={() => {}}
-                        onClickComment={() => handleToggleComments(post.id)}
-                        onClickShare={() => {}}
+                        totalLike={"5"}
+                        totalComment={"3"}
+                        onClickLike={() => handleLike(post.id)}
+                        onClickComment={() => {}}
+                        onClickShare={() => handleShare(post.id)}
+                        // totalLike={post.totalLike.toString()}
+                        // totalComment={post.totalComment.toString()}
+                        // onClickLike={() => handleLike(post.id)}
+                        // onClickComment={() => {}}
+                        // onClickShare={() => handleShare(post.id)}
                     />
-                    {visibleComments === post.id && (
-                        <AllComments
-                            comments={post.comments}
-                            totalComment={post.totalComment}
-                            createComment={handleCreateComment}
-                        />
-                    )}
+                    <CreateCommentForm
+                        postId={post.id}
+                        onCreateComment={handleCreateComment}
+                    />
                 </div>
             ))}
         </div>

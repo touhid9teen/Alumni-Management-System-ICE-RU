@@ -1,15 +1,20 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import Button from "../elements/Button";
 import InputField from "../elements/InputField";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Label from "../elements/Label";
+import ImageUploader from "./ImageUploader";
 
 interface FormData {
     fullName: string;
     studentId: string;
+    graduationYear: string;
     email: string;
+    role: string;
+    certificateOrIdCard: File | null;
     password: string;
     confirmPassword: string;
     certificate: FileList;
@@ -18,6 +23,11 @@ interface FormData {
 const schema = yup.object().shape({
     fullName: yup.string().required("Name is required"),
     studentId: yup.string().min(10).max(10).required(),
+    graduationYear: yup
+        .string()
+        .min(4)
+        .max(4)
+        .required("Graduation Year is required"),
     email: yup.string().email().required("Email is required"),
     password: yup.string().min(8).max(20).required(),
     confirmPassword: yup
@@ -46,12 +56,16 @@ const schema = yup.object().shape({
 type FieldKeys =
     | "fullName"
     | "studentId"
+    | "graduationYear"
     | "email"
+    | "role"
+    | "certificateOrIdCard"
     | "password"
     | "confirmPassword";
 
 const SignUpForm: FC = () => {
     const navigate = useNavigate();
+    const [selectedOption, setSelectedOption] = useState<string>("");
     const {
         reset,
         control,
@@ -63,6 +77,9 @@ const SignUpForm: FC = () => {
             fullName: "",
             studentId: "",
             email: "",
+            graduationYear: "",
+            role: "",
+            certificateOrIdCard: null,
             password: "",
             confirmPassword: "",
         },
@@ -72,7 +89,11 @@ const SignUpForm: FC = () => {
         // Store value in localstorage
         localStorage.setItem("user", JSON.stringify(data));
         reset();
-         navigate("/login");
+        navigate("/login");
+    };
+
+    const handleSelectChange = (event) => {
+        setSelectedOption(event.target.value);
     };
 
     return (
@@ -121,7 +142,66 @@ const SignUpForm: FC = () => {
                             key: "studentId",
                             placeholder: "Student Id",
                         },
+                        {
+                            name: "Graduation Year",
+                            key: "graduationYear",
+                            placeholder: "Graduation Year",
+                        },
+
                         { name: "Email", key: "email", placeholder: "Email" },
+                    ].map((field) => (
+                        <div key={field.key}>
+                            <Controller
+                                name={field.key as FieldKeys}
+                                control={control}
+                                render={({ field: { onChange, value } }) => (
+                                    <InputField
+                                        type={
+                                            field.key
+                                                .toLocaleLowerCase()
+                                                .includes("password")
+                                                ? "password"
+                                                : field.key == "email"
+                                                ? "email"
+                                                : "text"
+                                        }
+                                        customInputClass="w-100 border-zinc-300 bg-white flex-shrink-0 rounded-lg placeholder:text-sm placeholder:text-zinc-600 placeholder:font-normal"
+                                        value={value as string}
+                                        onChange={onChange}
+                                        id={value as string}
+                                        name={field.name}
+                                        placeholder={field.placeholder}
+                                    />
+                                )}
+                            />
+                            {errors[field.key] && (
+                                <p className="text-red-500 text-sm">
+                                    {errors[field.key]?.message}
+                                </p>
+                            )}
+                        </div>
+                    ))}
+                    <Label labelText="Are your a Student or Alumni?" />
+                    <select
+                        className="border px-3 py-2.5 rounded-lg "
+                        value={selectedOption}
+                        onChange={handleSelectChange}
+                    >
+                        <option value="">Select Option</option>
+                        <option value="student">Student</option>
+                        <option value="alumni">Alumni</option>
+                    </select>
+                    {/* Certificate upload field  */}
+                    {selectedOption !== "" && (
+                        <ImageUploader
+                            onUpload={(file) => {
+                                console.log("file", file);
+                            }}
+                            name="Certificate"
+                        />
+                    )}
+
+                    {[
                         {
                             name: "Password",
                             key: "password",
@@ -148,10 +228,10 @@ const SignUpForm: FC = () => {
                                                 ? "email"
                                                 : "text"
                                         }
-                                        customInputClass="w-100 h-16 px-6 py-7 h-18 border-zinc-300 bg-white flex-shrink-0 rounded-lg placeholder:text-sm placeholder:text-zinc-600 placeholder:font-normal"
-                                        value={value}
+                                        customInputClass="w-100 border-zinc-300 bg-white flex-shrink-0 rounded-lg placeholder:text-sm placeholder:text-zinc-600 placeholder:font-normal"
+                                        value={value as string}
                                         onChange={onChange}
-                                        id={value}
+                                        id={value as string}
                                         name={field.name}
                                         placeholder={field.placeholder}
                                     />
@@ -165,22 +245,9 @@ const SignUpForm: FC = () => {
                         </div>
                     ))}
 
-                    {/* Certificate upload field */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                            Upload Certificate
-                        </label>
-
-                        <input
-                            type="file"
-                            onChange={(e) => field.onChange(e.target.files)}
-                            className="mt-2"
-                        />
-                    </div>
-
                     <Button
                         buttonType="submit"
-                        customClass="flex justify-center item-center !bg-primary !text-black w-100 h-14 font-semibold text-sm"
+                        customClass="flex justify-center item-center !bg-primary !text-black w-100 font-semibold text-sm"
                     >
                         Create Account
                     </Button>
