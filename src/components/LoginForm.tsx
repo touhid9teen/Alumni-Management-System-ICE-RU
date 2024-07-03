@@ -168,13 +168,3 @@ const LoginForm: FC = () => {
 };
 
 export default LoginForm;
-
-<Button
-                        buttonType="submit"
-                        customClass="flex justify-center item-center font-semibold text-base text-gray-900 !py-0"
-                        disabled={isLoading}
-                    >
-                        <div className="flex items-center justify-center relative min-w-48 min-h-12">
-                            {isLoading ? <Loader mode="container" /> : "Log In"}
-                        </div>
-                    </Button>
