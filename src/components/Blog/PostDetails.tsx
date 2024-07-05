@@ -106,10 +106,10 @@ const PostDetails: React.FC<PostDetailsProps> = ({ refreshPosts }) => {
                         // onClickComment={() => {}}
                         // onClickShare={() => handleShare(post.id)}
                     />
-                    <CreateCommentForm
+                    {/* <CreateCommentForm
                         postId={post.id}
                         onCreateComment={handleCreateComment}
-                    />
+                    /> */}
                 </div>
             ))}
         </div>

@@ -17,7 +17,7 @@ function App(): JSX.Element {
                     element={
                         <MainLayout>
                             <AlumniInfoTable />
-                        </MainLayout>
+                        </MainLayout>   
                     }
                 />
                 <Route path="/login" element={<Login />} />
