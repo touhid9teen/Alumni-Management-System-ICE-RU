@@ -39,6 +39,11 @@ export const routes = {
 		key: "blog",
 		path: "/blog",
 	},
+	events: {
+		title: "Events",
+		key: "events",
+		path: "/events",
+	},
 	alumniProfile: {
 		title: "Alumni Profile",
 		key: "alumni-profile",

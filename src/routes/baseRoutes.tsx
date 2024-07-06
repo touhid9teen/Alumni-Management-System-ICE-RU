@@ -11,6 +11,7 @@ import Blog from "../page/Blog";
 import AlumniProfile from "../components/AlumniProfile";
 import MainLayout from "../layouts/MainLayout";
 import AlumniInfoTable from "../page/dashboard/AlumniInfoTable";
+import Events from "../page/Events"
 
 const MainRoutes = createBrowserRouter([
 	{
@@ -68,6 +69,14 @@ const MainRoutes = createBrowserRouter([
 				element: (
 					<MainLayout>
 						<AlumniInfoTable />
+					</MainLayout>
+				),
+			},
+			{
+				path: routes.events.path,
+				element: (
+					<MainLayout>
+						<Events />
 					</MainLayout>
 				),
 			},

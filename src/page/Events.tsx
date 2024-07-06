@@ -9,6 +9,7 @@ const Events: React.FC = () => {
             startTime: "02:30 AM",
             endTime: "05:30 AM",
             location: "Good Morning Cafe & Grill Toranomon",
+            eventimage:'https://via.placeholder.com/600x400?text=Event+1',
             description:
                 "Join us for the annual gathering of Stanford GSB United. Connect with alumni and enjoy a delightful morning at the Good Morning Cafe & Grill Toranomon.",
         },
@@ -19,6 +20,7 @@ const Events: React.FC = () => {
             startTime: "12:45 PM",
             endTime: "02:00 PM",
             location: "Oshman Family JCC, Palo Alto",
+            eventimage:'https://via.placeholder.com/600x400?text=Event+2',
             description:
                 "Kickstart your summer with our Tango Foundations I workshop. Perfect for beginners looking to learn the basics of Tango dancing.",
         },
@@ -29,6 +31,7 @@ const Events: React.FC = () => {
             startTime: "02:45 PM",
             endTime: "04:00 PM",
             location: "Feeling Flow Studio, Palo Alto",
+            eventimage:'https://via.placeholder.com/600x400?text=Event+3',
             description:
                 "Continue your Tango journey with our Foundations II workshop. Designed for those who have completed the Foundations I workshop or have some Tango experience.",
         },
@@ -39,6 +42,7 @@ const Events: React.FC = () => {
             startTime: "10:00 AM",
             endTime: "12:00 PM",
             location: "Silicon Valley Conference Center",
+            eventimage:'https://via.placeholder.com/600x400?text=Event+4',
             description:
                 "Network with tech innovators and enthusiasts at our annual meetup. Discover the latest trends and share ideas with industry leaders.",
         },
@@ -49,6 +53,7 @@ const Events: React.FC = () => {
             startTime: "06:00 AM",
             endTime: "09:00 AM",
             location: "Central Park, New York",
+            eventimage:'https://via.placeholder.com/600x400?text=Event+5',
             description:
                 "Participate in our annual charity run to support local communities. Enjoy a morning run through Central Park and make a difference.",
         },
@@ -59,6 +64,7 @@ const Events: React.FC = () => {
             startTime: "09:00 AM",
             endTime: "05:00 PM",
             location: "Online Event",
+            eventimage:'https://via.placeholder.com/600x400?text=Event+6',
             description:
                 "Join our comprehensive digital marketing workshop to enhance your skills. Learn from experts and gain practical knowledge to boost your career.",
         },
@@ -69,6 +75,7 @@ const Events: React.FC = () => {
             startTime: "01:00 PM",
             endTime: "06:00 PM",
             location: "Downtown Plaza, San Francisco",
+            eventimage:'https://via.placeholder.com/600x400?text=Event+7',
             description:
                 "Enjoy a day of art exhibitions and wine tasting at our annual Art & Wine Festival. Meet local artists and sample fine wines from the region.",
         },
@@ -79,6 +86,7 @@ const Events: React.FC = () => {
             startTime: "08:00 AM",
             endTime: "05:00 PM",
             location: "Hilton Hotel, Los Angeles",
+            eventimage:'https://via.placeholder.com/600x400?text=Event+8',
             description:
                 "Attend our Leadership Summit to learn from top industry leaders. Gain insights into effective leadership strategies and network with professionals.",
         },
@@ -100,6 +108,7 @@ const Events: React.FC = () => {
                     date={event.date}
                     startTime={event.startTime}
                     endTime={event.endTime}
+                    eventImage={event.eventimage}
                     location={event.location}
                 />
             ))}
