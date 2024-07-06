@@ -6,6 +6,7 @@ import Login from "./page/auth/login";
 import Signup from "./page/auth/Signup";
 import AlumniProfile from "./components/AlumniProfile";
 import Blog from "./page/Blog";
+import Events from "./page/Events";
 
 function App(): JSX.Element {
     
@@ -39,6 +40,15 @@ function App(): JSX.Element {
                     element={
                         <MainLayout>
                             <Blog />
+                            
+                        </MainLayout>
+                    }
+                />
+                 <Route
+                    path="/events"
+                    element={
+                        <MainLayout>
+                            <Events />
                             
                         </MainLayout>
                     }
