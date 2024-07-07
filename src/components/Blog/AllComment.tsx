@@ -5,25 +5,31 @@ import CreateCommentForm from "../CreateCommentForm";
 interface CommentData {
     id: number;
     avatar: string;
-    commentTime: string;
     title: string;
+    commentTime: string;
     content: string;
-    totalLike: string;
+    // Add the photos and videos properties to match the Comment type
+    photos: string[];
+    videos: string[];
 }
 
 interface AllCommentsProps {
+    postId: number;
     comments: CommentData[];
     totalComment: number;
-    createComment: () => void;
+    createComment: (postId: number, comment: CommentData) => void;
 }
 
+
 const AllComments: React.FC<AllCommentsProps> = ({
-    comments,
+    postId,
+    comments = [],
     totalComment,
     createComment,
 }) => {
     const [visibleCount, setVisibleCount] = useState(10);
     const [showCreateComment, setShowCreateComment] = useState(false);
+
     const handleShowMoreComments = () => {
         setVisibleCount((prevCount) => prevCount + 10);
     };
@@ -55,7 +61,10 @@ const AllComments: React.FC<AllCommentsProps> = ({
                     </button>
                 </div>
                 {showCreateComment && (
-                    <CreateCommentForm onCreatePost={() => {}} />
+                    <CreateCommentForm
+                        postId={postId}
+                        onCreateComment={createComment}
+                    />
                 )}
             </div>
             <div>
@@ -66,7 +75,7 @@ const AllComments: React.FC<AllCommentsProps> = ({
                         commentTime={comment.commentTime}
                         title={comment.title}
                         comment={comment.content}
-                        totalLike={comment.totalLike}
+                        totalLike={comment.totalLike?.toString() ?? "0"}
                         onClick={() => handleClick(index)}
                         handleLike={() => handleLike(index)}
                         handleShare={() => handleShare(index)}

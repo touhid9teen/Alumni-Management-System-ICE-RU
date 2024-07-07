@@ -10,7 +10,7 @@ interface Comment {
     id: number;
     avatar: string;
     title: string;
-    time: string;
+    commentTime: string;
     content: string;
     photos: string[];
     videos: string[];
@@ -38,7 +38,9 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
         type: "photo" | "video"
     ) => {
         if (e.target.files) {
-            const urls = files.map((file) => URL.createObjectURL(file));
+            const urls = Array.from(e.target.files).map((file) =>
+                URL.createObjectURL(file)
+            );
             if (type === "photo") {
                 setPhotos(urls);
             } else {
@@ -52,7 +54,7 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
             id: Date.now(),
             avatar: avatar,
             title: "John Doe", // Replace with actual user name
-            time: new Date().toISOString(),
+            commentTime: new Date().toISOString(),
             content: comment,
             photos: photos,
             videos: videos,
