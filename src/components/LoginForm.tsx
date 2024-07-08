@@ -13,6 +13,7 @@ import { LOCAL_STORAGE_KEYS } from "../constants/Global";
 import { setToStorage } from "../utils/token";
 import { toast } from "react-toastify";
 import Loader from "./Loader";
+import { routes } from "../constants/Route";
 
 const schema = yup.object().shape({
 	email: yup.string().email().required(),
@@ -44,7 +45,7 @@ const LoginForm: FC = () => {
 			const url = getBaseUrl() + "/auth/login";
 			const response = await axios.post(url, payload);
 
-			setToStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN, response.data.token);
+			setToStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN, response.data.access_token);
 			setToStorage(LOCAL_STORAGE_KEYS.AUTH_EMAIL, response.data.email);
 			setToStorage(LOCAL_STORAGE_KEYS.AUTH_NAME, response.data.name);
 
@@ -59,7 +60,7 @@ const LoginForm: FC = () => {
 		}
 		setIsLoading(false);
 	};
-	const onClickSignUp = () => navigate("/signup");
+	const onClickSignUp = () => navigate(routes.signup.path);
 	return (
 		<div className="py-8 2xl:py-12">
 			{/* message top */}
