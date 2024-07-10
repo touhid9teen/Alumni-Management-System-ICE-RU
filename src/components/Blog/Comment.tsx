@@ -1,6 +1,6 @@
-import React from 'react';
-import AvatarWithDescription from '../AvatarWithDescription';
-import { FaThumbsUp, FaReply } from 'react-icons/fa';
+import React from "react";
+import AvatarWithDescription from "../AvatarWithDescription";
+import { FaThumbsUp, FaReply } from "react-icons/fa";
 
 interface CommentProps {
     avatar: string;
@@ -48,7 +48,7 @@ const Comment: React.FC<CommentProps> = ({
                         onClick={handleShare}
                     >
                         <FaReply className="mr-1" />
-                        <span>Replay</span>
+                        <span>Reply</span>
                     </button>
                 </div>
             </div>

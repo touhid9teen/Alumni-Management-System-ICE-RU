@@ -1,15 +1,15 @@
 import React from "react";
 
 interface WrapperProps {
-    children: React.ReactNode;
-    className?: string;
+	children: React.ReactNode;
+	className?: string;
 }
 
 const Wrapper: React.FC<WrapperProps> = ({
-    children,
-    className = "",
+	children,
+	className = "",
 }: WrapperProps): JSX.Element => {
-    return <div className={className}>{children}</div>;
+	return <div className={className}>{children}</div>;
 };
 
 export default Wrapper;

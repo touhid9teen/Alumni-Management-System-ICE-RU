@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import AvatarWithDescription from "../AvatarWithDescription";
 import PostAction from "./PostAction";
 import PostSummary from "./PostSummary";
-import CreateCommentForm from "../CreateCommentForm";
-import avatar from "../../assets/avatar.png";
+import AllComments from "./AllComment";
 
 interface Comment {
     id: number;
     avatar: string;
     title: string;
-    time: string;
+    commentTime: string;
     content: string;
     photos: string[];
     videos: string[];
+    totalLike: number;
 }
 
 interface Post {
@@ -33,6 +33,9 @@ interface PostDetailsProps {
 
 const PostDetails: React.FC<PostDetailsProps> = ({ refreshPosts }) => {
     const [posts, setPosts] = useState<Post[]>([]);
+    const [showCommentForm, setShowCommentForm] = useState<{
+        [key: number]: boolean;
+    }>({});
 
     const fetchPosts = () => {
         const loadedPosts = localStorage.getItem("posts");
@@ -47,20 +50,21 @@ const PostDetails: React.FC<PostDetailsProps> = ({ refreshPosts }) => {
 
     const handleLike = (id: number) => {
         const updatedPosts = posts.map((post) =>
-            post.id === id
-                ? { ...post, totalLike: post.totalLike + 1 }
-                : post
+            post.id === id ? { ...post, totalLike: post.totalLike + 1 } : post
         );
         setPosts(updatedPosts);
         localStorage.setItem("posts", JSON.stringify(updatedPosts));
     };
 
-    // const handleComment = (id: number) => {
-    //     // This function is not used anymore
-    // };
+    const toggleCommentForm = (id: number) => {
+        setShowCommentForm((prevState) => ({
+            ...prevState,
+            [id]: !prevState[id],
+        }));
+    };
 
     const handleShare = (id: number) => {
-        //console.log(`Post ${postId} shared!`);
+        console.log(`Post ${id} shared!`);
         // Implement your share logic here
     };
 
@@ -93,23 +97,22 @@ const PostDetails: React.FC<PostDetailsProps> = ({ refreshPosts }) => {
                         title={post.title}
                         onClick={() => {}}
                     />
-                    <PostSummary content={post.content} photo={post.photos} />
+                    <PostSummary content={post.content} photos={post.photos} />
                     <PostAction
-                        totalLike={"5"}
-                        totalComment={"3"}
+                        totalLike={post.totalLike?.toString() ?? "0"}
+                        totalComment={post.totalComment?.toString() ?? "0"}
                         onClickLike={() => handleLike(post.id)}
-                        onClickComment={() => {}}
+                        onClickComment={() => toggleCommentForm(post.id)}
                         onClickShare={() => handleShare(post.id)}
-                        // totalLike={post.totalLike.toString()}
-                        // totalComment={post.totalComment.toString()}
-                        // onClickLike={() => handleLike(post.id)}
-                        // onClickComment={() => {}}
-                        // onClickShare={() => handleShare(post.id)}
                     />
-                    {/* <CreateCommentForm
-                        postId={post.id}
-                        onCreateComment={handleCreateComment}
-                    /> */}
+                    {showCommentForm[post.id] && (
+                        <AllComments
+                            postId={post.id}
+                            comments={post.comments}
+                            totalComment={post.totalComment}
+                            createComment={handleCreateComment}
+                        />
+                    )}
                 </div>
             ))}
         </div>
