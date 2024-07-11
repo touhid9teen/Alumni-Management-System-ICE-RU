@@ -79,14 +79,16 @@ const SideBarLink: React.FC<LProps> = (props: LProps) => {
 			to={linkTo}
 			className={({ isActive }) =>
 				isActive && text !== "Logout" && text !== "Login"
-					? "block duration-300 text-primary"
+					? "block duration-300 "
 					: "block duration-300"
 			}
 		>
-			<div className={`flex gap-7 items-center ${!open && "justify-center"}`}>
-				{icon}
-				<div className={`${!open && "hidden"} flex gap-3 items-center`}>
-					<span className="text-sm font-medium">{text}</span>
+			<div className={`flex gap-7 items-center hover:bg-gray-200  rounded-md ${!open && "justify-center"}`}>
+				<div className="flex gap-3 pl-4 items-center ">
+					{icon}
+				</div>
+				<div className={`${!open && "hidden"} flex gap-3 items-center `}>
+					<span className="text-sm font-medium ">{text}</span>
 				</div>
 			</div>
 		</NavLink>
@@ -123,7 +125,7 @@ const Sidebar: React.FC = () => {
 					</p>
 				</div>
 			</div>
-			<div className="flex-grow space-y-5 duration-100">
+			<div className="flex-grow space-y-5 duration-100 ">
 				{PageNavLinks.map((link) => (
 					<SideBarLink
 						key={link.text}
