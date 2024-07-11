@@ -11,6 +11,7 @@ import Blog from "../page/Blog";
 import AlumniProfile from "../components/AlumniProfile";
 import MainLayout from "../layouts/MainLayout";
 import AlumniInfoTable from "../page/dashboard/AlumniInfoTable";
+import AlumniAssociation from "../page/AlumniAssociation";
 
 const MainRoutes = createBrowserRouter([
 	{
@@ -68,6 +69,14 @@ const MainRoutes = createBrowserRouter([
 				element: (
 					<MainLayout>
 						<AlumniInfoTable />
+					</MainLayout>
+				),
+			},
+			{
+				path: routes.alumniAssociationCommittee.path,
+				element: (
+					<MainLayout>
+						<AlumniAssociation />
 					</MainLayout>
 				),
 			},
