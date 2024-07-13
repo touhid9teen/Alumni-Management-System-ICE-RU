@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../../elements/Button";
 
 interface EventItemProps {
     //eventId: number;
@@ -8,7 +9,7 @@ interface EventItemProps {
     endTime: string;
     location: string;
     //description: string;
-    eventImage: string; 
+    eventImage: string;
 }
 
 const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
@@ -24,29 +25,67 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
     } = props;
 
     return (
-        <div className="flex flex-row items-center justify-center pt-5 pb-5 xs:pt-10 sm:pt-20 border-b bg-white shadow-md rounded-lg">
-            <div className="flex flex-col items-center w-full xs:w-3/4 sm:w-2/4">
+        <div className="flex flex-col md:flex-row items-center justify-center py-5 border-b bg-white shadow-md rounded-lg mb-4">
+            <div className="flex flex-col items-center w-full md:w-1/2">
                 <img
                     src={eventImage}
                     alt={heading}
-                    className="w-full h-64 object-cover rounded-t-lg"
+                    className="w-full h-64 object-cover rounded-t-lg md:rounded-none md:rounded-l-lg"
                 />
             </div>
 
-            <div className="flex flex-col items-start w-full xs:w-3/4 sm:w-2/4 p-5">
-                <h1 className="text-2xl xs:text-3xl sm:text-4xl font-bold leading-tight mb-3">
+            <div className="flex flex-col items-start w-full md:w-1/2 p-5">
+                <h1 className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight mb-3 ">
                     {heading}
                 </h1>
-                <div className="flex flex-row justify-start items-center space-x-2 xs:space-x-3 sm:space-x-4 mb-2">
-                    <p className="text-lg xs:text-xl sm:text-2xl">{date}</p>
-                    <p className="text-lg xs:text-xl sm:text-2xl">
-                        {startTime}
-                    </p>
-                    <span className="text-lg xs:text-xl sm:text-2xl">to</span>
-                    <p className="text-lg xs:text-xl sm:text-2xl">{endTime}</p>
+                <div className="flex flex-col md:flex-row justify-between gap-4 mb-2  text-gray-500">
+                    <div className="flex flex-row justify-start items-center space-x-2">
+                        <p className="text-md md:text-lg lg:text-xl">{date}</p>
+                        <p className="text-md md:text-lg lg:text-xl">
+                            {startTime}
+                        </p>
+                        <span className="text-md md:text-lg lg:text-xl">
+                            to
+                        </span>
+                        <p className="text-md md:text-lg lg:text-xl">
+                            {endTime}
+                        </p>
+                    </div>
+                    <div className="flex flex-row justify-start items-center space-x-2">
+                        <p className="text-md md:text-lg lg:text-xl">
+                            {location}
+                        </p>
+                    </div>
                 </div>
-                <div className="flex flex-row justify-start items-center space-x-2 xs:space-x-3 sm:space-x-4">
-                    <p className="text-lg xs:text-xl sm:text-2xl">{location}</p>
+
+                <div className="flex flex-col md:flex-row justify-end items-center gap-5  w-full">
+                    {/* <button
+                        className="flex justify-center items-center bg-primary text-black px-2 mt-4 w-full md:w-auto h-12 font-semibold text-sm rounded"
+                        type="button"
+                    >
+                        Register Now
+                    </button>
+
+                    <button
+                        className="flex justify-center items-center bg-primary text-black px-2 mt-4 w-full md:w-auto h-12 font-semibold text-sm rounded"
+                        type="button"
+                    >
+                        See Details
+                    </button> */}
+                    <Button
+						buttonType="submit"
+						customClass="flex justify-center p-2 item-center font-semibold text-base text-black !py-0"
+						//disabled={isLoading}
+					>
+						Register Now
+					</Button>
+                    <Button
+						buttonType="submit"
+						customClass="flex justify-center p-2 item-center font-semibold text-base text-black !py-0"
+						//disabled={isLoading}
+					>
+						See Details
+					</Button>
                 </div>
             </div>
         </div>
