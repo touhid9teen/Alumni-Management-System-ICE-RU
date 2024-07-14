@@ -40,7 +40,7 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
             {showOverlay && (
                 <div className="flex flex-col items-center justify-center gap-10 absolute h-[94%] border bg-royal-indigo p-5 bg-opacity-60">
                     <Button
-                        customClass="px-5 !text-black"
+                        customClass="px-5 !text-black hover:!text-white hover:bg-han-purple"
                         onClick={() => {
                             navigate(routes.createEvent.path, {
                                 state: { eventId: id },
@@ -49,7 +49,7 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
                     >
                         Update
                     </Button>
-                    <Button customClass="px-5 !text-black" onClick={() => handleDelete(id )}>
+                    <Button customClass="px-5 !text-black hover:!text-white hover:bg-han-purple" onClick={() => handleDelete(id )}>
                         Delete
                     </Button>
                 </div>
@@ -89,6 +89,11 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
                         buttonType="submit"
                         customClass="flex justify-center p-3 !py-4 item-center font-semibold !text-textDark bg-tranquil-blue hover:bg-han-purple hover:!text-white"
                         //disabled={isLoading}
+                        onClick={() => {
+                            navigate(routes.eventDetails.path.replace(':id', id), {
+                                state: { eventId: id },
+                            });
+                        }}
                     >
                         See Details
                     </Button>

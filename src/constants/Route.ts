@@ -1,3 +1,5 @@
+
+
 export const routes = {
 	home: {
 		title: "Home",
@@ -43,6 +45,11 @@ export const routes = {
 		title: "Events",
 		key: "events",
 		path: "/events",
+	},
+	eventDetails: {
+		title: "EventDetails",
+		key: "event-details",
+		path: "/events/details/:id",
 	},
 	alumniProfile: {
 		title: "Alumni Profile",

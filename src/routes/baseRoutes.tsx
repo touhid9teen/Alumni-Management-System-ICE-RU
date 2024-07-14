@@ -13,6 +13,7 @@ import MainLayout from "../layouts/MainLayout";
 import AlumniInfoTable from "../page/dashboard/AlumniInfoTable";
 import Events from "../page/Events";
 import CreateEventForm from "../components/Event/CreateEventForm";
+import EventDetails from "../components/Event/EventDetails";
 
 const MainRoutes = createBrowserRouter([
     {
@@ -86,6 +87,14 @@ const MainRoutes = createBrowserRouter([
                 element: (
                     <MainLayout>
                         <CreateEventForm />
+                    </MainLayout>
+                ),
+            },
+            {
+                path: routes.eventDetails.path,
+                element: (
+                    <MainLayout>
+                        <EventDetails />
                     </MainLayout>
                 ),
             },
