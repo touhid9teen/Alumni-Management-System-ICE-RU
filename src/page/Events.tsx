@@ -11,9 +11,24 @@ import { routes } from "../constants/Route";
 const Events: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [eventData, setEventData] = useState<object>({});
+    const [idDeleted, setIdDeleted] = useState<number>(0);
 
     const token = getFromStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
     const navigate = useNavigate();
+
+    const handleDelete = async (eventId: number) => {
+        try {
+            const url = getBaseUrl() + `/event/delete/${eventId}`;
+            await axios.delete(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setIdDeleted((prevCount) => prevCount + 1);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,7 +54,7 @@ const Events: React.FC = () => {
             setIsLoading(false);
         };
         fetchData();
-    }, []);
+    }, [idDeleted]);
     return (
         <div className="flex flex-col font-serif">
             <div className="flex flex-col justify-center items-center pt-10 pb-16 sm:pt-20">
@@ -70,6 +85,7 @@ const Events: React.FC = () => {
                         location={event.location}
                         description={event.description}
                         eventImage={event.image_path}
+                        handleDelete={handleDelete}
                     />
                 ))
             ) : (

@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../elements/Button";
 import { routes } from "../../constants/Route";
-import { getBaseUrl } from "../../hooks/baseUrl";
-import axios from "axios";
-import { getFromStorage } from "../../utils/token";
-import { LOCAL_STORAGE_KEYS } from "../../constants/Global";
 import { toast } from "react-toastify";
 
 interface EventItemProps {
@@ -17,6 +13,7 @@ interface EventItemProps {
     location: string;
     description?: string;
     eventImage: string;
+    handleDelete: (eventId: number) => void;
 }
 
 const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
@@ -28,25 +25,12 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
         location,
         // description,
         eventImage,
+        handleDelete,
     } = props;
 
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const navigate = useNavigate();
-    const token = getFromStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
-
-    const handleDelete = async (eventId: number) => {
-        try {
-            const url = getBaseUrl() + `/event/delete/${eventId}`;
-            await axios.delete(url, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
+   
     return (
         <div
             className="flex py-5 gap-20 md:gap-10  bg-white shadow-md rounded-lg mb-4 relative"
@@ -54,9 +38,9 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
             onMouseLeave={() => setShowOverlay(false)}
         >
             {showOverlay && (
-                <div className="flex flex-col items-center justify-center gap-10 absolute h-[94%] border bg-royal-indigo p-5">
+                <div className="flex flex-col items-center justify-center gap-10 absolute h-[94%] border bg-royal-indigo p-5 bg-opacity-60">
                     <Button
-                        customClass="px-5"
+                        customClass="px-5 !text-black"
                         onClick={() => {
                             navigate(routes.createEvent.path, {
                                 state: { eventId: id },
@@ -65,7 +49,7 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
                     >
                         Update
                     </Button>
-                    <Button customClass="px-5" onClick={() => handleDelete(id)}>
+                    <Button customClass="px-5 !text-black" onClick={() => handleDelete(id )}>
                         Delete
                     </Button>
                 </div>
@@ -93,7 +77,7 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
                     Location: {location}
                 </p>
 
-                <div className="flex flex-col md:flex-row justify-end items-center gap-5  w-full">
+                <div className="flex flex-col md:flex-row justify-end items-center gap-5 w-full">
                     <Button
                         buttonType="submit"
                         customClass="flex justify-center p-3 !py-4 item-center font-semibold !text-textDark bg-tranquil-blue hover:bg-han-purple hover:!text-white"
