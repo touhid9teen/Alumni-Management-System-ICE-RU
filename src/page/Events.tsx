@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import EventItem from "../components/Event/EventItem";
-import CreateEventForm from "../components/Event/CreateEventForm";
 import axios from "axios";
 import { LOCAL_STORAGE_KEYS } from "../constants/Global";
 import { getFromStorage } from "../utils/token";
 import { getBaseUrl } from "../hooks/baseUrl";
 import { toast } from "react-toastify";
+import { routes } from "../constants/Route";
 
 const Events: React.FC = () => {
-    const [createEventForm, showCreateEventForm] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [eventData, setEventData] = useState<object>({});
-    const handleShowEventForm = () => {
-        showCreateEventForm(!createEventForm);
-    };
 
     const token = getFromStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,9 +27,6 @@ const Events: React.FC = () => {
                     },
                 });
                 setEventData(response?.data?.Data);
-                toast.success("Event create successful!", {
-                    autoClose: 1500,
-                });
             } catch (error) {
                 const errorMessage =
                     typeof error?.response?.data === "string"
@@ -56,15 +51,19 @@ const Events: React.FC = () => {
                 </p>
                 <button
                     className="text-xl sm:text-2xl pt-4 cursor-pointer text-blue-500 underline"
-                    onClick={handleShowEventForm}
+                    onClick={() => {
+                        navigate(routes.createEvent.path, {
+                            state: { form: "create-event" },
+                        });
+                    }}
                 >
                     Write a Event ?
                 </button>
-                {createEventForm && <CreateEventForm />}
             </div>
             {eventData.length > 0 ? (
                 eventData.map((event) => (
                     <EventItem
+                        id={event.id}
                         title={event.title}
                         date={event.event_date}
                         startTime={event.start_time}

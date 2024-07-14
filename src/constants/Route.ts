@@ -54,4 +54,9 @@ export const routes = {
 		key: "alumni-table-info",
 		path: "/dashboard",
 	},
+	createEvent: {
+		title: "Create Event",
+		key: "create-event",
+		path: "/events/create-event",
+	}
 };

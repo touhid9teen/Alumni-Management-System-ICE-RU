@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../../elements/Button";
+import { routes } from "../../constants/Route";
+import { getBaseUrl } from "../../hooks/baseUrl";
+import axios from "axios";
+import { getFromStorage } from "../../utils/token";
+import { LOCAL_STORAGE_KEYS } from "../../constants/Global";
+import { toast } from "react-toastify";
 
 interface EventItemProps {
-    //eventId: number;
+    id: number;
     title: string;
     date: string;
     startTime: string;
@@ -14,18 +21,55 @@ interface EventItemProps {
 
 const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
     const {
-        //eventId,
+        id,
         title,
         date,
         startTime,
-        endTime,
         location,
         // description,
         eventImage,
     } = props;
 
+    const [showOverlay, setShowOverlay] = useState<boolean>(false);
+    const navigate = useNavigate();
+    const token = getFromStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
+
+    const handleDelete = async (eventId: number) => {
+        try {
+            const url = getBaseUrl() + `/event/delete/${eventId}`;
+            await axios.delete(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
-        <div className="flex py-5 gap-20 md:gap-10  bg-white shadow-md rounded-lg mb-4">
+        <div
+            className="flex py-5 gap-20 md:gap-10  bg-white shadow-md rounded-lg mb-4 relative"
+            onMouseEnter={() => setShowOverlay(true)}
+            onMouseLeave={() => setShowOverlay(false)}
+        >
+            {showOverlay && (
+                <div className="flex flex-col items-center justify-center gap-10 absolute h-[94%] border bg-royal-indigo p-5">
+                    <Button
+                        customClass="px-5"
+                        onClick={() => {
+                            navigate(routes.createEvent.path, {
+                                state: { eventId: id },
+                            });
+                        }}
+                    >
+                        Update
+                    </Button>
+                    <Button customClass="px-5" onClick={() => handleDelete(id)}>
+                        Delete
+                    </Button>
+                </div>
+            )}
             <div className="border w-30 h-30 md:w-1/2">
                 <img
                     src={eventImage}

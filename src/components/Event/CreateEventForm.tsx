@@ -1,6 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 // import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../elements/Button";
 import InputField from "../../elements/InputField";
 import * as yup from "yup";
@@ -14,6 +15,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { LOCAL_STORAGE_KEYS } from "../../constants/Global";
 import { getFromStorage } from "../../utils/token";
+import { routes } from "../../constants/Route";
 
 interface FormData {
     title: string;
@@ -25,11 +27,11 @@ interface FormData {
 }
 
 const schema = yup.object().shape({
-    title: yup.string().required("Event Title is required"), 
-    event_date: yup.string().required("Event Date is required"), 
-    start_time: yup.string().required("Event Start Time is required"), 
+    title: yup.string().required("Event Title is required"),
+    event_date: yup.string().required("Event Date is required"),
+    start_time: yup.string().required("Event Start Time is required"),
     location: yup.string().required("Location is required"),
-    description: yup.string().required("Event Details are required"), 
+    description: yup.string().required("Event Details are required"),
     // Consider adding validation for the image field if necessary
 });
 
@@ -41,14 +43,20 @@ type FieldKeys =
     | "description"
     | "image";
 
+type FieldValues = "string" | "file" | null;
+
 const CreateEventForm: FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [reqImage, setReqImage] = useState<null | File>(null);
+    const loation = useLocation();
+    const eventId = loation.state.eventId;
+    const navigate = useNavigate();
 
     const {
         reset,
         control,
         handleSubmit,
+        setValue,
         formState: { errors },
     } = useForm<FormData>({
         resolver: yupResolver(schema),
@@ -61,6 +69,33 @@ const CreateEventForm: FC = () => {
             image: null,
         },
     });
+    useEffect(() => {
+        if (eventId) {
+            const fatchdataforedit = async () => {
+                try {
+                    const url = getBaseUrl() + `/event/${eventId}`;
+                    const response = await axios.get(url, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    Object.entries(response?.data?.Data).map(([key, value]) => {
+                        setValue(key as FieldKeys, value as FieldValues);
+                    });
+                } catch (error) {
+                    const errorMessage =
+                        typeof error?.response?.data === "string"
+                            ? error.response.data
+                            : "An unexpected error occurred. Please try again.";
+                    toast.error(errorMessage, {
+                        autoClose: 3000,
+                    });
+                }
+            };
+            fatchdataforedit();
+        }
+    }, []);
 
     const token = getFromStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
 
@@ -68,18 +103,40 @@ const CreateEventForm: FC = () => {
         payload.image = reqImage;
         setIsLoading(true);
         try {
-            const url = getBaseUrl() + "/event/create";
-            const response = await axios.post(url, payload, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-            console.log("Submit Successful", response);
+            let url;
+            let toastText;
+            let newPayload;
+            if (eventId) {
+                url = getBaseUrl() + `/event/update/${eventId}`;
+                newPayload = { ...payload, id: eventId };
+
+                toastText = "Event updated successfully";
+            } else {
+                url = getBaseUrl() + `/event/create`;
+                toastText = "Event created successfully";
+            }
+
+            const response = eventId
+                ? await axios.patch(url, newPayload, {
+                      headers: {
+                          Authorization: `Bearer ${token}`,
+                          "Content-Type": "multipart/form-data",
+                      },
+                  })
+                : await axios.post(url, payload, {
+                      headers: {
+                          Authorization: `Bearer ${token}`,
+                          "Content-Type": "multipart/form-data",
+                      },
+                  });
+
             reset();
-            toast.success("Event create successful!", {
+
+            toast.success(toastText, {
                 autoClose: 1500,
             });
+
+            navigate(routes.events.path);
         } catch (error) {
             const errorMessage =
                 typeof error?.response?.data === "string"
@@ -215,7 +272,7 @@ const CreateEventForm: FC = () => {
 
                     <Button
                         buttonType="submit"
-                        customClass="flex justify-center item-center !bg-primary !text-black w-100 font-semibold text-sm"
+                        customClass="flex justify-center item-center !bg-primary !text-black w-100 font-semibold text-sm !py-0"
                         disabled={isLoading}
                     >
                         <div className="flex items-center justify-center relative min-w-48 min-h-12">
