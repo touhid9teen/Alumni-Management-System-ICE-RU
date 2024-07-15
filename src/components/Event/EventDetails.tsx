@@ -46,7 +46,7 @@ const EventDetails: React.FC = () => {
                 />
                 <div className="p-6">
                     <h2 className="text-2xl font-bold text-gray-800">
-                        {eventdata.title}
+                        {eventdata?.title}
                     </h2>
                     <p className="text-gray-600">
                         {eventdata?.event_date} at {eventdata?.start_time}

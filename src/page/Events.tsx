@@ -61,7 +61,7 @@ const Events: React.FC = () => {
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold">
                     Upcoming Event
                 </h1>
-                <p className="text-xl sm:text-2xl pt-4">
+                <p className="text-xl sm:text-2xl pt-4 ">
                     Peek at some alumni events happening just around the corner.
                 </p>
                 <button

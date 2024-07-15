@@ -150,7 +150,7 @@ const CreateEventForm: FC = () => {
     };
 
     return (
-        <div className="w-[821px] h-[900px] bg-white">
+        <div className="flex flex-col item-center justify-center bg-white">
             {/* headline */}
             <div className="mt-16 flex flex-col justify-center items-center">
                 <h2 className="text-2xl text-black font-semibold">
