@@ -1,10 +1,11 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC, useDebugValue } from "react";
 import AvatarWithDescription from "./AvatarWithDescription";
 import Avatar from "../assets/avatar.png";
 import Button from "../elements/Button";
 import TextArea from "../elements/TextArea";
 import MediaUploader from "../elements/MediaUploader";
 import moment from "moment"; // Ensure you have moment installed
+import Toolbar from "../components/Toolbar";
 
 interface Post {
     id: number;
@@ -25,6 +26,13 @@ const CreatePostForm: FC<CreatePostFormProps> = ({ onClick }) => {
     const [photos, setPhotos] = useState<string[]>([]);
     const [videos, setVideos] = useState<string[]>([]);
     const [posts, setPosts] = useState<Post[]>([]);
+
+    // const [editorContent, setEditorContent] =
+    //     useState<string>("Initial content");
+
+    // const handleEditorChange = (content: string) => {
+    //     setContent(content);
+    // };
 
     useEffect(() => {
         const loadedPosts = localStorage.getItem("posts");
@@ -87,11 +95,16 @@ const CreatePostForm: FC<CreatePostFormProps> = ({ onClick }) => {
                 onClick={() => {}}
             />
             <div className="flex flex-col gap-5">
-                <TextArea
+                {/* <TextArea
                     value={content}
                     onChange={handleContentChange}
                     placeholder="Write your post here..."
                     minHeight="200px"
+                /> */}
+                <Toolbar 
+                    value={content}
+                    onChange={handleContentChange}
+                    placeholder="Write your post here..."
                 />
                 <div className="flex flex-row justify-between gap-4">
                     <MediaUploader

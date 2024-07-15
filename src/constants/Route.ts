@@ -1,3 +1,5 @@
+
+
 export const routes = {
 	home: {
 		title: "Home",
@@ -39,6 +41,16 @@ export const routes = {
 		key: "blog",
 		path: "/blog",
 	},
+	events: {
+		title: "Events",
+		key: "events",
+		path: "/events",
+	},
+	eventDetails: {
+		title: "EventDetails",
+		key: "event-details",
+		path: "/events/details/:id",
+	},
 	alumniProfile: {
 		title: "Alumni Profile",
 		key: "alumni-profile",
@@ -49,4 +61,9 @@ export const routes = {
 		key: "alumni-table-info",
 		path: "/dashboard",
 	},
+	createEvent: {
+		title: "Create Event",
+		key: "create-event",
+		path: "/events/create-event",
+	}
 };

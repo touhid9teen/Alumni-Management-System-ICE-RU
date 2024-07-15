@@ -1,24 +1,41 @@
-import React from 'react';
-
-interface TextAreaProps {
+interface InputFieldProps {
+    id: string;
+    name: string;
     value: string;
-    onChange: (value: string) => void;
-    placeholder: string;
-    minHeight: string;
-    //maxLength?: number;
-    customClass? : string;
+    type?: string;
+    placeholder?: string;
+    customInputClass?: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    accept?: string;
+    height?: string;
 }
 
-const TextArea: React.FC<TextAreaProps> = ({ value, onChange, placeholder, minHeight,customClass }) => {
+const TextArea: React.FC<InputFieldProps> = (props: InputFieldProps) => {
+    const {
+        type = "",
+        placeholder = "",
+        customInputClass = "",
+        id,
+        name,
+        value,
+        onChange,
+        accept,
+        height = "auto",
+    } = props;
+
     return (
-        <div className="relative">
+        <div className="w-full">
             <textarea
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
-                className={`border border-gray-300 w-full p-4 rounded-lg focus:outline-none${customClass}` }
+                id={id}
+                type={type}
                 placeholder={placeholder}
-                style={{ minHeight }}
-            ></textarea>
+                name={name}
+                onChange={onChange}
+                value={value}
+                accept={accept}
+                className={`rounded-lg w-full px-4 py-2.5 text-deep-blue text-base border-2 border-silver-cloud placeholder:text-tranquil-blue placeholder:text-base ${customInputClass}`}
+                style={{ height }}
+            />
         </div>
     );
 };
