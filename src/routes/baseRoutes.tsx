@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import PageNotFound from "../page/NotFoundPage";
 import { routes } from "../constants/Route";
 import PublicWrapper from "../components/Layout/PublicWrapper";
@@ -11,9 +12,11 @@ import Blog from "../page/Blog";
 import AlumniProfile from "../components/AlumniProfile";
 import MainLayout from "../layouts/MainLayout";
 import AlumniInfoTable from "../page/dashboard/AlumniInfoTable";
+import AlumniAssociation from "../page/AlumniAssociation";
 import Events from "../page/Events";
 import CreateEventForm from "../components/Event/CreateEventForm";
 import EventDetails from "../components/Event/EventDetails";
+import CreateCommitteeForm from "../components/AlumniAssocation/CreateCommitteeForm";
 
 const MainRoutes = createBrowserRouter([
     {
@@ -98,6 +101,23 @@ const MainRoutes = createBrowserRouter([
                     </MainLayout>
                 ),
             },
+            {
+                path: routes.alumniAssociationCommittee.path,
+                element: (
+                    <MainLayout>
+                        <AlumniAssociation />
+                    </MainLayout>
+                ),
+            },
+            {
+                path: routes.addAlumniAssociationCommitteeMember.path,
+                element: (
+                    <MainLayout>
+                        <CreateCommitteeForm />
+                    </MainLayout>
+                ),
+            },
+            
         ],
     },
 ]);

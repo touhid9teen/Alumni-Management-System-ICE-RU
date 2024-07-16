@@ -1,16 +1,16 @@
 import { ChangeEvent, FC, useRef, useState } from "react";
 
 // import placeHolder from '@renderer/assets/uploadImagePlaceholder.png';
-import Button from "../elements/Button";
 
 interface ImageUploadProps {
+    id?: string;
     name: string;
     maxSize?: number;
     onUpload: (data: { name: string; image: File }) => void;
 }
 
 const ImageUpload: FC<ImageUploadProps> = (props: ImageUploadProps) => {
-    const { name, maxSize = 524288, onUpload } = props;
+    const { id, name, maxSize = 524288, onUpload } = props;
     const [image, setImage] = useState<File | null>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -50,24 +50,13 @@ const ImageUpload: FC<ImageUploadProps> = (props: ImageUploadProps) => {
         }
     };
 
-    const handleUploadedImage = (): void => {
-        if (inputRef.current) {
-            inputRef.current.click();
-        }
-    };
-
     return (
-        <div>
+        <div key={id}>
             <div
                 className={`relative rounded-xl pl-1 ${
                     !image ? "border border-dashed" : ""
                 }`}
             >
-                {/* <img
-          src={image ? URL.createObjectURL(image) : placeHolder}
-          alt="Uploaded image"
-          className="rounded-xl object-cover"
-        /> */}
                 <input
                     type="file"
                     id={`upload-image-${name}`}
@@ -79,12 +68,6 @@ const ImageUpload: FC<ImageUploadProps> = (props: ImageUploadProps) => {
                 />
             </div>
 
-            {/* <Button
-                customClass="mt-3 h-6 !px-3 py-2 text-xs !bg-[#D2FBE7] !text-black rounded-xl"
-                onClick={handleUploadedImage}
-            >
-                Upload Image
-            </Button> */}
             {errorMessage && (
                 <span className="mt-2 text-xs text-red-500">
                     {errorMessage}
