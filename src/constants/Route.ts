@@ -36,6 +36,11 @@ export const routes = {
 		key: "alumni-association-committee",
 		path: "/alumni-association-committee",
 	},
+	addAlumniAssociationCommitteeMember: {
+		title: "Add Alumni Association Committee Member",
+		key: "add-alumni-association-committee-member",
+		path: "/add-committee-member",
+	},
 	blog: {
 		title: "Blog",
 		key: "blog",
@@ -66,4 +71,5 @@ export const routes = {
 		key: "create-event",
 		path: "/events/create-event",
 	}
+
 };
