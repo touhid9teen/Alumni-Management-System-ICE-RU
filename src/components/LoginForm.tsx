@@ -48,6 +48,7 @@ const LoginForm: FC = () => {
 			setToStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN, response.data.access_token);
 			setToStorage(LOCAL_STORAGE_KEYS.AUTH_EMAIL, response.data.email);
 			setToStorage(LOCAL_STORAGE_KEYS.AUTH_NAME, response.data.name);
+			setToStorage(LOCAL_STORAGE_KEYS.AUTH_ROLE, response.data.role);
 
 			toast.success("Login successful!", {
 				autoClose: 1500,
@@ -109,6 +110,7 @@ const LoginForm: FC = () => {
 										id={value}
 										name={field.name}
 										placeholder={field.placeholder}
+										customInputClass="!w-[400px]"
 									/>
 								)}
 							/>
@@ -148,7 +150,7 @@ const LoginForm: FC = () => {
                     </div> */}
 					<Button
 						buttonType="submit"
-						customClass="flex justify-center item-center font-semibold text-base text-gray-900 !py-0"
+						customClass="flex justify-center item-center font-semibold text-base text-gray-900 !py-0 "
 						disabled={isLoading}
 					>
 						<div className="flex items-center justify-center relative min-w-48 min-h-12">
