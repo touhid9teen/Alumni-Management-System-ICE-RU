@@ -19,7 +19,7 @@ const CommitteeMembers: React.FC<CommitteeMembersProps> = (
             />
             <h1 className="font-bold text-xl">{role}</h1>
             <h3 className=" text-lg">{name}</h3>
-            <p className=" text-sm text-gray-500">{designation}</p>
+            <p className=" text-md sm text-gray-500">{designation}</p>
         </div>
     );
 };
