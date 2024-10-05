@@ -86,33 +86,49 @@ const PostDetails: React.FC<PostDetailsProps> = ({ refreshPosts }) => {
     };
 
     return (
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col space-y-6 max-w-4xl mx-auto p-1 bg-gray-100">
             {dummypost.map((post) => (
                 <div
                     key={post.id}
-                    className="bg-white shadow-md rounded-lg p-6"
+                    className="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow duration-300"
                 >
-                    <AvatarWithDescription
-                        avatar={post.avatar}
-                        time={post.postTime}
-                        title={post.title}
-                        onClick={() => {}}
-                    />
-                    <PostSummary content={post.content} photos={post.photos} />
-                    <PostAction
-                        totalLike={post.totalLike?.toString() ?? "0"}
-                        totalComment={post.totalComment?.toString() ?? "0"}
-                        onClickLike={() => handleLike(post.id)}
-                        onClickComment={() => toggleCommentForm(post.id)}
-                        onClickShare={() => handleShare(post.id)}
-                    />
-                    {showCommentForm[post.id] && (
-                        <AllComments
-                            postId={post.id}
-                            comments={post.comments}
-                            totalComment={post.totalComment}
-                            createComment={handleCreateComment}
+                    {/* Post Header */}
+                    <div className="flex items-center mb-4">
+                        <AvatarWithDescription
+                            avatar={post.avatar}
+                            time={post.postTime}
+                            title={post.title}
+                            onClick={() => {}}
                         />
+                    </div>
+
+                    {/* Post Content */}
+                    <PostSummary content={post.content} photo={post.photos} />
+
+                    {/* Action Buttons (Like, Comment, Share) */}
+                    {/* <div className="border-t mt-4 pt-4 flex justify-between items-center"> */}
+    <PostAction
+        totalLike={post.totalLike?.toString() ?? "0"}
+        totalComment={post.totalComment?.toString() ?? "0"}
+        onClickLike={() => handleLike(post.id)}
+        onClickComment={() => toggleCommentForm(post.id)}
+        onClickShare={() => handleShare(post.id)}
+    />
+{/* </div> */}
+
+
+
+
+                    {/* Comments Section */}
+                    {showCommentForm[post.id] && (
+                        <div className="mt-4">
+                            <AllComments
+                                postId={post.id}
+                                comments={post.comments}
+                                totalComment={post.totalComment}
+                                createComment={handleCreateComment}
+                            />
+                        </div>
                     )}
                 </div>
             ))}
