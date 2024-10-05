@@ -109,6 +109,7 @@ const LoginForm: FC = () => {
 										id={value}
 										name={field.name}
 										placeholder={field.placeholder}
+										customInputClass="!w-[400px]"
 									/>
 								)}
 							/>
@@ -148,7 +149,7 @@ const LoginForm: FC = () => {
                     </div> */}
 					<Button
 						buttonType="submit"
-						customClass="flex justify-center item-center font-semibold text-base text-gray-900 !py-0"
+						customClass="flex justify-center item-center font-semibold text-base text-gray-900 !py-0 "
 						disabled={isLoading}
 					>
 						<div className="flex items-center justify-center relative min-w-48 min-h-12">

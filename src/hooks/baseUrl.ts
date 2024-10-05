@@ -1,3 +1,3 @@
 export const getBaseUrl = () => {
-	return "http://10.5.174.38:9030/v1";
+	return "http://localhost:9030/v1";
 };
