@@ -30,7 +30,7 @@ const Blog: React.FC = () => {
                 </button>
             </div>
 
-            <div className="container mx-auto flex flex-col md:flex-row mt-16 md:mt-20 p-4">
+            <div className="container mx-auto flex flex-col md:flex-row md: p-4">
                 <main className="w-full p-4">
                     {showCreatePost && (
                         <CreatePostForm onClick={handleCreatePost} />

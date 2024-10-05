@@ -16,26 +16,31 @@ const PostAction: React.FC<PostActionsProps> = ({
     onClickShare,
 }) => {
     return (
-        <div className="flex justify-between items-center border-t border-b rounded border-gray-200 py-2 mb-2 px-2">
+        <div className="flex justify-between items-center border-t border-b border-gray-200 py-3 mb-3 px-4">
+            {/* Like Button */}
             <button
-                className="flex items-center text-gray-500 hover:text-blue-500"
+                className="flex items-center text-gray-600 hover:text-blue-500 focus:outline-none space-x-2"
                 onClick={onClickLike}
             >
-                <FaThumbsUp className="mr-1" />
-                <span>{totalLike}</span>
+                <FaThumbsUp />
+                <span>{totalLike} Likes</span>
             </button>
+
+            {/* Comment Button */}
             <button
-                className="flex items-center text-gray-500 hover:text-blue-500"
+                className="flex items-center text-gray-600 hover:text-blue-500 focus:outline-none space-x-2"
                 onClick={onClickComment}
             >
-                <FaCommentAlt className="mr-1" />
-                <span>{totalComment}</span>
+                <FaCommentAlt />
+                <span>{totalComment} Comments</span>
             </button>
+
+            {/* Share Button */}
             <button
-                className="flex items-center text-gray-500 hover:text-blue-500"
+                className="flex items-center text-gray-600 hover:text-blue-500 focus:outline-none space-x-2"
                 onClick={onClickShare}
             >
-                <FaShare className="mr-1" />
+                <FaShare />
                 <span>Share</span>
             </button>
         </div>
