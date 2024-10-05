@@ -30,39 +30,47 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
 
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const navigate = useNavigate();
-   
+
     return (
         <div
-            className="flex py-5 gap-20 md:gap-10  bg-white shadow-md rounded-lg mb-4 relative"
+            className="flex py-5 gap-20 md:gap-10 bg-white shadow-md rounded-lg mb-4 relative"
             onMouseEnter={() => setShowOverlay(true)}
             onMouseLeave={() => setShowOverlay(false)}
         >
-            {showOverlay && (
-                <div className="flex flex-col items-center justify-center gap-10 absolute h-[94%] border bg-royal-indigo p-5 bg-opacity-60">
-                    <Button
-                        customClass="px-5 !text-black hover:!text-white hover:bg-han-purple"
-                        onClick={() => {
-                            navigate(routes.createEvent.path, {
-                                state: { eventId: id },
-                            });
-                        }}
-                    >
-                        Update
-                    </Button>
-                    <Button customClass="px-5 !text-black hover:!text-white hover:bg-han-purple" onClick={() => handleDelete(id )}>
-                        Delete
-                    </Button>
-                </div>
-            )}
-            <div className="border w-30 h-30 md:w-1/2">
+            <div className="relative border w-30 h-30 md:w-1/2 overflow-hidden rounded-t-lg md:rounded-none md:rounded-l-lg">
                 <img
                     src={eventImage}
                     alt={title}
-                    className="object-cover w-[50%] rounded-t-lg md:rounded-none md:rounded-l-lg"
+                    className="absolute inset-0 w-full h-full object-cover"
                 />
+                
+                {/* Buttons overlay */}
+                {showOverlay && (
+                   <div className="flex flex-col items-center justify-center absolute inset-0 bg-black bg-opacity-50 p-5 gap-2">
+                   <Button
+                       customClass="px-5 py-2 !text-black bg-han-purple hover:bg-han-purple-dark transition duration-200 rounded"
+                       onClick={() => {
+                           navigate(routes.createEvent.path, {
+                               state: { eventId: id },
+                           });
+                       }}
+                       aria-label="Update Event"
+                   >
+                       Update
+                   </Button>
+                   <Button
+                       customClass="px-5 py-2 !text-black bg-red-600 hover:bg-red-700 transition duration-200 rounded"
+                       onClick={() => handleDelete(id)}
+                       aria-label="Delete Event"
+                   >
+                       Delete
+                   </Button>
+               </div>
+               
+                )}
             </div>
 
-            <div className="flex  flex-col items-start gap-3 md:w-1/2 p-5">
+            <div className="flex flex-col items-start gap-3 md:w-1/2 p-5">
                 <h1 className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight mb-3 ">
                     {title}
                 </h1>
@@ -72,31 +80,31 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
                 <p className="text-md md:text-lg lg:text-xl">
                     Time: {startTime}
                 </p>
-
                 <p className="text-md md:text-lg lg:text-xl">
                     Location: {location}
                 </p>
 
                 <div className="flex flex-col md:flex-row justify-end items-center gap-5 w-full">
-                    <Button
-                        buttonType="submit"
-                        customClass="flex justify-center p-3 !py-4 item-center font-semibold !text-textDark bg-tranquil-blue hover:bg-han-purple hover:!text-white"
-                        //disabled={isLoading}
-                    >
-                        Register Now
-                    </Button>
-                    <Button
-                        buttonType="submit"
-                        customClass="flex justify-center p-3 !py-4 item-center font-semibold !text-textDark bg-tranquil-blue hover:bg-han-purple hover:!text-white"
-                        //disabled={isLoading}
-                        onClick={() => {
-                            navigate(routes.eventDetails.path.replace(':id', id), {
-                                state: { eventId: id },
-                            });
-                        }}
-                    >
-                        See Details
-                    </Button>
+                <Button
+    buttonType="submit"
+    customClass="flex justify-center p-3 !py-4 item-center font-semibold !text-white bg-blue-400 hover:bg-blue-900 transition duration-200"
+    //disabled={isLoading}
+>
+    Register Now
+</Button>
+<Button
+    buttonType="button"  // Change to "button" for navigation
+    customClass="flex justify-center p-3 !py-4 item-center font-semibold !text-white bg-blue-400 hover:bg-blue-900 transition duration-200"
+    //disabled={isLoading}
+    onClick={() => {
+        navigate(routes.eventDetails.path.replace(':id', id), {
+            state: { eventId: id },
+        });
+    }}
+>
+    See Details
+</Button>
+
                 </div>
             </div>
         </div>
