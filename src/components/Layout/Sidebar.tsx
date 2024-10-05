@@ -94,12 +94,12 @@ const SideBarLink: React.FC<LProps> = (props: LProps) => {
 			}
 		>
 			<div
-				className={`flex gap-7 items-center hover:bg-gray-200  rounded-md ${
+				className={`flex gap-7  items-center hover:bg-gray-200  rounded-md ${
 					!open && "justify-center"
 				}`}
 			>
 				<div className="flex gap-3 pl-4 items-center ">{icon}</div>
-				<div className={`${!open && "hidden"} flex gap-3 items-center `}>
+				<div className={`${!open && "hidden"} flex items-center `}>
 					<span className="text-sm font-medium ">{text}</span>
 				</div>
 			</div>

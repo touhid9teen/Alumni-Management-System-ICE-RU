@@ -37,7 +37,6 @@ const AuthorizationTable = () => {
 	const navigate = useNavigate();
 
 	const handleOnClick = (reqUserData: RequestUser) => {
-		console.log(reqUserData);
 		navigate(`/authorization/${reqUserData.studentId}`, {
 			state: { reqUserData },
 		});
