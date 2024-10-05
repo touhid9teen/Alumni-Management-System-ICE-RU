@@ -1,5 +1,3 @@
-
-
 export const routes = {
 	home: {
 		title: "Home",
@@ -70,6 +68,15 @@ export const routes = {
 		title: "Create Event",
 		key: "create-event",
 		path: "/events/create-event",
-	}
-
+	},
+	authorization: {
+		title: "Authorization",
+		key: "authorization",
+		path: "/authorization",
+	},
+	requestedUser: {
+		title: "Requested User",
+		key: "requested-user",
+		path: "/authorization/:studentId",
+	},
 };
