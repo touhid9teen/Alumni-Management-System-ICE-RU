@@ -7,10 +7,11 @@ import { getFromStorage } from "../utils/token";
 import { getBaseUrl } from "../hooks/baseUrl";
 import { toast } from "react-toastify";
 import { routes } from "../constants/Route";
+import eventData from "../data/eventdummydata";
 
 const Events: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [eventData, setEventData] = useState<object>({});
+    // const [eventData, setEventData] = useState<object>({});
     const [idDeleted, setIdDeleted] = useState<number>(0);
 
     const token = getFromStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
@@ -41,7 +42,7 @@ const Events: React.FC = () => {
                         "Content-Type": "multipart/form-data",
                     },
                 });
-                setEventData(response?.data?.Data);
+                // setEventData(response?.data?.Data);
             } catch (error) {
                 const errorMessage =
                     typeof error?.response?.data === "string"
