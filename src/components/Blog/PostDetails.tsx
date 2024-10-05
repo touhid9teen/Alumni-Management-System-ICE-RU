@@ -3,6 +3,7 @@ import AvatarWithDescription from "../AvatarWithDescription";
 import PostAction from "./PostAction";
 import PostSummary from "./PostSummary";
 import AllComments from "./AllComment";
+import dummypost from "../../data/blogdummydata";
 
 interface Comment {
     id: number;
@@ -86,7 +87,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({ refreshPosts }) => {
 
     return (
         <div className="flex flex-col space-y-4">
-            {posts.map((post) => (
+            {dummypost.map((post) => (
                 <div
                     key={post.id}
                     className="bg-white shadow-md rounded-lg p-6"
