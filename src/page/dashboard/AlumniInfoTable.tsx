@@ -59,7 +59,7 @@ const ContactTable: React.FC = () => {
             position: "Data Analyst",
             Institute: "XYZ University",
             location: "New York, USA",
-            profilePic: "https://randomuser.me/api/portraits/women/2.jpg",
+            profilePic: "https://random user.me/api/portraits/women/2.jpg",
             socialLinks: {
                 github: "janeDoe",
                 linkedin: "janeDoe",
