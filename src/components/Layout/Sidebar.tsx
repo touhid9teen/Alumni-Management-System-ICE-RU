@@ -19,6 +19,7 @@ import {
 import { routes } from "../../constants/Route";
 import { LOCAL_STORAGE_KEYS } from "../../constants/Global";
 import { toast } from "react-toastify";
+import React from "react";
 
 interface Link {
 	icon: JSX.Element;
