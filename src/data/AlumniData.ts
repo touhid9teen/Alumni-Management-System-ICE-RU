@@ -1,7 +1,7 @@
 export const alumniDataSet = [
 	{
 		studentId: "1",
-		name: "Md. Touhidul Islam",
+		name: "Touhidul Islam",
 		jobTypes: "Private",
 		position: "Software Engineer",
 		Institute: "ABC Institute",
@@ -42,7 +42,7 @@ export const alumniDataSet = [
 		position: "Data Analyst",
 		Institute: "XYZ University",
 		location: "New York, USA",
-		profilePic: "https://random user.me/api/portraits/women/2.jpg",
+		profilePic: "https://randomuser.me/api/portraits/men/21.jpg",
 		socialLinks: {
 			github: "janeDoe",
 			linkedin: "janeDoe",

@@ -60,7 +60,7 @@ const Home: React.FC = () => {
 		<div className="relative font-serif">
 			<Slider {...settings}>
 				{images.map((src, index) => (
-					<div key={index} className="relative h-[800px] w-full">
+					<div key={index} className="relative h-[700px] w-full">
 						<img
 							src={src}
 							alt={`Slide ${index + 1}`}
