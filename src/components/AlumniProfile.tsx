@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import CoverPhoto from "../assets/coverphoto.webp"; // Assuming Cover Photo remains local
 import {
     FaGithub,
@@ -10,6 +10,7 @@ import {
     FaPhone,
     FaMapMarkerAlt,
     FaBriefcase,
+    FaEdit, // Import Edit icon
 } from "react-icons/fa";
 
 interface Alumni {
@@ -42,6 +43,7 @@ interface Alumni {
 
 const AlumniProfile: React.FC = () => {
     const { studentId } = useParams<{ studentId: string }>();
+    const navigate = useNavigate(); // Initialize navigate
     const [alumniData, setAlumniData] = useState<Alumni | null>(null);
 
     useEffect(() => {
@@ -74,6 +76,16 @@ const AlumniProfile: React.FC = () => {
                         <p className="text-lg text-white">{alumniData.position} at {alumniData.Institute}</p>
                         <p className="text-sm text-gray-200">{alumniData.location}</p>
                     </div>
+                </div>
+                {/* Edit Profile Button */}
+                <div className="absolute top-32 right-10">
+                    <button
+                        onClick={() => navigate(`/dashboard/edit-profile/${studentId}`)} // Navigate to edit profile
+                        className="flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+                    >
+                        <FaEdit className="mr-2" /> {/* Edit icon */}
+                        Edit Profile
+                    </button>
                 </div>
             </div>
 
@@ -152,6 +164,8 @@ const AlumniProfile: React.FC = () => {
 };
 
 export default AlumniProfile;
+
+
 
 
 
