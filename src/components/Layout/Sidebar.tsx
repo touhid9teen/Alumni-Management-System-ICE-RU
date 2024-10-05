@@ -14,6 +14,7 @@ import {
 	LoginIcon,
 	BlogIcon,
 	AlumniAssociationIcon,
+	AuthorizationIcon,
 } from "../../elements/Icons";
 import { routes } from "../../constants/Route";
 import { LOCAL_STORAGE_KEYS } from "../../constants/Global";
@@ -65,7 +66,7 @@ const PageNavLinks: Link[] = [
 
 const LinkForAdmin: Link[] = [
 	{
-		icon: <SettingIcon />,
+		icon: <AuthorizationIcon />,
 		text: "Authorization",
 		linkTo: "/authorization",
 	},
