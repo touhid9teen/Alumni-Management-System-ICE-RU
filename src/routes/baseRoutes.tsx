@@ -40,7 +40,14 @@ const MainRoutes = createBrowserRouter([
 					</MainLayout>
 				),
 			},
-			// add public routes in this way
+			{
+				path: routes.alumniAssociationCommittee.path,
+				element: (
+					<MainLayout>
+						<AlumniAssociation />
+					</MainLayout>
+				),
+			},
 		],
 	},
 	{
@@ -100,14 +107,6 @@ const MainRoutes = createBrowserRouter([
 				element: (
 					<MainLayout>
 						<EventDetails />
-					</MainLayout>
-				),
-			},
-			{
-				path: routes.alumniAssociationCommittee.path,
-				element: (
-					<MainLayout>
-						<AlumniAssociation />
 					</MainLayout>
 				),
 			},
