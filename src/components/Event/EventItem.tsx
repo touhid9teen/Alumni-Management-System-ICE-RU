@@ -4,7 +4,6 @@ import Button from "../../elements/Button";
 import { routes } from "../../constants/Route";
 
 interface EventItemProps {
-<<<<<<< HEAD
     id: number;
     title: string;
     date: string;
@@ -24,34 +23,6 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
         eventImage,
         handleDelete,
     } = props;
-=======
-	id: number;
-	title: string;
-	date: string;
-	startTime: string;
-	endTime?: string;
-	location: string;
-	description?: string;
-	eventImage: string;
-	handleDelete: (eventId: number) => void;
-	eventDate: string;
-	image_path: string;
-}
-
-const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
-	const {
-		id,
-		title,
-		date,
-		startTime,
-		location,
-		description,
-		eventImage,
-		eventDate,
-		handleDelete,
-		image_path,
-	} = props;
->>>>>>> 0cf3f98819055a34473e99d17fbb7ec7ff592e7b
 
 	const [showOverlay, setShowOverlay] = useState<boolean>(false);
 	const navigate = useNavigate();

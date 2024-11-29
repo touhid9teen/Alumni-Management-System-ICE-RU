@@ -10,14 +10,8 @@ import { routes } from "../constants/Route";
 import eventData from "../data/eventdummydata"; // Using dummy event data
 
 const Events: React.FC = () => {
-<<<<<<< HEAD
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [idDeleted, setIdDeleted] = useState<number>(0);
-=======
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	// const [eventData, setEventData] = useState<object>({});
-	const [idDeleted, setIdDeleted] = useState<number>(0);
->>>>>>> 0cf3f98819055a34473e99d17fbb7ec7ff592e7b
 
 	const token = getFromStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
 	const navigate = useNavigate();
