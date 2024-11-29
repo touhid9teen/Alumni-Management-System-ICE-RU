@@ -33,7 +33,8 @@ const EventDetails: React.FC = () => {
 
                     console.log("Resposne", response?.data?.Data);
                     setEventData(response?.data?.Data);
-                } catch (error: unknown) {
+                }
+                catch (error: unknown) {
                     const errorMessage =
                         axios.isAxiosError(error) && error.response?.data && typeof error.response.data === "string"
                             ? error.response.data
@@ -41,11 +42,11 @@ const EventDetails: React.FC = () => {
                     toast.error(errorMessage, {
                         autoClose: 3000,
                     });
-
+                }
             };
             fatchdataforshow();
         }
-    }, []);
+    }, [eventId, token]);
     return (
         <div className="max-w-4xl mx-auto p-4">
             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
