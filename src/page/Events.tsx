@@ -7,64 +7,72 @@ import { getFromStorage } from "../utils/token";
 import { getBaseUrl } from "../hooks/baseUrl";
 import { toast } from "react-toastify";
 import { routes } from "../constants/Route";
-import eventData from "../data/eventdummydata"; // Using dummy event data
+
 
 const Events: React.FC = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    // const [isLoading, setIsLoading] = useState<boolean>(false);
+    interface Event {
+        id: number;
+        title: string;
+        event_date: string;
+        start_time: string;
+        location: string;
+        description: string;
+        image_path: string;
+    }
+
+    const [eventData, setEventData] = useState<Event[]>([]);
     const [idDeleted, setIdDeleted] = useState<number>(0);
 
-	const token = getFromStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
-	const navigate = useNavigate();
+    const token = getFromStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
+    const navigate = useNavigate();
 
-	const handleDelete = async (eventId: number) => {
-		try {
-			const url = getBaseUrl() + `/event/delete/${eventId}`;
-			await axios.delete(url, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
-			setIdDeleted((prevCount) => prevCount + 1);
-		} catch (error) {
-			console.log(error);
-		}
-	};
+    const handleDelete = async (eventId: number) => {
+        try {
+            const url = getBaseUrl() + `/event/delete/${eventId}`;
+            await axios.delete(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setIdDeleted((prevCount) => prevCount + 1);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-<<<<<<< HEAD
     useEffect(() => {
         const fetchData = async () => {
-            setIsLoading(true);
+            // setIsLoading(true);
             try {
                 const url = getBaseUrl() + "/events";
                 const response = await axios.get(url, {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
+                        "Content-Type": "multipart/form-data",
                     },
                 });
-                // If real data is being used, this will replace dummy data
-                // setEventData(response?.data?.Data);
-            } catch (error) {
-                const errorMessage =
-                    typeof error?.response?.data === "string"
-                        ? error.response.data
-                        : "An unexpected error occurred. Please try again.";
+                setEventData(response.data.Data);
+            } catch (error: unknown) {
+                let errorMessage = "An unexpected error occurred. Please try again.";
+                if (axios.isAxiosError(error) && error.response?.data) {
+                    errorMessage = typeof error.response.data === "string" ? error.response.data : errorMessage;
+                }
                 toast.error(errorMessage, {
                     autoClose: 3000,
                 });
             }
-            setIsLoading(false);
+            // setIsLoading(false);
         };
         fetchData();
-    }, [idDeleted]);
-
+    }, [idDeleted, token]);
     return (
         <div className="flex flex-col font-serif">
             <div className="flex flex-col justify-center items-center pt-10 pb-16 sm:pt-20">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold">
-                    Upcoming Events
+                    Upcoming Event
                 </h1>
-                <p className="text-xl sm:text-2xl pt-4">
+                <p className="text-xl sm:text-2xl pt-4 ">
                     Peek at some alumni events happening just around the corner.
                 </p>
                 <button
@@ -75,96 +83,27 @@ const Events: React.FC = () => {
                         });
                     }}
                 >
-                    Create an Event?
+                    Write a Event ?
                 </button>
             </div>
-
-            {/* Event List */}
             {eventData.length > 0 ? (
-                eventData.map((event) => (
+                eventData.map((event: { id: number; title: string; event_date: string; start_time: string; location: string; description: string; image_path: string }) => (
                     <EventItem
-                        key={event.id}
                         id={event.id}
                         title={event.title}
                         date={event.event_date}
                         startTime={event.start_time}
                         location={event.location}
+                        description={event.description}
                         eventImage={event.image_path}
                         handleDelete={handleDelete}
                     />
                 ))
             ) : (
-                <div>No events found.</div> // Display when no events are available
+                <div>No events found.</div> // Optional: Display when there are no events
             )}
         </div>
     );
-=======
-	useEffect(() => {
-		const fetchData = async () => {
-			setIsLoading(true);
-			try {
-				const url = getBaseUrl() + "/events";
-				const response = await axios.get(url, {
-					headers: {
-						Authorization: `Bearer ${token}`,
-						"Content-Type": "multipart/form-data",
-					},
-				});
-				// setEventData(response?.data?.Data);
-			} catch (error) {
-				const errorMessage =
-					typeof error?.response?.data === "string"
-						? error.response.data
-						: "An unexpected error occurred. Please try again.";
-				toast.error(errorMessage, {
-					autoClose: 3000,
-				});
-			}
-			setIsLoading(false);
-		};
-		fetchData();
-	}, [idDeleted]);
-	return (
-		<div className="flex flex-col font-serif">
-			<div className="flex flex-col justify-center items-center pt-10 pb-16 sm:pt-20">
-				<h1 className="text-4xl sm:text-5xl md:text-6xl font-bold">
-					Upcoming Event
-				</h1>
-				<p className="text-xl sm:text-2xl pt-4 ">
-					Peek at some alumni events happening just around the corner.
-				</p>
-				<button
-					className="text-xl sm:text-2xl pt-4 cursor-pointer text-blue-500 underline"
-					onClick={() => {
-						navigate(routes.createEvent.path, {
-							state: { form: "create-event" },
-						});
-					}}
-				>
-					Write a Event ?
-				</button>
-			</div>
-			{eventData.length > 0 ? (
-				eventData.map((event) => (
-					<EventItem
-						id={event.id}
-						title={event.title}
-						date={event.event_date}
-						startTime={event.start_time}
-						location={event.location}
-						description={event.description}
-						eventImage={event.image_path}
-						handleDelete={handleDelete}
-						key={event.id}
-						eventDate={event.event_date}
-					/>
-				))
-			) : (
-				<div>No events found.</div> // Optional: Display when there are no events
-			)}
-		</div>
-	);
->>>>>>> 0cf3f98819055a34473e99d17fbb7ec7ff592e7b
 };
 
 export default Events;
