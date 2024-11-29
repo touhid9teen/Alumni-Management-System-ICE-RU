@@ -7,11 +7,10 @@ import { getFromStorage } from "../utils/token";
 import { getBaseUrl } from "../hooks/baseUrl";
 import { toast } from "react-toastify";
 import { routes } from "../constants/Route";
-import eventData from "../data/eventdummydata";
+import eventData from "../data/eventdummydata"; // Using dummy event data
 
 const Events: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    // const [eventData, setEventData] = useState<object>({});
     const [idDeleted, setIdDeleted] = useState<number>(0);
 
     const token = getFromStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
@@ -39,9 +38,10 @@ const Events: React.FC = () => {
                 const response = await axios.get(url, {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        "Content-Type": "multipart/form-data",
+                        "Content-Type": "application/json",
                     },
                 });
+                // If real data is being used, this will replace dummy data
                 // setEventData(response?.data?.Data);
             } catch (error) {
                 const errorMessage =
@@ -56,13 +56,14 @@ const Events: React.FC = () => {
         };
         fetchData();
     }, [idDeleted]);
+
     return (
         <div className="flex flex-col font-serif">
             <div className="flex flex-col justify-center items-center pt-10 pb-16 sm:pt-20">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold">
-                    Upcoming Event
+                    Upcoming Events
                 </h1>
-                <p className="text-xl sm:text-2xl pt-4 ">
+                <p className="text-xl sm:text-2xl pt-4">
                     Peek at some alumni events happening just around the corner.
                 </p>
                 <button
@@ -73,24 +74,26 @@ const Events: React.FC = () => {
                         });
                     }}
                 >
-                    Write a Event ?
+                    Create an Event?
                 </button>
             </div>
+
+            {/* Event List */}
             {eventData.length > 0 ? (
                 eventData.map((event) => (
                     <EventItem
+                        key={event.id}
                         id={event.id}
                         title={event.title}
                         date={event.event_date}
                         startTime={event.start_time}
                         location={event.location}
-                        description={event.description}
                         eventImage={event.image_path}
                         handleDelete={handleDelete}
                     />
                 ))
             ) : (
-                <div>No events found.</div> // Optional: Display when there are no events
+                <div>No events found.</div> // Display when no events are available
             )}
         </div>
     );
