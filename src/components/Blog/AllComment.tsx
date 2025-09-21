@@ -11,6 +11,7 @@ interface CommentData {
     // Add the photos and videos properties to match the Comment type
     photos: string[];
     videos: string[];
+    totalLike?: number; // Added to match usage in the component
 }
 
 interface AllCommentsProps {

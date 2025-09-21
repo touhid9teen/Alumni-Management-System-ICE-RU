@@ -13,7 +13,7 @@ interface Comment {
     content: string;
     photos: string[];
     videos: string[];
-    totalLike: number;
+    totalLike?: number;
 }
 
 interface Post {

@@ -10,11 +10,11 @@ export const useSession = () => {
 	});
 
 	useEffect(() => {
-		setTimeout(() => {
+		setTimeout(() => {	
 			const token = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
 			const email = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_EMAIL);
 
-			if (token && email) {
+			if (token && email) {	
 				setSession({
 					session: { email },
 					status: SESSION_STATUS.AUTHENTICATED,
