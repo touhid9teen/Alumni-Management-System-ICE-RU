@@ -100,17 +100,15 @@ const SignUpForm: FC = () => {
   ];
 
   return (
-    <div className="w-[821px] h-[900px] bg-white">
+    <div className="w-full max-w-md mx-auto bg-white p-6 md:p-10 rounded-lg">
       {/* message top */}
       <div className="flex justify-center items-center">
-        <div className="w-full mt-12 mr-28">
+        <div className="w-full mt-6">
           <p className="flex text-sm font-normal justify-end">
             have an account?&nbsp;
             <span
-              className="w-14 h-4 text-deep-blue text-sm font-medium cursor-pointer"
-              onClick={() => {
-                navigate("/login");
-              }}
+              className="text-deep-blue text-sm font-medium cursor-pointer"
+              onClick={() => navigate("/login")}
             >
               Sign in!
             </span>
@@ -119,29 +117,24 @@ const SignUpForm: FC = () => {
       </div>
 
       {/* headline */}
-      <div className="mt-16 flex flex-col justify-center items-center">
+      <div className="mt-10 flex flex-col justify-center items-center text-center">
         <h2 className="text-2xl text-black font-semibold">
           Get Started With Contacts
         </h2>
-        <h4 className="text-zinc-500 text-sm font-normal mt-3 leading-3">
+        <h4 className="text-zinc-500 text-sm font-normal mt-2">
           Getting Started is easy
         </h4>
       </div>
 
       {/* Signup Form */}
       <div className="flex flex-col justify-center items-center mt-6">
-        <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="flex flex-col gap-5 w-full"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           {[
-            {
-              name: "FullName",
-              key: "fullName",
-              placeholder: "Full Name",
-            },
-            {
-              name: "studentId",
-              key: "studentId",
-              placeholder: "Student Id",
-            },
+            { name: "FullName", key: "fullName", placeholder: "Full Name" },
+            { name: "studentId", key: "studentId", placeholder: "Student ID" },
             {
               name: "Graduation Year",
               key: "graduationYear",
@@ -149,20 +142,14 @@ const SignUpForm: FC = () => {
             },
             { name: "Email", key: "email", placeholder: "Email" },
           ].map((field) => (
-            <div key={field.key}>
+            <div key={field.key} className="w-full">
               <Controller
                 name={field.key as FieldKeys}
                 control={control}
                 render={({ field: { onChange, value } }) => (
                   <InputField
-                    type={
-                      field.key.toLocaleLowerCase().includes("password")
-                        ? "password"
-                        : field.key === "email"
-                        ? "email"
-                        : "text"
-                    }
-                    customInputClass="w-100 border-zinc-300 bg-white flex-shrink-0 rounded-lg placeholder:text-sm placeholder:text-zinc-600 placeholder:font-normal"
+                    type={field.key === "email" ? "email" : "text"}
+                    customInputClass="w-full border-zinc-300 bg-white rounded-lg placeholder:text-sm"
                     value={value as string}
                     onChange={onChange}
                     id={value as string}
@@ -178,14 +165,16 @@ const SignUpForm: FC = () => {
               )}
             </div>
           ))}
+
           <Label labelText="Are you a Student or Alumni?" />
+
           <Controller
             name="role"
             control={control}
             render={({ field }) => (
               <Select
                 {...field}
-                className="border rounded-lg"
+                className="w-full border rounded-lg"
                 value={selectedOption}
                 onChange={(option) => {
                   handleSelectChange(option);
@@ -196,36 +185,30 @@ const SignUpForm: FC = () => {
               />
             )}
           />
-          {/* Certificate upload field */}
-          {selectedOption && selectedOption.value !== "" && (
+
+          {selectedOption && (
             <ImageUploader
-              onUpload={(file) => {
-                console.log("file", file);
-              }}
+              onUpload={(file) => console.log("file", file)}
               name="Certificate"
             />
           )}
 
           {[
-            {
-              name: "Password",
-              key: "password",
-              placeholder: "New password",
-            },
+            { name: "Password", key: "password", placeholder: "New Password" },
             {
               name: "confirmPassword",
               key: "confirmPassword",
               placeholder: "Confirm Password",
             },
           ].map((field) => (
-            <div key={field.key}>
+            <div key={field.key} className="w-full">
               <Controller
                 name={field.key as FieldKeys}
                 control={control}
                 render={({ field: { onChange, value } }) => (
                   <InputField
                     type="password"
-                    customInputClass="!w-100 border-zinc-300 bg-white flex-shrink-0 rounded-lg placeholder:text-sm placeholder:text-zinc-600 placeholder:font-normal"
+                    customInputClass="w-full border-zinc-300 bg-white rounded-lg placeholder:text-sm"
                     value={value as string}
                     onChange={onChange}
                     id={value as string}
@@ -234,7 +217,7 @@ const SignUpForm: FC = () => {
                   />
                 )}
               />
-              {field.key in errors && (
+              {errors[field.key as keyof FormData] && (
                 <p className="text-red-500 text-sm">
                   {errors[field.key as keyof FormData]?.message}
                 </p>
@@ -244,19 +227,16 @@ const SignUpForm: FC = () => {
 
           <Button
             buttonType="submit"
-            customClass="flex justify-center item-center !bg-primary font-semibold text-sm"
+            customClass="w-full flex justify-center items-center bg-primary text-white font-semibold text-sm py-3 rounded-md"
           >
             Create Account
           </Button>
         </form>
       </div>
 
-      <div className="flex justify-center">
-        <p className="text-zinc-600 text-sm font-normal mt-14">
-          By continuing you indicate that you read and agreed to the Terms of
-          Use
-        </p>
-      </div>
+      <p className="text-zinc-600 text-sm font-normal mt-10 text-center">
+        By continuing you indicate that you read and agreed to the Terms of Use
+      </p>
     </div>
   );
 };

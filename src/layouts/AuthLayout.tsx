@@ -12,7 +12,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
   children,
 }) => {
   return (
-    <div className="min-h-screen w-full flex flex-col lg:flex-row">
+    <div className="min-h-screen w-full flex">
       <div className="hidden lg:block lg:w-2/5 xl:w-1/3 bg-gray-100">
         <img
           src={imageSource}
