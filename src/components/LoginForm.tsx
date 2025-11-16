@@ -97,15 +97,14 @@ const LoginForm: FC = () => {
       </div>
 
       {/* Login Form */}
-      <div className="flex flex-col justify-center items-center mt-6">
-        <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col justify-center items-center mt-6 w-full px-4">
+        <form
+          className="flex flex-col gap-5 w-full max-w-md"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           {[
             { name: "Email", key: "email", placeholder: "Email" },
-            {
-              name: "Password",
-              key: "password",
-              placeholder: "Password",
-            },
+            { name: "Password", key: "password", placeholder: "Password" },
           ].map((field) => (
             <div key={field.key}>
               <Controller
@@ -119,10 +118,11 @@ const LoginForm: FC = () => {
                     id={value}
                     name={field.name}
                     placeholder={field.placeholder}
-                    customInputClass="!w-[400px]"
+                    customInputClass="w-full md:w-[400px]"
                   />
                 )}
               />
+
               {field.key in errors && (
                 <p className="text-red-500 text-sm">
                   {errors[field.key as keyof typeof errors]?.message}
@@ -131,32 +131,6 @@ const LoginForm: FC = () => {
             </div>
           ))}
 
-          {/* Toggle button 
-                   <div className="flex justify-between">
-                        <Toggle
-                            id={"cn"}
-                            name={"cn"}
-                            initialChecked={false}
-                            checkedOnLabel="Remember me"
-                            checkedOffLabel="Remember me"
-                            onChangeToggle={function ({
-                                name,
-                                checked,
-                            }: {
-                                name: string;
-                                checked: boolean;
-                            }): void {
-                                console.log(
-                                    ":: TODO => user data should be saved for future login",
-                                    name,
-                                    checked
-                                );
-                            }}
-                        />
-                        <p className="text-red-600 text-sm font-normal cursor-pointer">
-                            Recover Password
-                        </p>
-                    </div> */}
           <Button
             buttonType="submit"
             customClass="flex justify-center item-center font-semibold text-base text-gray-900 !py-0 "
