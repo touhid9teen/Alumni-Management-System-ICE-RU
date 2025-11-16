@@ -100,12 +100,12 @@ const SignUpForm: FC = () => {
   ];
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white p-6 md:p-10 rounded-lg">
+    <div className="w-full max-w-[821px] max-h-screen bg-white mx-auto flex flex-col justify-center">
       {/* message top */}
       <div className="flex justify-center items-center">
         <div className="w-full mt-6">
           <p className="flex text-sm font-normal justify-end">
-            have an account?&nbsp;
+            Have an account?&nbsp;
             <span
               className="text-deep-blue text-sm font-medium cursor-pointer"
               onClick={() => navigate("/login")}
