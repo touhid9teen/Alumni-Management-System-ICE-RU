@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import RU from "../../assets/Logo_of_rajshahi_university.jpg";
@@ -7,7 +7,6 @@ import {
   DashboardIcon,
   EventsIcon,
   HomeIcon,
-  // Jobs,
   MentorshipIcon,
   SettingIcon,
   LogoutIcon,
@@ -16,10 +15,10 @@ import {
   AlumniAssociationIcon,
   AuthorizationIcon,
 } from "../../elements/Icons";
+
 import { routes } from "../../constants/Route";
 import { LOCAL_STORAGE_KEYS } from "../../constants/Global";
 import { toast } from "react-toastify";
-import React from "react";
 
 interface Link {
   icon: JSX.Element;
@@ -33,39 +32,23 @@ interface LProps extends Link {
 }
 
 const PageNavLinks: Link[] = [
-  {
-    icon: <HomeIcon />,
-    text: "Home",
-    linkTo: routes.home.path,
-  },
+  { icon: <HomeIcon />, text: "Home", linkTo: routes.home.path },
   {
     icon: <DashboardIcon />,
-    text: "DashBoard",
+    text: "Dashboard",
     linkTo: routes.alumniTableInfo.path,
   },
-  {
-    icon: <BlogIcon />,
-    text: "Blog",
-    linkTo: routes.blog.path,
-  },
-  {
-    icon: <EventsIcon />,
-    text: "Events",
-    linkTo: "/events",
-  },
+  { icon: <BlogIcon />, text: "Blog", linkTo: routes.blog.path },
+  { icon: <EventsIcon />, text: "Events", linkTo: "/events" },
   {
     icon: <AlumniAssociationIcon />,
     text: "Alumni Association",
     linkTo: routes.alumniAssociationCommittee.path,
   },
-  {
-    icon: <MentorshipIcon />,
-    text: "Mentors",
-    linkTo: "/mentors",
-  },
+  { icon: <MentorshipIcon />, text: "Mentors", linkTo: "/mentors" },
 ];
 
-const LinkForAdmin: Link[] = [
+const LinkForAdmin = [
   {
     icon: <AuthorizationIcon />,
     text: "Authorization",
@@ -73,134 +56,150 @@ const LinkForAdmin: Link[] = [
   },
 ];
 
-const ActionNavLinks: Link[] = [
-  {
-    icon: <SettingIcon />,
-    text: "Setting",
-    linkTo: "/setting",
-  },
+const ActionNavLinks = [
+  { icon: <SettingIcon />, text: "Setting", linkTo: "/setting" },
 ];
 
-const SideBarLink: React.FC<LProps> = (props: LProps) => {
-  const { icon, text, linkTo, open, onClick } = props;
-
+// ---------------- SIDE BAR LINK UI ----------------
+const SideBarLink = ({ icon, text, linkTo, open, onClick }: LProps) => {
   return (
     <NavLink
-      onClick={onClick}
       to={linkTo}
+      onClick={() => {
+        onClick && onClick();
+        if (window.innerWidth < 1024) {
+          window.dispatchEvent(new CustomEvent("close-mobile-sidebar"));
+        }
+      }}
       className={({ isActive }) =>
-        isActive && text !== "Logout" && text !== "Login"
-          ? "block duration-300 "
-          : "block duration-300"
+        `flex items-center gap-3 px-4 py-3 rounded-xl transition-all
+         ${
+           isActive
+             ? "bg-blue-50 text-blue-600 font-semibold"
+             : "hover:bg-gray-100 text-gray-700"
+         }`
       }
     >
-      <div
-        className={`flex gap-7  items-center  hover:bg-gray-200  rounded-md ${
-          !open && "justify-center"
-        }`}
+      <span className="text-gray-600">{icon}</span>
+
+      <span
+        className={`text-sm font-medium whitespace-nowrap transition-opacity duration-200
+         ${open ? "opacity-100" : "opacity-0 lg:hidden"}`}
       >
-        <div className="flex gap-3 pl-4 pt-2 items-center  justify-center ">
-          {icon}
-        </div>
-        <div className={`${!open && "hidden"} flex items-center `}>
-          <span className="text-sm font-medium ">{text}</span>
-        </div>
-      </div>
+        {text}
+      </span>
     </NavLink>
   );
 };
 
+// ---------------- SIDEBAR MAIN COMPONENT ----------------
 const Sidebar: React.FC = () => {
   const [open, setOpen] = useState(true);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
   const role = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_ROLE);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const close = () => setIsMobileOpen(false);
+    window.addEventListener("close-mobile-sidebar", close);
+    return () => window.removeEventListener("close-mobile-sidebar", close);
+  }, []);
+
   return (
-    <div
-      className={`${
-        open ? "w-full" : "w-[76px]"
-      } flex flex-col max-w-[276px] h-screen border-r-[1px] border-[#E9E9E9] p-[21px]`}
-    >
-      <div className="flex gap-[21px] mb-10">
-        <NavIcon
-          onClick={() => setOpen(!open)}
-          className="cursor-pointer flex-shrink-0"
+    <>
+      {/* MOBILE BUTTON */}
+      <button
+        onClick={() => setIsMobileOpen(true)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg hover:bg-gray-100"
+      >
+        <NavIcon className="w-6 h-6 lg:w-7 lg:h-7" />
+      </button>
+
+      {/* OVERLAY */}
+      {isMobileOpen && (
+        <div
+          onClick={() => setIsMobileOpen(false)}
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
         />
-        <div className="flex flex-col">
-          <img
-            className={`${!open ? "hidden" : "h-8 w-8 ml-6"}`}
-            src={RU}
-            alt="Logo of Rajshahi University"
-          />
-          <p className={`${!open && "hidden"} text-md font-medium `}>
-            Alumni ICE RU
-          </p>
-        </div>
-      </div>
-      <div className="flex-grow space-y-5 duration-100 ">
-        {PageNavLinks.map((link) => (
-          <SideBarLink
-            key={link.text}
-            open={open}
-            icon={link.icon}
-            text={link.text}
-            linkTo={link.linkTo}
-          />
-        ))}
-        {role === "admin" &&
-          LinkForAdmin.map((link) => (
-            <SideBarLink
-              key={link.text}
-              open={open}
-              icon={link.icon}
-              text={link.text}
-              linkTo={link.linkTo}
-            />
-          ))}
-      </div>
+      )}
 
-      <div
-        className={`flex-row text-xs font-medium mt-[48px] mb-[26px] ${
-          !open ? "text-center" : "text-left"
+      {/* SIDEBAR */}
+      <aside
+        className={`fixed lg:sticky top-0 left-0 h-screen bg-white border-r border-gray-200
+        flex flex-col z-50 transition-all duration-300 ease-in-out
+        ${open ? "w-64" : "w-20"}
+        ${
+          isMobileOpen
+            ? "translate-x-0 shadow-2xl"
+            : "-translate-x-full lg:translate-x-0"
         }`}
-      ></div>
+      >
+        {/* HEADER / LOGO */}
+        <div className="flex items-center gap-4 px-5 py-4 border-b border-gray-200">
+          <button
+            onClick={() => setOpen(!open)}
+            className="hidden lg:block p-2 rounded-lg hover:bg-gray-100 "
+          >
+            <NavIcon className="w-6 h-6 lg:w-7 lg:h-7" />
+          </button>
 
-      <div className="space-y-5 duration-100">
-        {ActionNavLinks.map((link) => (
-          <SideBarLink
-            key={link.text}
-            open={open}
-            icon={link.icon}
-            text={link.text}
-            linkTo={link.linkTo}
-          />
-        ))}
-        {token ? (
-          <SideBarLink
-            icon={<LogoutIcon />}
-            text="Logout"
-            linkTo={routes.home.path}
-            open={open}
-            onClick={() => {
-              navigate("/");
-              localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
-              localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_NAME);
-              localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_EMAIL);
-              localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_ROLE);
-              toast.success("Logout successful!");
-            }}
-          />
-        ) : (
-          <SideBarLink
-            icon={<LoginIcon />}
-            text="Login"
-            linkTo={routes.login.path}
-            open={open}
-          />
-        )}
-      </div>
-    </div>
+          {open && (
+            <div className="flex items-center gap-3">
+              <img src={RU} className="w-10 h-10 rounded-md object-cover" />
+              <p className="text-sm font-semibold text-gray-800 whitespace-nowrap">
+                Alumni ICE RU
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* NAV LINKS */}
+        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+          {PageNavLinks.map((link) => (
+            <SideBarLink key={link.text} open={open} {...link} />
+          ))}
+
+          {role === "admin" && (
+            <>
+              <div className="my-3 border-t border-gray-200"></div>
+              {LinkForAdmin.map((link) => (
+                <SideBarLink key={link.text} open={open} {...link} />
+              ))}
+            </>
+          )}
+        </nav>
+
+        {/* ACTION / FOOTER LINKS */}
+        <div className="border-t border-gray-200 px-3 py-4 space-y-2">
+          {ActionNavLinks.map((link) => (
+            <SideBarLink key={link.text} open={open} {...link} />
+          ))}
+
+          {token ? (
+            <SideBarLink
+              icon={<LogoutIcon />}
+              text="Logout"
+              linkTo={routes.home.path}
+              open={open}
+              onClick={() => {
+                navigate("/");
+                localStorage.clear();
+                toast.success("Logout successful!");
+              }}
+            />
+          ) : (
+            <SideBarLink
+              icon={<LoginIcon />}
+              text="Login"
+              linkTo={routes.login.path}
+              open={open}
+            />
+          )}
+        </div>
+      </aside>
+    </>
   );
 };
 
