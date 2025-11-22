@@ -1,5 +1,7 @@
 # Alumni-Management-System-ICE-RU
 
+![Project Photo](assets/project-photo.png)
+
 Alumni-Management-System-ICE-RU is a web application designed to facilitate effective communication and networking among alumni of the Information and Communication Engineering (ICE) at RU. Built with TypeScript and TailwindCSS for the frontend, this system offers a modern and responsive interface for alumni to stay connected, share updates, and access resources.
 
 ## Features
