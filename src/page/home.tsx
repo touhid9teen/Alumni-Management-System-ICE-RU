@@ -1,38 +1,42 @@
-import React, { useState, useEffect, useRef } from "react";
 import {
-  Menu,
-  Calendar,
-  MapPin,
-  Search,
-  ChevronRight,
-  GraduationCap,
-  Users,
   BookOpen,
-  X,
-  Mail,
-  Phone,
+  Calendar,
+  ChevronRight,
   Facebook,
-  Twitter,
+  GraduationCap,
   Linkedin,
+  Mail,
+  MapPin,
+  Menu,
+  Phone,
+  Twitter,
+  Users,
+  X,
 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 
 // --- Asset Imports ---
+import Cover3 from "../assets/cover.jpg";
 import Cover1 from "../assets/cover1.jpg";
 import Cover2 from "../assets/cover2.jpg";
-import Cover3 from "../assets/cover.jpg";
 import event1 from "../assets/event1.png";
 import event2 from "../assets/event2.jpeg";
 import event3 from "../assets/event3.jpeg";
 // import RULogo from "../assets/ru_logo.png"; // Assuming you have an RU logo
+import Secretary from "../assets/secretary.jpg";
 import story1 from "../assets/story1.jpeg";
 import story2 from "../assets/story2.jpeg";
 import story3 from "../assets/story3.jpeg";
-import Secretary from "../assets/secretary.jpg";
 
-// --- Helper Component for Smooth Scroll Animations ---
-const RevealOnScroll = ({ children, delay = 0 }) => {
+interface RevealOnScrollProps {
+  children: ReactNode;
+  delay?: number;
+}
+
+const RevealOnScroll = ({ children, delay = 0 }: RevealOnScrollProps) => {
   const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -164,7 +168,7 @@ const Home = () => {
 
   // Close mobile menu on escape key
   useEffect(() => {
-    const handleEscape = (e) => {
+    const handleEscape = (e: KeyboardEvent): void => {
       if (e.key === "Escape") setIsMenuOpen(false);
     };
     window.addEventListener("keydown", handleEscape);
