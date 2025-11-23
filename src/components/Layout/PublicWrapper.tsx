@@ -6,16 +6,16 @@ import { SESSION_STATUS } from "../../constants/Global";
 import { useSession } from "../../hooks/useSession";
 
 const PublicWrapper = () => {
-	const { status } = useSession();
+  const { status } = useSession();
 
-	if (status === SESSION_STATUS.LOADING) return <Loader />;
+  if (status === SESSION_STATUS.LOADING) return <Loader />;
 
-	return (
-		<>
-			<Header />
-			<Outlet />
-		</>
-	);
+  return (
+    <>
+      <Header />
+      <Outlet />
+    </>
+  );
 };
 
 export default PublicWrapper;
