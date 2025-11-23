@@ -1,5 +1,18 @@
-import { ChevronRight, X } from "lucide-react";
-import type { MobileSidebarProps } from "../../types";
+import { X } from "lucide-react";
+import { NavLink } from "react-router-dom";
+
+interface NavLinkItem {
+  icon: JSX.Element;
+  text: string;
+  linkTo: string;
+  onClick?: () => void;
+}
+
+interface MobileSidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+  navLinks: NavLinkItem[];
+}
 
 const MobileSidebar: React.FC<MobileSidebarProps> = ({
   isOpen,
@@ -37,15 +50,23 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({
           <ul className="space-y-1">
             {navLinks.map((link, i: number) => (
               <li key={i}>
-                <a
-                  href={link.href}
-                  target={link.target || "_self"}
-                  onClick={onClose}
-                  className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors font-medium"
+                <NavLink
+                  to={link.linkTo}
+                  onClick={() => {
+                    link.onClick && link.onClick();
+                    onClose();
+                  }}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors font-medium ${
+                      isActive
+                        ? "bg-blue-50 text-blue-600"
+                        : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    }`
+                  }
                 >
-                  <ChevronRight size={16} className="text-gray-400" />
-                  {link.name}
-                </a>
+                  <span className="text-lg">{link.icon}</span>
+                  {link.text}
+                </NavLink>
               </li>
             ))}
           </ul>

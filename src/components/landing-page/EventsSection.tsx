@@ -26,7 +26,7 @@ const EventsSection: React.FC<EventsSectionProps> = ({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {events.map((event, i: number) => (
-            <EventCard key={event.id} event={event} delay={i * 100} />
+            <EventCard key={event.id} events={event} delay={i * 100} />
           ))}
         </div>
 

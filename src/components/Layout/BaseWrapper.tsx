@@ -1,5 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 
+import Header from "./Header";
 import Loader from "../../components/Loader";
 import { SESSION_STATUS } from "../../constants/Global";
 import { routes } from "../../constants/Route";
@@ -15,7 +16,12 @@ const BaseWrapper = () => {
 		return;
 	}
 
-	return <Outlet />;
+	return (
+		<>
+			<Header />
+			<Outlet />
+		</>
+	);
 };
 
 export default BaseWrapper;

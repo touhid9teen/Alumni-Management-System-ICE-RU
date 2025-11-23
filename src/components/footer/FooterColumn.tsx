@@ -1,5 +1,8 @@
 import { ChevronRight } from "lucide-react";
-import type { FooterColumnProps } from "../../types";
+interface FooterColumnProps {
+  title: string;
+  links: string[];
+}
 
 const FooterColumn: React.FC<FooterColumnProps> = ({
   title,

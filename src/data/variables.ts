@@ -1,14 +1,30 @@
-import type { NavLink, Event, Story } from "../types";
-
-// Import event images
 import event1 from "../assets/event1.png";
 import event2 from "../assets/event2.jpeg";
 import event3 from "../assets/event3.jpeg";
 
-// Import story images
 import story1 from "../assets/story1.jpeg";
 import story2 from "../assets/story2.jpeg";
 import story3 from "../assets/story3.jpeg";
+interface Event {
+  id: number;
+  title: string;
+  date: string;
+  venue: string;
+  img: string;
+}
+interface Story {
+  id: number;
+  name: string;
+  batch: string;
+  role: string;
+  img: string;
+  text: string;
+}
+interface NavLink {
+  name: string;
+  href: string;
+  target?: string;
+}
 
 export const navLinks: NavLink[] = [
   { name: "Home", href: "#" },

@@ -1,10 +1,4 @@
-export interface NavLink {
-  name: string;
-  href: string;
-  target?: string;
-}
-
-export interface Event {
+export interface EventData {
   id: number;
   title: string;
   date: string;
@@ -12,27 +6,25 @@ export interface Event {
   img: string;
 }
 
-export interface RevealOnScrollProps {
-  children: React.ReactNode;
-  delay?: number;
-}
-
-export interface HeaderProps {
-  navLinks: NavLink[];
-}
-
-export interface MobileSidebarProps {
-  isOpen: boolean;
-  onClose: () => void;
-  navLinks: NavLink[];
+export interface StoryData {
+  id: number;
+  name: string;
+  batch: string;
+  role: string;
+  img: string;
+  text: string;
 }
 
 export interface EventsSectionProps {
-  events: Event[];
+  events: EventData[];
 }
 
-export interface FooterColumnProps {
-  title: string;
-  links: string[];
+export interface StoriesSectionProps {
+  stories: StoryData[];
 }
 
+export interface NavLink {
+  name: string;
+  href: string;
+  target?: string;
+}

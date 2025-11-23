@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { RevealOnScrollProps } from "../types";
+interface RevealOnScrollProps {
+  children: React.ReactNode;
+  delay?: number;
+}
 
 const RevealOnScroll: React.FC<RevealOnScrollProps> = ({
   children,

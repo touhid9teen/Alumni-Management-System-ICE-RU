@@ -7,7 +7,7 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({
   heroImages,
 }): JSX.Element => {
-  const [currentSlide, setCurrentSlide] = useState < number > 0;
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
