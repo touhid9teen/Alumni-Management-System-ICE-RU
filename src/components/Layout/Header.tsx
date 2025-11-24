@@ -1,7 +1,6 @@
 import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-
 import MobileSidebar from "./MobileSidebar";
 import {
   DashboardIcon,
@@ -30,10 +29,9 @@ interface HeaderProps {
   navLinks?: NavLinkItem[];
 }
 
-const Header: React.FC<HeaderProps> = (): JSX.Element => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [scrolled, setScrolled] = useState<boolean>(false);
-
+const Header: React.FC = (): JSX.Element => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
   const userRole = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_ROLE);
 
@@ -74,24 +72,13 @@ const Header: React.FC<HeaderProps> = (): JSX.Element => {
   };
 
   useEffect(() => {
-    const checkScroll = (): void => {
-      setScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener("scroll", checkScroll, { passive: true });
-    checkScroll();
-
-    return () => window.removeEventListener("scroll", checkScroll);
-  }, []);
-
-  useEffect(() => {
     if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "unset";
+      document.documentElement.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = "unset";
+      document.documentElement.style.overflow = "unset";
     };
   }, [isMenuOpen]);
 
@@ -103,131 +90,118 @@ const Header: React.FC<HeaderProps> = (): JSX.Element => {
     return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
+  // Add scroll event listener
+  useEffect(() => {
+    const handleScroll = (): void => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-[999] transition-all duration-300 ease-in-out`}
-      style={{
-        backgroundColor:
-          scrolled || isMenuOpen ? "#1e3a8a" : "rgba(30, 58, 138, 0.8)",
-        boxShadow:
-          scrolled || isMenuOpen ? "0 2px 10px rgba(0, 0, 0, 0.3)" : "none",
-        backdropFilter: scrolled || isMenuOpen ? "blur(4px)" : "none",
-      }}
+      className={`sticky top-0 z-50 w-full  ${
+        scrolled
+          ? "bg-black shadow-lg backdrop-blur-sm transition-all duration-300"
+          : "bg-transparent "
+      }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 sm:h-20">
-          <div className="flex-shrink-0">
-            <span className="text-xl sm:text-2xl font-bold text-white tracking-wider">
-              ICE ALUMNI-RU
-            </span>
-          </div>
+      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="text-2xl font-bold text-white">ICE ALUMNI-RU</div>
 
-          <nav className="hidden lg:flex items-center flex-1 ml-8">
-            <ul className="flex items-center gap-2">
-              {pageNavLinks.map((link, i: number) => (
-                <li key={i}>
-                  <NavLink
-                    to={link.linkTo}
-                    className={({ isActive }) =>
-                      `flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded ${
-                        isActive ? "bg-white/20 text-white" : ""
-                      }`
-                    }
-                    title={link.text}
-                  >
-                    <span className="text-lg">{link.icon}</span>
-                    <span className="hidden xl:inline text-sm">
-                      {link.text}
-                    </span>
-                  </NavLink>
-                </li>
-              ))}
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-1">
+          {pageNavLinks.map((link, i: number) => (
+            <NavLink
+              key={i}
+              to={link.linkTo}
+              onClick={link.onClick}
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded ${
+                  isActive ? "bg-white/20 text-white" : ""
+                }`
+              }
+              title={link.text}
+            >
+              {link.icon}
+              {link.text}
+            </NavLink>
+          ))}
 
-              {userRole === "admin" &&
-                adminLinks.map((link, i: number) => (
-                  <li key={`admin-${i}`}>
-                    <NavLink
-                      to={link.linkTo}
-                      className={({ isActive }) =>
-                        `flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded ${
-                          isActive ? "bg-white/20 text-white" : ""
-                        }`
-                      }
-                      title={link.text}
-                    >
-                      <span className="text-lg">{link.icon}</span>
-                      <span className="hidden xl:inline text-sm">
-                        {link.text}
-                      </span>
-                    </NavLink>
-                  </li>
-                ))}
+          {userRole === "admin" &&
+            adminLinks.map((link, i: number) => (
+              <NavLink
+                key={i}
+                to={link.linkTo}
+                onClick={link.onClick}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded ${
+                    isActive ? "bg-white/20 text-white" : ""
+                  }`
+                }
+                title={link.text}
+              >
+                {link.icon}
+                {link.text}
+              </NavLink>
+            ))}
 
-              {actionLinks.map((link, i: number) => (
-                <li key={`action-${i}`}>
-                  <NavLink
-                    to={link.linkTo}
-                    className={({ isActive }) =>
-                      `flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded ${
-                        isActive ? "bg-white/20 text-white" : ""
-                      }`
-                    }
-                    title={link.text}
-                  >
-                    <span className="text-lg">{link.icon}</span>
-                    <span className="hidden xl:inline text-sm">
-                      {link.text}
-                    </span>
-                  </NavLink>
-                </li>
-              ))}
+          {actionLinks.map((link, i: number) => (
+            <NavLink
+              key={i}
+              to={link.linkTo}
+              onClick={link.onClick}
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded ${
+                  isActive ? "bg-white/20 text-white" : ""
+                }`
+              }
+              title={link.text}
+            >
+              {link.icon}
+              {link.text}
+            </NavLink>
+          ))}
 
-              {token && (
-                <li>
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded"
-                    title="Logout"
-                  >
-                    <span className="text-lg">
-                      <LogoutIcon />
-                    </span>
-                    <span className="hidden xl:inline text-sm">Logout</span>
-                  </button>
-                </li>
-              )}
+          {token && (
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded"
+              title="Logout"
+            >
+              <LogoutIcon />
+              Logout
+            </button>
+          )}
 
-              {!token && (
-                <li>
-                  <NavLink
-                    to={routes.login.path}
-                    className={({ isActive }) =>
-                      `flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded ${
-                        isActive ? "bg-white/20 text-white" : ""
-                      }`
-                    }
-                    title="Login"
-                  >
-                    <span className="text-lg">
-                      <LoginIcon />
-                    </span>
-                    <span className="hidden xl:inline text-sm">Login</span>
-                  </NavLink>
-                </li>
-              )}
-            </ul>
-          </nav>
+          {!token && (
+            <NavLink
+              to={routes.login.path}
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded ${
+                  isActive ? "bg-white/20 text-white" : ""
+                }`
+              }
+              title="Login"
+            >
+              <LoginIcon />
+              Login
+            </NavLink>
+          )}
+        </nav>
 
-          <button
-            onClick={() => setIsMenuOpen(true)}
-            className="lg:hidden p-2 text-white hover:bg-white/20 rounded-lg transition-colors"
-            aria-label="Open menu"
-          >
-            <Menu size={24} />
-          </button>
-        </div>
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMenuOpen(true)}
+          className="lg:hidden p-2 text-white hover:bg-white/20 rounded-lg transition-colors"
+          aria-label="Open menu"
+        >
+          <Menu size={24} />
+        </button>
       </div>
 
+      {/* Mobile Sidebar */}
       <MobileSidebar
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
