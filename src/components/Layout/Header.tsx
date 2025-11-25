@@ -1,22 +1,22 @@
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import MobileSidebar from "./MobileSidebar";
+import { toast } from "react-toastify";
+import { LOCAL_STORAGE_KEYS } from "../../constants/Global";
+import { routes } from "../../constants/Route";
 import {
+  AlumniAssociationIcon,
+  AuthorizationIcon,
+  BlogIcon,
   DashboardIcon,
   EventsIcon,
   HomeIcon,
-  MentorshipIcon,
-  BlogIcon,
-  AlumniAssociationIcon,
-  AuthorizationIcon,
-  SettingIcon,
-  LogoutIcon,
   LoginIcon,
+  LogoutIcon,
+  MentorshipIcon,
+  SettingIcon,
 } from "../../elements/Icons";
-import { routes } from "../../constants/Route";
-import { LOCAL_STORAGE_KEYS } from "../../constants/Global";
-import { toast } from "react-toastify";
+import MobileSidebar from "./MobileSidebar";
 
 interface NavLinkItem {
   icon: JSX.Element;
