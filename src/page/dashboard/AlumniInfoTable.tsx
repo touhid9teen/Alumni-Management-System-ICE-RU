@@ -1,138 +1,147 @@
-import React, { useState } from "react";
+// ===== 3. TABLE COMPONENT =====
 import { useNavigate } from "react-router";
-import Select, { SingleValue, ActionMeta } from "react-select";
 import AvatarWithDescription from "../../components/AvatarWithDescription";
-import Table from "../../components/Table/Table";
-import TableRow from "../../components/Table/TableRow";
-import { alumniDataSet } from "./../../data/AlumniData";
+import React from "react";
+import { Pagination } from "./Pagination";
 
-const jobTypeOptions = [
-  { value: "Private", label: "Private" },
-  { value: "Government", label: "Government" },
-  { value: "Freelance", label: "Freelance" },
-  { value: "Startup", label: "Startup" },
-];
+interface Alumni {
+  studentId: string;
+  name: string;
+  profilePic: string;
+  jobTypes: string;
+  position: string;
+  Institute: string;
+  location: string;
+}
 
-const positionOptions = [
-  { value: "Software Engineer", label: "Software Engineer" },
-  { value: "Data Analyst", label: "Data Analyst" },
-  { value: "Web Developer", label: "Web Developer" },
-  { value: "Project Manager", label: "Project Manager" },
-  { value: "CTO", label: "CTO" },
-];
+interface AlumniTableProps {
+  data: Alumni[];
+  isLoading?: boolean;
+  itemsPerPage?: number;
+  onRowClick?: (studentId: string) => void;
+}
 
-const locationOptions = [
-  { value: "Dhaka, Bangladesh", label: "Dhaka, Bangladesh" },
-  { value: "New York, USA", label: "New York, USA" },
-  { value: "London, UK", label: "London, UK" },
-  { value: "Toronto, Canada", label: "Toronto, Canada" },
-  { value: "San Francisco, USA", label: "San Francisco, USA" },
-];
-
-const ContactTable: React.FC = () => {
+export const AlumniTable: React.FC<AlumniTableProps> = ({
+  data = [],
+  isLoading = false,
+  itemsPerPage = 10,
+  onRowClick,
+}) => {
   const navigate = useNavigate();
-  const [filters, setFilters] = useState({
-    jobType: "",
-    position: "",
-    location: "",
-  });
+  const [currentPage, setCurrentPage] = React.useState(1);
 
-  const handleFilterChange = (
-    selectedOption: SingleValue<{ value: string; label: string }>,
-    action: ActionMeta<{ value: string; label: string }>
-  ) => {
-    setFilters({
-      ...filters,
-      [action.name as string]: selectedOption ? selectedOption.value : "",
-    });
+  const tableData = Array.isArray(data) ? data : [];
+
+  const totalItems = tableData.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedData = tableData.slice(startIndex, endIndex);
+
+  // Reset to first page when data changes
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [tableData.length]);
+
+  const handleRowClick = (studentId: string) => {
+    if (onRowClick) {
+      onRowClick(studentId);
+    } else {
+      navigate(`/dashboard/profile/${studentId}`);
+    }
   };
 
   return (
-    <>
-      <div className="flex flex-col justify-between w-full pb-3">
-        <div className="flex gap-4 mb-4">
-          <div style={{ width: "250px" }}>
-            <label htmlFor="jobType" className="block text-sm font-medium mb-2">
-              Job Type
-            </label>
-            <Select
-              id="jobType"
-              name="jobType"
-              options={jobTypeOptions}
-              onChange={handleFilterChange}
-              className="w-full"
-              placeholder="Select Job Type"
-            />
-          </div>
-          <div style={{ width: "250px" }}>
-            <label
-              htmlFor="position"
-              className="block text-sm font-medium mb-2"
-            >
-              Position
-            </label>
-            <Select
-              id="position"
-              name="position"
-              options={positionOptions}
-              onChange={handleFilterChange}
-              className="w-full"
-              placeholder="Select Position"
-            />
-          </div>
-          <div style={{ width: "250px" }}>
-            <label
-              htmlFor="location"
-              className="block text-sm font-medium mb-2"
-            >
-              Location
-            </label>
-            <Select
-              id="location"
-              name="location"
-              options={locationOptions}
-              onChange={handleFilterChange}
-              className="w-full"
-              placeholder="Select Location"
-            />
-          </div>
-          <div className="flex items-end">
-            <button
-              onClick={() => console.log("Searching with filters:", filters)}
-              className="px-6 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-            >
-              Search
-            </button>
-          </div>
-        </div>
-        <Table
-          id="1"
-          tableData={["Name", "Job Types", "Position", "Institute", "Location"]}
-          customTableClass="w-full"
-        >
-          {alumniDataSet.map((user) => (
-            <TableRow
-              key={user.studentId}
-              studentId={user.studentId}
-              name={
-                <AvatarWithDescription
-                  avatar={user.profilePic}
-                  title={user.name}
-                  onClick={() =>
-                    navigate(`/dashboard/profile/${user.studentId}`)
-                  }
-                />
-              }
-              jobTypes={user.jobTypes}
-              position={user.position}
-              Institute={user.Institute}
-              location={user.location}
-            />
-          ))}
-        </Table>
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="border-b border-gray-200 bg-gray-50">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                Name
+              </th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                Job Type
+              </th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                Position
+              </th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">
+                Institute
+              </th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden lg:table-cell">
+                Location
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {isLoading ? (
+              <tr>
+                <td colSpan={5} className="px-6 py-12">
+                  <div className="flex justify-center items-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                  </div>
+                </td>
+              </tr>
+            ) : tableData.length > 0 ? (
+              paginatedData.map((user) => (
+                <tr
+                  key={user.studentId}
+                  onClick={() => handleRowClick(user.studentId)}
+                  className="hover:bg-blue-50 transition-colors cursor-pointer"
+                >
+                  <td className="px-6 py-4">
+                    <AvatarWithDescription
+                      avatar={user.profilePic}
+                      title={user.name}
+                      onClick={() => handleRowClick(user.studentId)}
+                    />
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="px-3 py-1 inline-flex text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                      {user.jobTypes}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-900 font-medium">
+                    {user.position}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 hidden sm:table-cell">
+                    {user.Institute}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 hidden lg:table-cell">
+                    {user.location}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={5} className="px-6 py-12 text-center">
+                  <div className="text-gray-500">
+                    <p className="text-lg font-medium">No alumni found</p>
+                    <p className="text-sm mt-1">
+                      Try adjusting your filters or search term
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
-    </>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="px-6 py-6">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            variant="default"
+          />
+        </div>
+      )}
+    </div>
   );
 };
-
-export default ContactTable;

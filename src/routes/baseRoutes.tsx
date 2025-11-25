@@ -11,7 +11,6 @@ import BaseWrapper from "../components/Layout/BaseWrapper";
 import Blog from "../page/Blog";
 import AlumniProfile from "../components/AlumniProfile";
 import MainLayout from "../layouts/MainLayout";
-import AlumniInfoTable from "../page/dashboard/AlumniInfoTable";
 import AlumniAssociation from "../page/AlumniAssociation";
 import Events from "../page/Events";
 import CreateEventForm from "../components/Event/CreateEventForm";
@@ -19,6 +18,7 @@ import EventDetails from "../components/Event/EventDetails";
 import CreateCommitteeForm from "../components/AlumniAssocation/CreateCommitteeForm";
 import AuthorizationTable from "../page/AuthorizationTable";
 import RequestedUserDetails from "../components/Admin/RequestedUserDetails";
+import AlumniPage from "../page/dashboard/AlumniPage";
 
 const MainRoutes = createBrowserRouter([
 	{
@@ -82,7 +82,7 @@ const MainRoutes = createBrowserRouter([
 				path: routes.alumniTableInfo.path,
 				element: (
 					<MainLayout>
-						<AlumniInfoTable />
+						<AlumniPage />
 					</MainLayout>
 				),
 			},
