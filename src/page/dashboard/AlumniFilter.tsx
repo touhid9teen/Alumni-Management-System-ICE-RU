@@ -1,7 +1,7 @@
 // ===== 1. FILTER COMPONENT =====
 import React from "react";
 import { Search, X } from "lucide-react";
-import Select, { SingleValue } from "react-select";
+import Select, { CSSObjectWithLabel, SingleValue } from "react-select";
 
 interface FilterOption {
   value: string;
@@ -67,14 +67,13 @@ export const AlumniFilter: React.FC<AlumniFilterProps> = ({
   };
 
   const selectStyles = {
-    control: (base: Any) => ({
+    control: (base: CSSObjectWithLabel) => ({
       ...base,
       borderColor: "#d1d5db",
       boxShadow: "none",
       "&:hover": { borderColor: "#3b82f6" },
     }),
   };
-
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 space-y-4">
       <h2 className="text-lg font-semibold text-gray-900">Filter Alumni</h2>
