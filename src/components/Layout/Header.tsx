@@ -1,4 +1,4 @@
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import MobileSidebar from "./MobileSidebar";
@@ -23,10 +23,6 @@ interface NavLinkItem {
   text: string;
   linkTo: string;
   onClick?: () => void;
-}
-
-interface HeaderProps {
-  navLinks?: NavLinkItem[];
 }
 
 const Header: React.FC = (): JSX.Element => {
@@ -61,7 +57,7 @@ const Header: React.FC = (): JSX.Element => {
   ];
 
   const actionLinks: NavLinkItem[] = [
-    { icon: <SettingIcon />, text: "Setting", linkTo: "/setting" },
+    { icon: <SettingIcon />, text: "Settings", linkTo: "/setting" },
   ];
 
   const handleLogout = () => {
@@ -90,7 +86,6 @@ const Header: React.FC = (): JSX.Element => {
     return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
-  // Add scroll event listener
   useEffect(() => {
     const handleScroll = (): void => {
       setScrolled(window.scrollY > 10);
@@ -101,31 +96,42 @@ const Header: React.FC = (): JSX.Element => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full  ${
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "bg-black shadow-lg backdrop-blur-sm transition-all duration-300"
-          : "bg-transparent "
+          ? "bg-neutral-950/95 backdrop-blur-md shadow-lg border-b border-white/5"
+          : " bg-neutral-950/95 backdrop-blur-md shadow-lg border-b border-white/5 "
       }`}
     >
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="text-2xl font-bold text-white">ICE ALUMNI-RU</div>
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        {/* Logo */}
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+            <span className="text-white font-bold text-lg">A</span>
+          </div>
+          <div className="font-bold text-lg tracking-wide">
+            <span className="text-white">ICE</span>
+            <span className="text-blue-400 ml-1">ALUMNI</span>
+          </div>
+        </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-0.5">
           {pageNavLinks.map((link, i: number) => (
             <NavLink
               key={i}
               to={link.linkTo}
               onClick={link.onClick}
               className={({ isActive }) =>
-                `flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded ${
-                  isActive ? "bg-white/20 text-white" : ""
+                `flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md ${
+                  isActive
+                    ? "text-white bg-blue-600/20 border border-blue-500/30"
+                    : "text-gray-300 hover:text-white hover:bg-white/10"
                 }`
               }
               title={link.text}
             >
               {link.icon}
-              {link.text}
+              <span>{link.text}</span>
             </NavLink>
           ))}
 
@@ -136,65 +142,72 @@ const Header: React.FC = (): JSX.Element => {
                 to={link.linkTo}
                 onClick={link.onClick}
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded ${
-                    isActive ? "bg-white/20 text-white" : ""
+                  `flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md ${
+                    isActive
+                      ? "text-white bg-blue-600/20 border border-blue-500/30"
+                      : "text-gray-300 hover:text-white hover:bg-white/10"
                   }`
                 }
                 title={link.text}
               >
                 {link.icon}
-                {link.text}
+                <span>{link.text}</span>
               </NavLink>
             ))}
+        </nav>
 
+        {/* Right Side Actions */}
+        <div className="hidden lg:flex items-center gap-0.5">
           {actionLinks.map((link, i: number) => (
             <NavLink
               key={i}
               to={link.linkTo}
               onClick={link.onClick}
               className={({ isActive }) =>
-                `flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded ${
-                  isActive ? "bg-white/20 text-white" : ""
+                `flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md ${
+                  isActive
+                    ? "text-white bg-blue-600/20 border border-blue-500/30"
+                    : "text-gray-300 hover:text-white hover:bg-white/10"
                 }`
               }
               title={link.text}
             >
               {link.icon}
-              {link.text}
+              <span>{link.text}</span>
             </NavLink>
           ))}
 
-          {token && (
+          {token ? (
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-red-600/10 transition-all duration-200 rounded-md ml-1"
               title="Logout"
             >
               <LogoutIcon />
-              Logout
+              <span>Logout</span>
             </button>
-          )}
-
-          {!token && (
+          ) : (
             <NavLink
               to={routes.login.path}
               className={({ isActive }) =>
-                `flex items-center gap-2 px-3 py-2 text-white/95 hover:text-white font-medium transition-colors duration-200 hover:bg-white/10 rounded ${
-                  isActive ? "bg-white/20 text-white" : ""
+                `flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md ml-1 ${
+                  isActive
+                    ? "text-white bg-blue-600 border border-blue-500"
+                    : "text-white bg-blue-600 hover:bg-blue-700 border border-blue-500"
                 }`
               }
               title="Login"
             >
               <LoginIcon />
-              Login
+              <span>Login</span>
             </NavLink>
           )}
-        </nav>
+        </div>
 
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMenuOpen(true)}
-          className="lg:hidden p-2 text-white hover:bg-white/20 rounded-lg transition-colors"
+          className="lg:hidden p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
           aria-label="Open menu"
         >
           <Menu size={24} />

@@ -1,4 +1,4 @@
-import event1 from "../assets/event1.png";
+import event1 from "../assets/event1.jpeg";
 import event2 from "../assets/event2.jpeg";
 import event3 from "../assets/event3.jpeg";
 

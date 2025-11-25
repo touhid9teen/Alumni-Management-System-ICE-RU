@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface HeroSectionProps {
   heroImages: string[];
@@ -17,7 +18,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     }, 5000);
     return () => clearInterval(interval);
   }, [heroImages.length]);
+  const navigate = useNavigate();
 
+  const handelLogin = () => {
+    navigate("/login");
+  };
   return (
     <section className="relative h-screen min-h-[600px] max-h-[1000px] w-full overflow-hidden pt-16">
       {heroImages.map((img: string, i: number) => (
@@ -54,7 +59,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({
               future.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-in-up delay-200">
-              <button className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg font-semibold text-base sm:text-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+              <button
+                className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg font-semibold text-base sm:text-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                onClick={handelLogin}
+              >
                 Sign In Now
               </button>
               <button className="px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm border-2 border-blue-700 text-white hover:bg-white hover:text-gray-900 rounded-lg font-semibold text-base sm:text-lg transition-all transform hover:-translate-y-0.5">
