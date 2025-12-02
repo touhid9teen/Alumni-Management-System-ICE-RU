@@ -60,37 +60,41 @@ const AlumniPage: React.FC = () => {
   };
 
   return (
-    <div className="w-full space-y-6">
-      {/* Page Header */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Alumni Directory</h1>
-        <p className="text-gray-600 mt-2">
-          Connect with {filteredData.length} alumni members
-        </p>
+    <div className="flex items-center justify-center py-10 px-4 sm:px-6 lg:px-8 bg-gray-100 min-h-screen">
+      <div className="space-y-6 ">
+        {/* Page Header */}
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-gray-900">Alumni Directory</h1>
+          <p className="text-gray-600 mt-2">
+            Connect with {filteredData.length} alumni members
+          </p>
+        </div>
+
+        {/* Filter Component */}
+        <AlumniFilter
+          searchTerm={filters.searchTerm}
+          onSearchChange={(value) =>
+            setFilters({ ...filters, searchTerm: value })
+          }
+          jobType={filters.jobType}
+          onJobTypeChange={(value) =>
+            setFilters({ ...filters, jobType: value })
+          }
+          position={filters.position}
+          onPositionChange={(value) =>
+            setFilters({ ...filters, position: value })
+          }
+          location={filters.location}
+          onLocationChange={(value) =>
+            setFilters({ ...filters, location: value })
+          }
+          isFiltered={!!isFiltered}
+          onClearFilters={handleClearFilters}
+        />
+
+        {/* Table Component with integrated pagination */}
+        <AlumniTable data={filteredData} itemsPerPage={10} />
       </div>
-
-      {/* Filter Component */}
-      <AlumniFilter
-        searchTerm={filters.searchTerm}
-        onSearchChange={(value) =>
-          setFilters({ ...filters, searchTerm: value })
-        }
-        jobType={filters.jobType}
-        onJobTypeChange={(value) => setFilters({ ...filters, jobType: value })}
-        position={filters.position}
-        onPositionChange={(value) =>
-          setFilters({ ...filters, position: value })
-        }
-        location={filters.location}
-        onLocationChange={(value) =>
-          setFilters({ ...filters, location: value })
-        }
-        isFiltered={!!isFiltered}
-        onClearFilters={handleClearFilters}
-      />
-
-      {/* Table Component with integrated pagination */}
-      <AlumniTable data={filteredData} itemsPerPage={10} />
     </div>
   );
 };
