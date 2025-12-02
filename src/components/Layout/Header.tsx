@@ -96,10 +96,10 @@ const Header: React.FC = (): JSX.Element => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+      className={`sticky top-0 z-50 w-full transition-all duration-300 bg-gray-900  ${
         scrolled
-          ? "bg-neutral-950/95 backdrop-blur-md shadow-lg border-b border-white/5"
-          : " bg-neutral-950/95 backdrop-blur-md shadow-lg border-b border-white/5 "
+          ? "  shadow-lg border-b border-white/5"
+          : "  shadow-lg border-b border-white/5 "
       }`}
     >
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
