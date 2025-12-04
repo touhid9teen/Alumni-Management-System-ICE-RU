@@ -31,6 +31,8 @@ const Header: React.FC = (): JSX.Element => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
   const userRole = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_ROLE);
 
+  console.log("User Role:", userRole);
+
   const pageNavLinks: NavLinkItem[] = [
     { icon: <HomeIcon />, text: "Home", linkTo: routes.home.path },
     {
@@ -63,6 +65,8 @@ const Header: React.FC = (): JSX.Element => {
   const handleLogout = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_ROLE);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_EMAIL);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_NAME);
     toast.success("Logged out successfully");
     window.location.href = routes.home.path;
   };

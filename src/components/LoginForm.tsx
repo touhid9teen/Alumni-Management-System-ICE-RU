@@ -37,39 +37,39 @@ const LoginForm: FC = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<ILoginRequest> = async () =>
-    // payload: ILoginRequest
-    {
-      setIsLoading(true);
-      try {
-        //   const url = getBaseUrl() + "/auth/login";
-        // const response = await axios.post(url, payload);
+  const onSubmit: SubmitHandler<ILoginRequest> = async (
+    payload: ILoginRequest
+  ) => {
+    setIsLoading(true);
+    try {
+      //   const url = getBaseUrl() + "/auth/login";
+      // const response = await axios.post(url, payload);
 
-        const response = {
-          data: {
-            access_token: "abcd1234efgh5678",
-            email: "user@example.com",
-            name: "John Doe",
-            role: "admin",
-          },
-        };
+      const response = {
+        data: {
+          access_token: "abcd1234efgh5678",
+          email: payload.email,
+          name: "John Doe",
+          role: payload.email === 'admin@xml.com' ? 'admin' : 'user',
+        },
+      };
 
-        setToStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN, response.data.access_token);
-        setToStorage(LOCAL_STORAGE_KEYS.AUTH_EMAIL, response.data.email);
-        setToStorage(LOCAL_STORAGE_KEYS.AUTH_NAME, response.data.name);
-        setToStorage(LOCAL_STORAGE_KEYS.AUTH_ROLE, response.data.role);
+      setToStorage(LOCAL_STORAGE_KEYS.AUTH_TOKEN, response.data.access_token);
+      setToStorage(LOCAL_STORAGE_KEYS.AUTH_EMAIL, response.data.email);
+      setToStorage(LOCAL_STORAGE_KEYS.AUTH_NAME, response.data.name);
+      setToStorage(LOCAL_STORAGE_KEYS.AUTH_ROLE, response.data.role);
 
-        toast.success("Login successful!", {
-          autoClose: 1500,
-        });
-        navigate("/");
-      } catch (error) {
-        toast.error(error instanceof Error ? error.message : "Login failed", {
-          autoClose: 3000,
-        });
-      }
-      setIsLoading(false);
-    };
+      toast.success("Login successful!", {
+        autoClose: 1500,
+      });
+      navigate("/");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Login failed", {
+        autoClose: 3000,
+      });
+    }
+    setIsLoading(false);
+  };
   const onClickSignUp = () => navigate(routes.signup.path);
   return (
     <div className="py-8 2xl:py-12">
