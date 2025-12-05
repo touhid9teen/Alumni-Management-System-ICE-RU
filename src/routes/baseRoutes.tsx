@@ -19,122 +19,131 @@ import CreateCommitteeForm from "../components/AlumniAssocation/CreateCommitteeF
 import AuthorizationTable from "../page/AuthorizationTable";
 import RequestedUserDetails from "../components/Admin/RequestedUserDetails";
 import AlumniPage from "../page/dashboard/AlumniPage";
+import MentorPage from "../page/Mentorship";
 
 const MainRoutes = createBrowserRouter([
-	{
-		children: [
-			{
-				path: routes.pageNotFound.path,
-				element: <PageNotFound />,
-			},
-		],
-	},
-	{
-		element: <PublicWrapper />,
-		children: [
-			{
-				path: routes.home.path,
-				element: (
-					<MainLayout>
-						<Home />
-					</MainLayout>
-				),
-			},
-			{
-				path: routes.alumniAssociationCommittee.path,
-				element: (
-					<MainLayout>
-						<AlumniAssociation />
-					</MainLayout>
-				),
-			},
-		],
-	},
-	{
-		element: <AuthWrapper />,
-		children: [
-			{
-				path: routes.login.path,
-				element: <Login />,
-			},
-			{
-				path: routes.signup.path,
-				element: <Signup />,
-			},
-		],
-	},
-	{
-		element: <BaseWrapper />,
-		children: [
-			{
-				path: routes.blog.path,
-				element: (
-					<MainLayout>
-						<Blog />,
-					</MainLayout>
-				),
-			},
-			{
-				path: routes.alumniProfile.path,
-				element: <AlumniProfile />,
-			},
-			{
-				path: routes.alumniTableInfo.path,
-				element: (
-					<MainLayout>
-						<AlumniPage />
-					</MainLayout>
-				),
-			},
-			{
-				path: routes.events.path,
-				element: (
-					<MainLayout>
-						<Events />
-					</MainLayout>
-				),
-			},
-			{
-				path: routes.createEvent.path,
-				element: (
-					<MainLayout>
-						<CreateEventForm />
-					</MainLayout>
-				),
-			},
-			{
-				path: routes.eventDetails.path,
-				element: (
-					<MainLayout>
-						<EventDetails />
-					</MainLayout>
-				),
-			},
-			{
-				path: routes.addAlumniAssociationCommitteeMember.path,
-				element: (
-					<MainLayout>
-						<CreateCommitteeForm />
-					</MainLayout>
-				),
-			},
-			{
-				path: routes.authorization.path,
-				element: (
-					<MainLayout>
-						<AuthorizationTable />
-					</MainLayout>
-				),
-			},
-			{
-				path: routes.requestedUser.path,
-				element: (
-					<MainLayout>
-						<RequestedUserDetails />
-					</MainLayout>
-				),
-			},
-		],
-	},
+  {
+    children: [
+      {
+        path: routes.pageNotFound.path,
+        element: <PageNotFound />,
+      },
+    ],
+  },
+  {
+    element: <PublicWrapper />,
+    children: [
+      {
+        path: routes.home.path,
+        element: (
+          <MainLayout>
+            <Home />
+          </MainLayout>
+        ),
+      },
+      {
+        path: routes.alumniAssociationCommittee.path,
+        element: (
+          <MainLayout>
+            <AlumniAssociation />
+          </MainLayout>
+        ),
+      },
+    ],
+  },
+  {
+    element: <AuthWrapper />,
+    children: [
+      {
+        path: routes.login.path,
+        element: <Login />,
+      },
+      {
+        path: routes.signup.path,
+        element: <Signup />,
+      },
+    ],
+  },
+  {
+    element: <BaseWrapper />,
+    children: [
+      {
+        path: routes.blog.path,
+        element: (
+          <MainLayout>
+            <Blog />,
+          </MainLayout>
+        ),
+      },
+      {
+        path: routes.alumniProfile.path,
+        element: <AlumniProfile />,
+      },
+      {
+        path: routes.alumniTableInfo.path,
+        element: (
+          <MainLayout>
+            <AlumniPage />
+          </MainLayout>
+        ),
+      },
+      {
+        path: routes.events.path,
+        element: (
+          <MainLayout>
+            <Events />
+          </MainLayout>
+        ),
+      },
+      {
+        path: routes.createEvent.path,
+        element: (
+          <MainLayout>
+            <CreateEventForm />
+          </MainLayout>
+        ),
+      },
+      {
+        path: routes.eventDetails.path,
+        element: (
+          <MainLayout>
+            <EventDetails />
+          </MainLayout>
+        ),
+      },
+      {
+        path: routes.mentorship.path,
+        element: (
+          <MainLayout>
+            <MentorPage />
+          </MainLayout>
+        ),
+      },
+      {
+        path: routes.addAlumniAssociationCommitteeMember.path,
+        element: (
+          <MainLayout>
+            <CreateCommitteeForm />
+          </MainLayout>
+        ),
+      },
+      {
+        path: routes.authorization.path,
+        element: (
+          <MainLayout>
+            <AuthorizationTable />
+          </MainLayout>
+        ),
+      },
+      {
+        path: routes.requestedUser.path,
+        element: (
+          <MainLayout>
+            <RequestedUserDetails />
+          </MainLayout>
+        ),
+      },
+    ],
+  },
 ]);
 export default MainRoutes;

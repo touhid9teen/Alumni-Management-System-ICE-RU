@@ -47,7 +47,7 @@ const Header: React.FC = (): JSX.Element => {
       text: "Alumni Association",
       linkTo: routes.alumniAssociationCommittee.path,
     },
-    { icon: <MentorshipIcon />, text: "Mentors", linkTo: "/mentors" },
+    { icon: <MentorshipIcon />, text: "Mentorship", linkTo: "/mentorship" },
   ];
 
   const adminLinks: NavLinkItem[] = [

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../elements/Button";
 import { routes } from "../../constants/Route";
+import { LOCAL_STORAGE_KEYS } from "../../constants/Global";
+import { getUserRole } from "../../utils/token";
 
 interface EventItemProps {
   id: number;
@@ -29,7 +31,7 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
 
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
   const navigate = useNavigate();
-
+  const role = getUserRole();
   return (
     <div
       className="flex py-5 gap-20 md:gap-10 bg-white shadow-md rounded-lg mb-4 relative"
@@ -44,7 +46,7 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
         />
 
         {/* Buttons overlay */}
-        {showOverlay && (
+        {showOverlay && role === "admin" && (
           <div className="flex flex-col items-center justify-center absolute inset-0 bg-black bg-opacity-50 p-5 gap-2">
             <Button
               customClass="px-5 py-2 !text-black bg-han-purple hover:bg-han-purple-dark transition duration-200 rounded"
