@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../elements/Button";
 import { routes } from "../../constants/Route";
-import { LOCAL_STORAGE_KEYS } from "../../constants/Global";
+import Button from "../../elements/Button";
 import { getUserRole } from "../../utils/token";
 
 interface EventItemProps {
