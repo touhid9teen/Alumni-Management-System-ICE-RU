@@ -80,14 +80,14 @@ const EventItem: React.FC<EventItemProps> = (props: EventItemProps) => {
         <div className="flex flex-col md:flex-row justify-end items-center gap-5 w-full">
           <Button
             buttonType="submit"
-            customClass="flex justify-center p-3 !py-4 item-center font-semibold !text-white bg-blue-400 hover:bg-blue-900 transition duration-200"
+            customClass="flex justify-center p-3 !py-4 item-center font-semibold !text-white bg-blue-700 hover:bg-blue-900 transition duration-200"
             //disabled={isLoading}
           >
             Register Now
           </Button>
           <Button
             buttonType="button" // Change to "button" for navigation
-            customClass="flex justify-center p-3 !py-4 item-center font-semibold !text-white bg-blue-400 hover:bg-blue-900 transition duration-200"
+            customClass="flex justify-center p-3 !py-4 item-center font-semibold !text-white bg-blue-700 hover:bg-blue-900 transition duration-200"
             //disabled={isLoading}
             onClick={() => {
               navigate(routes.eventDetails.path.replace(":id", id.toString()), {
