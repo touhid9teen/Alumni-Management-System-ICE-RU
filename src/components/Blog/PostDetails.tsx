@@ -1,139 +1,107 @@
-import React, { useState, useEffect } from "react";
-import AvatarWithDescription from "../AvatarWithDescription";
-import PostAction from "./PostAction";
-import PostSummary from "./PostSummary";
-import AllComments from "./AllComment";
-import dummypost from "../../data/blogdummydata";
+export const PostCard: FC<PostCardProps> = ({ post, onImageClick }) => {
+  const [isLiked, setIsLiked] = useState<boolean>(false);
 
-interface Comment {
-    id: number;
-    avatar: string;
-    title: string;
-    commentTime: string;
-    content: string;
-    photos: string[];
-    videos: string[];
-    totalLike?: number;
-}
-
-interface Post {
-    id: number;
-    avatar: string;
-    title: string;
-    postTime: string;
-    content: string;
-    photos: string[];
-    totalLike: number;
-    totalComment: number;
-    comments: Comment[];
-}
-
-interface PostDetailsProps {
-    refreshPosts?: () => void;
-}
-
-const PostDetails: React.FC<PostDetailsProps> = ({ refreshPosts }) => {
-    const [posts, setPosts] = useState<Post[]>([]);
-    const [showCommentForm, setShowCommentForm] = useState<{
-        [key: number]: boolean;
-    }>({});
-
-    const fetchPosts = () => {
-        const loadedPosts = localStorage.getItem("posts");
-        if (loadedPosts) {
-            setPosts(JSON.parse(loadedPosts));
-        }
-    };
-
-    useEffect(() => {
-        fetchPosts();
-    }, [refreshPosts]);
-
-    const handleLike = (id: number) => {
-        const updatedPosts = posts.map((post) =>
-            post.id === id ? { ...post, totalLike: post.totalLike + 1 } : post
-        );
-        setPosts(updatedPosts);
-        localStorage.setItem("posts", JSON.stringify(updatedPosts));
-    };
-
-    const toggleCommentForm = (id: number) => {
-        setShowCommentForm((prevState) => ({
-            ...prevState,
-            [id]: !prevState[id],
-        }));
-    };
-
-    const handleShare = (id: number) => {
-        console.log(`Post ${id} shared!`);
-        // Implement your share logic here
-    };
-
-    const handleCreateComment = (postId: number, comment: Comment) => {
-        const updatedPosts = posts.map((post) => {
-            if (post.id === postId) {
-                const updatedComments = [...post.comments, comment];
-                return {
-                    ...post,
-                    comments: updatedComments,
-                    totalComment: post.totalComment + 1,
-                };
-            }
-            return post;
-        });
-        setPosts(updatedPosts);
-        localStorage.setItem("posts", JSON.stringify(updatedPosts));
-    };
-
-    return (
-        <div className="flex flex-col space-y-6 max-w-4xl mx-auto p-1 bg-gray-100">
-            {dummypost.map((post) => (
-                <div
-                    key={post.id}
-                    className="bg-white shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow duration-300"
-                >
-                    {/* Post Header */}
-                    <div className="flex items-center mb-4">
-                        <AvatarWithDescription
-                            avatar={post.avatar}
-                            time={post.postTime}
-                            title={post.title}
-                            onClick={() => {}}
-                        />
-                    </div>
-
-                    {/* Post Content */}
-                    <PostSummary content={post.content} photo={post.photos} />
-
-                    {/* Action Buttons (Like, Comment, Share) */}
-                    {/* <div className="border-t mt-4 pt-4 flex justify-between items-center"> */}
-    <PostAction
-        totalLike={post.totalLike?.toString() ?? "0"}
-        totalComment={post.totalComment?.toString() ?? "0"}
-        onClickLike={() => handleLike(post.id)}
-        onClickComment={() => toggleCommentForm(post.id)}
-        onClickShare={() => handleShare(post.id)}
-    />
-{/* </div> */}
-
-
-
-
-                    {/* Comments Section */}
-                    {showCommentForm[post.id] && (
-                        <div className="mt-4">
-                            <AllComments
-                                postId={post.id}
-                                comments={post.comments}
-                                totalComment={post.totalComment}
-                                createComment={handleCreateComment}
-                            />
-                        </div>
-                    )}
-                </div>
-            ))}
+  return (
+    <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden mb-6">
+      {/* Post Header */}
+      <div className="p-6 border-b border-gray-100">
+        <div className="flex items-start justify-between">
+          <div className="flex items-center gap-4">
+            <img
+              src={post.author.avatar}
+              alt={post.author.name}
+              className="w-12 h-12 rounded-full object-cover border-2 border-blue-100"
+            />
+            <div>
+              <h3 className="font-semibold text-gray-900">
+                {post.author.name}
+              </h3>
+              <p className="text-sm text-gray-600">{post.author.title}</p>
+              <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
+                <Calendar size={12} />
+                {formatTimeAgo(post.createdAt)}
+              </div>
+            </div>
+          </div>
         </div>
-    );
-};
+      </div>
 
-export default PostDetails;
+      {/* Post Content */}
+      <div className="px-6 py-4">
+        <p className="text-gray-700 leading-relaxed">{post.content}</p>
+      </div>
+
+      {/* Post Images */}
+      {post.images && post.images.length > 0 && (
+        <div className="px-6 py-4">
+          <div
+            className={`grid gap-3 ${
+              post.images.length === 1 ? "grid-cols-1" : "grid-cols-2"
+            }`}
+          >
+            {post.images.slice(0, 4).map((image, idx) => (
+              <div
+                key={idx}
+                className="relative cursor-pointer group overflow-hidden rounded-lg bg-gray-100"
+                onClick={() => onImageClick(idx, post.images)}
+              >
+                <img
+                  src={image}
+                  alt={`Post ${idx}`}
+                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                {post.images.length > 4 && idx === 3 && (
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">
+                      +{post.images.length - 4}
+                    </span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Post Actions */}
+      <div className="px-6 py-4 border-t border-gray-100 border-b border-gray-100">
+        <div className="flex justify-around text-sm text-gray-600">
+          <button
+            onClick={() => setIsLiked(!isLiked)}
+            className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition duration-300 ${
+              isLiked
+                ? "bg-red-50 text-red-600 shadow-sm"
+                : "text-gray-700 hover:bg-gray-100"
+            }`}
+          >
+            <Heart
+              size={20}
+              fill={isLiked ? "currentColor" : "none"}
+              className="transition"
+            />
+            <span>{post.likes}</span>
+            <span className="hidden sm:inline">Likes</span>
+          </button>
+          <button className="flex items-center gap-2 px-6 py-3 rounded-lg text-gray-700 hover:bg-gray-100 font-semibold transition duration-300">
+            <MessageCircle size={20} />
+            <span>{post.comments}</span>
+            <span className="hidden sm:inline">Comments</span>
+          </button>
+          <button className="flex items-center gap-2 px-6 py-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-semibold transition duration-300">
+            <Share2 size={20} />
+            <span className="hidden sm:inline">Share</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Comments Section */}
+      <div className="px-6 py-4">
+        <CommentsSection
+          comments={post.commentList}
+          totalComments={post.comments}
+          postId={post.id}
+        />
+      </div>
+    </div>
+  );
+};
