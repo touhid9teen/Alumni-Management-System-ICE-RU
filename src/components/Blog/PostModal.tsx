@@ -1,3 +1,7 @@
+import { FC, useState } from "react";
+import { CreatePostModalProps } from "../../types";
+import { X } from "lucide-react";
+
 export const CreatePostModal: FC<CreatePostModalProps> = ({
   onClose,
   onSubmit,

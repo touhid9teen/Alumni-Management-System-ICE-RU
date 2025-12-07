@@ -1,3 +1,8 @@
+import { FC } from "react";
+import { CommentReplyProps } from "../../types";
+import { Heart } from "lucide-react";
+import { formatTimeAgo } from "../../utils/blog";
+
 export const CommentReply: FC<CommentReplyProps> = ({ reply, onLike }) => (
   <div className="ml-12 mt-4 flex gap-3">
     <img

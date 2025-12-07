@@ -1,3 +1,7 @@
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ImageModalProps } from "../../types";
+import { FC } from "react";
+
 export const ImageModal: FC<ImageModalProps> = ({
   images,
   currentIndex,

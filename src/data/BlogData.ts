@@ -1,3 +1,5 @@
+import { PostType } from "../types";
+
 export const dummyPosts: PostType[] = [
   {
     id: 1,

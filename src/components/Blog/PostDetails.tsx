@@ -1,3 +1,9 @@
+import { Calendar, Heart, MessageCircle, Share2 } from "lucide-react";
+import { CommentsSection } from "./CommentsSection";
+import { formatTimeAgo } from "../../utils/blog";
+import { PostCardProps } from "../../types";
+import { FC, useState } from "react";
+
 export const PostCard: FC<PostCardProps> = ({ post, onImageClick }) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
 

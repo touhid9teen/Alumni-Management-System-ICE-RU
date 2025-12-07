@@ -1,3 +1,9 @@
+import { Heart } from "lucide-react";
+import { formatTimeAgo } from "../../utils/blog";
+import { CommentReply } from "./CommentReplay";
+import { FC, useState } from "react";
+import { CommentProps } from "../../types";
+
 export const Comment: FC<CommentProps> = ({
   comment,
   onLike,

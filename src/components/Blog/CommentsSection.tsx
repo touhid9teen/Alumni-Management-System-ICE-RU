@@ -1,3 +1,8 @@
+import { FC, useState } from "react";
+import { CommentsSectionProps } from "../../types";
+import { MessageCircle } from "lucide-react";
+import { Comment } from "./Comment";
+
 export const CommentsSection: FC<CommentsSectionProps> = ({
   comments,
   totalComments,
