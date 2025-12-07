@@ -84,4 +84,9 @@ export const routes = {
     key: "requested-user",
     path: "/authorization/:studentId",
   },
+  setting: {
+    title: "Setting",
+    key: "setting",
+    path: "/setting",
+  },
 };

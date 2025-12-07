@@ -20,6 +20,7 @@ import AuthorizationTable from "../page/AuthorizationTable";
 import RequestedUserDetails from "../components/Admin/RequestedUserDetails";
 import AlumniPage from "../page/dashboard/AlumniPage";
 import MentorPage from "../page/Mentorship";
+import AlumniSettingsPage from "../page/Setting";
 
 const MainRoutes = createBrowserRouter([
   {
@@ -140,6 +141,14 @@ const MainRoutes = createBrowserRouter([
         element: (
           <MainLayout>
             <RequestedUserDetails />
+          </MainLayout>
+        ),
+      },
+      {
+        path: routes.setting.path,
+        element: (
+          <MainLayout>
+            <AlumniSettingsPage />
           </MainLayout>
         ),
       },
