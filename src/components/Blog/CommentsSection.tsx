@@ -9,7 +9,7 @@ export const CommentsSection: FC<CommentsSectionProps> = ({
   postId,
 }) => {
   const [visibleCount, setVisibleCount] = useState<number>(3);
-
+  console.log("post id", postId);
   return (
     <div className="mt-6 pt-4 border-t border-gray-200">
       <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
@@ -22,7 +22,7 @@ export const CommentsSection: FC<CommentsSectionProps> = ({
             key={comment.id}
             comment={comment}
             onLike={() => {}}
-            onReplyClick={(id) => {}}
+            onReplyClick={() => {}}
           />
         ))}
       </div>

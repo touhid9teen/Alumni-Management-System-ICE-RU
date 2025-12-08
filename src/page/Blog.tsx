@@ -19,7 +19,23 @@ export const AlumniBlog: FC = () => {
 
   const handleCreatePost = (content: string): void => {
     // API Call
-    // const newPost = await fetch('/api/posts', { method: 'POST', body: JSON.stringify({ content }) });
+    const newPost: PostType = {
+      id: Date.now(),
+      author: {
+        name: "Current User",
+        avatar: "", // Add avatar URL if needed
+        title: "Alumnus", // Add appropriate title here
+      },
+      createdAt: new Date(),
+      content,
+      likes: 0,
+      comments: 0,
+      images: [],
+      commentList: [],
+    };
+    //  newPost = await fetch('/api/posts', { method: 'POST', body: JSON.stringify({ content }) });
+    setPosts((prevPosts) => [...prevPosts, newPost]);
+
     console.log("Post created:", content);
   };
 

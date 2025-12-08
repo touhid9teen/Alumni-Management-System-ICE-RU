@@ -1,4 +1,4 @@
-import React, { useState, useMemo, FC } from "react";
+import { useState, useMemo, FC } from "react";
 import { Search, X, ChevronDown } from "lucide-react";
 import { alumniDummyData } from "../../data/AlumniData";
 
@@ -214,7 +214,7 @@ export const AlumniTable: FC<AlumniTableProps> = ({ data, itemsPerPage }) => {
           </thead>
           <tbody className="divide-y divide-gray-200">
             {displayedData.length > 0 ? (
-              displayedData.map((alumni, index) => (
+              displayedData.map((alumni) => (
                 <tr
                   key={alumni.studentId}
                   className="hover:bg-blue-50 transition"
